@@ -77,7 +77,7 @@ export function buildWorld(E) {
   // 1 · flux through a flat square in a uniform field
   // ======================================================================
   const XF = STATIONS.flux, cF = V(XF, Y, 0);
-  const gF = asm('flux', root, { title: 'A square in a uniform field', sub: 'Φ = EA cos θ' });
+  const gF = asm('flux', root, { title: '匀强电场中的正方形', sub: 'Φ = EA cos θ' });
   {
     const pts = [], vals = [-1.75, -1.25, -0.75, -0.25, 0.25, 0.75, 1.25, 1.75];
     for (const y of vals) for (const z of vals) pts.push(XF - 2.6, Y + y, z, XF + 3.0, Y + y, z);
@@ -100,7 +100,7 @@ export function buildWorld(E) {
   // 2 · Gauss's law: a point charge in a sphere; a box beside a charge
   // ======================================================================
   const cG = V(STATIONS.gauss - 1.5, Y, 0);
-  const gG = asm('gauss', root, { title: 'A point charge in a Gaussian sphere', sub: 'the flux is q/ε₀ at any radius' });
+  const gG = asm('gauss', root, { title: '高斯球面中的点电荷', sub: '半径多大，电通量都是 q/ε₀' });
   charge(gG, cG, 1);
   const sphG = new THREE.Group(); sphG.position.copy(cG); gG.add(sphG);
   gpart(sphG, new THREE.SphereGeometry(1, 48, 32), 'Gaussian sphere');
@@ -118,7 +118,7 @@ export function buildWorld(E) {
 
   // the box, with a charge just outside it
   const cB = V(STATIONS.gauss + 4.6, Y, 0);
-  const gB = asm('box', root, { title: 'A closed box, the charge outside', sub: 'what goes in comes out' });
+  const gB = asm('box', root, { title: '电荷在外的闭合盒子', sub: '穿进去多少，就穿出来多少' });
   const qB = cB.clone().add(V(...M.BOX.at).multiplyScalar(D));
   charge(gB, qB, 1);
   { const pf = M.pointField(M.BOX.q, M.BOX.at);
@@ -138,7 +138,7 @@ export function buildWorld(E) {
   // 3 · an infinite line of charge
   // ======================================================================
   const cL = V(STATIONS.line, Y, 0);
-  const gL = asm('line', root, { title: 'A line of charge in a Gaussian cylinder', sub: 'only the curved side carries flux' });
+  const gL = asm('line', root, { title: '高斯圆柱面中的带电直线', sub: '只有侧面有电通量' });
   part(root, xAxis(new THREE.CylinderGeometry(0.06, 0.06, 11, 20)), { tone: 'hi', name: 'Line of charge', pos: cL.toArray() });
   dots(root, Array.from({ length: 44 }, (_, i) => V(cL.x - 5.375 + i * 0.25, Y, 0.06)), 'Line of charge', 0.035);
   label('axis', '−∞', () => V(cL.x - 5.9, Y, 0)); label('axis', '+∞', () => V(cL.x + 6.3, Y, 0));
@@ -158,9 +158,9 @@ export function buildWorld(E) {
   const rL = greyArrow(gL, 'Radius');
   label('vec', 'r', () => tip(rL));
   label('vec blue', '<b>E</b>', () => tip(eL[7].ar));
-  label('tick', 'cap: Φ = 0', () => ex(gL) > 0.3 ? capsL[0].getWorldPosition(V()).add(V(0.4, 1.0, 0)) : null);
-  label('tick', 'cap: Φ = 0', () => ex(gL) > 0.3 ? capsL[1].getWorldPosition(V()).add(V(0.0, 1.0, 0)) : null);
-  label('tick', 'side: Φ = λL/ε₀', () => ex(gL) > 0.3 ? cL.clone().add(V(0.9, -2.0, 0)) : null);
+  label('tick', '底面：Φ = 0', () => ex(gL) > 0.3 ? capsL[0].getWorldPosition(V()).add(V(0.4, 1.0, 0)) : null);
+  label('tick', '底面：Φ = 0', () => ex(gL) > 0.3 ? capsL[1].getWorldPosition(V()).add(V(0.0, 1.0, 0)) : null);
+  label('tick', '侧面：Φ = λL/ε₀', () => ex(gL) > 0.3 ? cL.clone().add(V(0.9, -2.0, 0)) : null);
 
   // ======================================================================
   // 4 · a non-conducting sheet, and a conducting plate
@@ -178,26 +178,26 @@ export function buildWorld(E) {
   const grid3 = [-1.5, 1.5];
   // the sheet
   const cS = V(STATIONS.sheet, Y, 0), W2 = 2.2;
-  const gS = asm('sheet', root, { title: 'A charged sheet and a pillbox', sub: 'flux out of both caps' });
+  const gS = asm('sheet', root, { title: '带电平面与扁圆柱高斯面', sub: '电通量从两个底面穿出' });
   part(gS, box(2 * W2, 0.05, 2 * W2, 0.01), { tone: 'hi', name: 'Sheet', pos: cS.toArray() });
   dots(gS, scatter(7, 90, cS.x - W2 + 0.1, cS.x + W2 - 0.1, -W2 + 0.1, W2 - 0.1, Y + 0.03), 'Sheet');
   const pbS = pillbox(gS, cS, M.SHEET.pr * D, -0.8, 0.8, 0.8);
   const eS = []; for (const x of grid3) for (const z of grid3) for (const s of [1, -1]) eS.push({ x, z, s, ar: fieldArrow(gS) });
   label('vec blue', '<b>E</b>', () => tip(eS[0].ar)); label('vec blue', '<b>E</b>', () => tip(eS[1].ar));
   label('tick', 'σ', () => V(cS.x - W2 - 0.1, Y + 0.12, W2));
-  label('tick', 'top: EA', () => ex(gS) > 0.3 ? pbS.top.getWorldPosition(V()).add(V(-0.2, 0.25, 0)) : null);
-  label('tick', 'bottom: EA', () => ex(gS) > 0.3 ? pbS.bot.getWorldPosition(V()).add(V(-0.2, -0.3, 0)) : null);
-  label('tick', 'side: 0', () => ex(gS) > 0.3 ? cS.clone().add(V(-0.55, 0.45, 0)) : null);
+  label('tick', '上底：EA', () => ex(gS) > 0.3 ? pbS.top.getWorldPosition(V()).add(V(-0.2, 0.25, 0)) : null);
+  label('tick', '下底：EA', () => ex(gS) > 0.3 ? pbS.bot.getWorldPosition(V()).add(V(-0.2, -0.3, 0)) : null);
+  label('tick', '侧面：0', () => ex(gS) > 0.3 ? cS.clone().add(V(-0.55, 0.45, 0)) : null);
   // the plate
   const cP = V(STATIONS.plate, Y, 0), TP = M.PLATE.t * D;
-  const gP = asm('plate', root, { title: 'A charged metal plate', sub: 'flux out of one cap only' });
+  const gP = asm('plate', root, { title: '带电金属板', sub: '电通量只从一个底面穿出' });
   part(gP, box(2 * W2, TP, 2 * W2, 0.02), { tone: 'hi', name: 'Metal plate', pal: 'base', pos: cP.toArray() });
   dots(gP, [...scatter(11, 90, cP.x - W2 + 0.1, cP.x + W2 - 0.1, -W2 + 0.1, W2 - 0.1, Y + TP / 2 + 0.02), ...scatter(12, 90, cP.x - W2 + 0.1, cP.x + W2 - 0.1, -W2 + 0.1, W2 - 0.1, Y - TP / 2 - 0.02)], 'Surface charge');
   const pbP = pillbox(gP, cP, M.SHEET.pr * D, 0, TP / 2 + 0.8, 0.8);
   const eP = []; for (const x of grid3) for (const z of grid3) for (const s of [1, -1]) eP.push({ x, z, s, ar: fieldArrow(gP) });
   label('vec blue', '<b>E</b>', () => tip(eP[0].ar)); label('vec blue', '<b>E</b>', () => tip(eP[1].ar));
-  label('tick', 'top: EA', () => ex(gP) > 0.3 ? pbP.top.getWorldPosition(V()).add(V(-0.2, 0.25, 0)) : null);
-  label('tick', 'in the metal: E = 0', () => ex(gP) > 0.3 ? pbP.bot.getWorldPosition(V()).add(V(-0.2, -0.3, 0)) : null);
+  label('tick', '上底：EA', () => ex(gP) > 0.3 ? pbP.top.getWorldPosition(V()).add(V(-0.2, 0.25, 0)) : null);
+  label('tick', '金属中：E = 0', () => ex(gP) > 0.3 ? pbP.bot.getWorldPosition(V()).add(V(-0.2, -0.3, 0)) : null);
 
   // ======================================================================
   // spheres: conducting, insulating, ρ = br — a cutaway with a wedge removed
@@ -239,9 +239,9 @@ export function buildWorld(E) {
     label('vec blue', '<b>E</b>', () => { for (const i of [12, 4, 9, 15, 2]) if (arrows[i].visible) return tip(arrows[i]); return null; });
     return { c, g, gs, enc, dirs, arrows, rad, mats };
   }
-  const SC_ = sphereScene('csphere', STATIONS.csphere, 'c', { title: 'A charged metal sphere', sub: 'all its charge on the surface' });
-  const SI_ = sphereScene('isphere', STATIONS.isphere, 'i', { title: 'A uniformly charged insulating sphere', sub: 'charge all through it' });
-  const SN_ = sphereScene('nsphere', STATIONS.nsphere, 'n', { title: 'A sphere with ρ = br', sub: 'denser towards the edge' });
+  const SC_ = sphereScene('csphere', STATIONS.csphere, 'c', { title: '带电金属球', sub: '电荷全部在表面' });
+  const SI_ = sphereScene('isphere', STATIONS.isphere, 'i', { title: '均匀带电的绝缘球', sub: '电荷遍布整个球体' });
+  const SN_ = sphereScene('nsphere', STATIONS.nsphere, 'n', { title: 'ρ = br 的球', sub: '越靠近边缘越密' });
   label('tick', 'q<sub>enc</sub> = 0', () => ex(SC_.g) > 0.3 && SC_.gs.scale.x < R1 ? SC_.c.clone().add(V(0.15, -0.35, 0.6)) : null);
 
   // ======================================================================
@@ -272,17 +272,17 @@ export function buildWorld(E) {
     const rad = greyArrow(g, 'Radius');
     label('vec', 'r', () => tip(rad));
     label('vec blue', '<b>E</b>', () => tip(arrows[7].ar));
-    label('tick', kind === 'c' ? 'metal' : 'insulator', () => c.clone().add(V(0.2, RL / 2 + 0.35, 0)));
+    label('tick', kind === 'c' ? '金属' : '绝缘体', () => c.clone().add(V(0.2, RL / 2 + 0.35, 0)));
     return { c, g, gs, enc, arrows, rad, mats, LG };
   }
-  const RC_ = rodScene('crod', STATIONS.crod, 'c', { title: 'A charged metal rod', sub: 'charge on the surface' });
-  const RI_ = rodScene('irod', STATIONS.irod, 'i', { title: 'A uniformly charged insulating rod', sub: 'charge all through it' });
+  const RC_ = rodScene('crod', STATIONS.crod, 'c', { title: '带电金属棒', sub: '电荷在表面' });
+  const RI_ = rodScene('irod', STATIONS.irod, 'i', { title: '均匀带电的绝缘棒', sub: '电荷遍布整根棒' });
 
   // ======================================================================
   // 10 · a conductor in equilibrium: a metal shell in a uniform field
   // ======================================================================
   const cC = V(STATIONS.cage, Y, 0), RC = M.CAGE.R * D, RCi = RC - 0.12;
-  const gC = asm('cage', root, { title: 'A hollow metal shell in a field', sub: 'a Faraday cage' });
+  const gC = asm('cage', root, { title: '电场中的空心金属球壳', sub: '法拉第笼' });
   const cmats = [fadeMat('base'), fadeMat('dark'), fadeMat('base')];
   const wedgeLen = 2 * Math.PI - (WEDGE[1] - WEDGE[0]);
   part(gC, new THREE.SphereGeometry(RC, 64, 40, WEDGE[1], wedgeLen), { tone: 'hi', name: 'Metal shell', mat: cmats[0], pos: cC.toArray() });
