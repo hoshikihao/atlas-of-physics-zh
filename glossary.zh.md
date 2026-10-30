@@ -18,6 +18,8 @@
 | Fig. N | 图 N |
 | No. 01 · Kinematics（各章顶栏） | 第 1 章 · 运动学 |
 | Scroll to turn the page | 滚动翻页 |
+| Free response（练习题） | 解答题 |
+| the organizer（各章依据的 AP 讲义） | 参考讲义 |
 
 ## Chapter Titles
 | English | 中文 |
@@ -132,6 +134,7 @@
 | pendulum | 单摆 |
 | physical pendulum | 复摆 |
 | torsion pendulum | 扭摆 |
+| mass on a spring | 弹簧振子 |
 | rotation | 转动 |
 | angular acceleration | 角加速度 |
 | torque | 力矩 |
@@ -192,6 +195,16 @@
 | Kirchhoff’s rules | 基尔霍夫定律 |
 | junction rule / loop rule | 节点定律 / 回路定律 |
 | time constant | 时间常数 |
+| superposition | 叠加原理 |
+| conductivity / conductance | 电导率 / 电导 |
+| drift speed / velocity | 漂移速度 |
+| charge carrier | 载流子 |
+| Drude model | 德鲁德模型 |
+| ohmic conductor | 欧姆导体 |
+| equivalent resistance | 等效电阻 |
+| branch / main line | 支路 / 干路 |
+| short / open circuit | 短路 / 断路 |
+| nichrome | 镍铬合金 |
 
 ## Magnetism and Induction
 | English | 中文 |
@@ -212,3 +225,17 @@
 | self-inductance / inductance | 自感 / 电感 |
 | inductor | 电感器 |
 | LC oscillation | LC 振荡 |
+| field line (magnetic) | 磁感线 |
+| magnetic monopole | 磁单极子 |
+| right-hand rule | 右手定则 |
+| cyclotron | 回旋加速器 |
+| Hall effect | 霍尔效应 |
+| Amperian loop | 安培环路 |
+| induced electric field | 感生电场 |
+| eddy currents | 涡流 |
+| iron core / winding | 铁芯 / 绕组 |
+| primary / secondary coil | 初级线圈 / 次级线圈 |
+| transformer | 变压器 |
+| flux linkage | 磁链 |
+| back emf | 自感电动势 |
+| tesla / gauss / weber / henry | 特斯拉 / 高斯 / 韦伯 / 亨利 |
