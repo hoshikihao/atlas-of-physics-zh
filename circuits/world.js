@@ -154,7 +154,7 @@ export function buildWorld(E) {
 
   // ---------- 0 · current: electrons drifting in a copper wire ----------
   const X0 = STATIONS.wire, WY = 1.0, RW = M.CU.r * MAG, WL = 7;
-  const g0 = asm('wire', root, { title: 'Charge drifting in a wire', sub: 'I = nqAv_d' });
+  const g0 = asm('wire', root, { title: '导线中漂移的电荷', sub: 'I = nqAv_d' });
   part(g0, xAxis(new THREE.CylinderGeometry(RW, RW, WL, 48)), { tone: 'mid', name: 'Copper wire', pos: [X0, WY, 0], mat: shadeMat('paper', { opacity: 0.22 }) });
   const ring = (x, r, n = 64) => { const p = []; for (let i = 0; i < n; i++) for (const k of [i, i + 1]) { const a = 2 * Math.PI * k / n; p.push(x, WY + r * Math.cos(a), r * Math.sin(a)); } return p; };
   lines(g0, ring(X0, RW * 1.01), '#2c2c30');
@@ -168,7 +168,7 @@ export function buildWorld(E) {
   elec[0].y = 0.05; elec[0].z = RW * 0.55;
   const ePool = dotPool(g0, NE, 'blue', new THREE.SphereGeometry(0.05, 12, 8));
   const eOne = part(g0, new THREE.SphereGeometry(0.075, 16, 12), { tone: 'hi', pal: 'ink', name: 'One electron' });
-  label('tick', 'one electron', () => eOne.position.clone().add(V(-0.12, 0.62, 0)));
+  label('tick', '单个电子', () => eOne.position.clone().add(V(-0.12, 0.62, 0)));
   const DRIFT = M.CU.vd * MAG * SPEEDUP;           // drawn drift speed, units/s
   const eArr = [-2, 0.6, 2.4].map(() => arrow(g0, 'blue', { r: 0.03, head: 0.16, headR: 0.08, name: 'Field E' }));
   eArr.forEach((a, k) => setArrow(a, V(X0 - 2.6 + k * 2.1, WY, -0.05), V(1.0, 0, 0)));
@@ -178,7 +178,7 @@ export function buildWorld(E) {
   label('vec', '<i>I</i>', () => V(X0 + 3.05, WY + RW + 0.35, 0));
   const vArr = arrow(g0, 'dark', { r: 0.022, head: 0.12, headR: 0.06, name: 'Drift velocity', tone: 'mid' });
   setArrow(vArr, V(X0 + 2.8, WY - RW - 0.35, 0), V(-1.0, 0, 0));
-  label('tick', 'electrons drift ←', () => V(X0 + 1.65, WY - RW - 0.35, 0));
+  label('tick', '电子漂移方向 ←', () => V(X0 + 1.65, WY - RW - 0.35, 0));
   // breakdown: the slab of length Δx = v_d Δt just upstream of A; all of it crosses A in Δt
   const SLAB = 1.5;
   const slab = part(g0, xAxis(new THREE.CylinderGeometry(RW * 1.02, RW * 1.02, 1, 48)), { tone: 'lo', name: 'Slab AΔx', mat: shadeMat('blue', { opacity: 0.18 }) });
@@ -188,7 +188,7 @@ export function buildWorld(E) {
 
   // ---------- 1 · resistance: R = ρL/A ----------
   const X1 = STATIONS.resist, RY = 0.45, ZT = -0.75, ZK = 0.75, RT = 0.075;
-  const g1 = asm('wires', root, { title: 'Two nichrome wires', sub: 'R = ρL/A' });
+  const g1 = asm('wires', root, { title: '两根镍铬合金导线', sub: 'R = ρL/A' });
   const wireMat = shadeMat('paper', { opacity: 0.45 });
   const thin = part(g1, xAxis(new THREE.CylinderGeometry(RT, RT, 1, 24)), { tone: 'hi', name: 'Thin wire', mat: wireMat });
   const thick = part(g1, xAxis(new THREE.CylinderGeometry(2 * RT, 2 * RT, 1, 32)), { tone: 'hi', name: 'Thick wire', mat: wireMat });
@@ -208,7 +208,7 @@ export function buildWorld(E) {
 
   // ---------- 2 · Ohm's law, as heights ----------
   const OHM_E = named(M.OHM.edges, 'w'), BULB_E = named(M.BULB.edges, 'w');
-  const g2 = asm('ohm', root, { title: 'One battery, one resistor', sub: 'potential drawn as height' });
+  const g2 = asm('ohm', root, { title: '一个电池，一个电阻', sub: '把电势画成高度' });
   const cOhm = circuit(g2, { edges: OHM_E, at: [STATIONS.ohm, 0], pos: { bl: [-1.3, 1], tl: [-1.3, -1], tr: [1.3, -1], br: [1.3, 1] }, K: K_DOT.ohm, IK: K_ARROW.ohm,
     nodes: ['tl', 'br'], arrows: [{ n: 'w1', frac: 0.5, off: [0, -0.28], html: '<i>I</i>' }],
     tags: [{ n: 'bat', html: '6.0 V', side: 0.5 }, { n: 'R', html: '3.0 Ω', side: -0.38 }] });
@@ -216,31 +216,31 @@ export function buildWorld(E) {
   label('vec blue', '<i>E</i>', () => (opened(g2) > 0.5 && ohmE[0].visible ? ohmE[0].localToWorld(V(0, ohmE[0].userData.arrow.shaft.scale.y + 0.15, 0)) : null));
 
   // ---------- 3 · power: a bulb ----------
-  const g3 = asm('bulb', root, { title: 'A 24 Ω bulb on 12 V', sub: 'a bulb is a resistor that glows' });
+  const g3 = asm('bulb', root, { title: '接在 12 V 上的 24 Ω 灯泡', sub: '灯泡就是会发光的电阻' });
   const cBulb = circuit(g3, { edges: BULB_E, at: [STATIONS.power, 0], pos: { bl: [-1.4, 0.9], tl: [-1.4, -0.9], tr: [1.4, -0.9], br: [1.4, 0.9] }, K: K_DOT.power, IK: K_ARROW.power,
     arrows: [{ n: 'w3', frac: 0.5, off: [0, 0.28], html: '<i>I</i>' }], tags: [{ n: 'bat', html: '12 V', side: 0.5 }, { n: 'bulb', html: '24 Ω', side: 0.55, up: 0.35 }] });
 
   // ---------- 4 · a real battery: emf and internal resistance ----------
   const X4 = STATIONS.cell;
-  const g4 = asm('cell', root, { title: 'A real battery', sub: 'an ideal emf with a resistor inside' });
+  const g4 = asm('cell', root, { title: '真实的电池', sub: '理想电动势，内部串一个电阻' });
   let cellR = M.cellLoad(0);
   const cellDef = { edges: M.cellEdges(cellR), at: [X4, 0], pos: { n0: [-1.5, 1.1], m: [-1.5, 0], p: [-1.5, -1.1], tr: [1.5, -1.1], br: [1.5, 1.1] }, K: K_DOT.cell, IK: K_ARROW.cell, noPlus: false,
     nodes: [['p', -0.1, -0.35]], arrows: [{ n: 'w3', frac: 0.5, off: [0, -0.3], html: '<i>I</i>' }], Pref: 18,
-    tags: [{ n: 'emf', html: 'emf 12 V', side: 0.62 }, { n: 'r', html: '<i>r</i> 2 Ω', side: 0.45 }, { n: 'load', html: '', side: -0.5, up: 0.35, text: () => `R ${cellR.toFixed(2)} Ω` }] };
+    tags: [{ n: 'emf', html: '电动势 12 V', side: 0.62 }, { n: 'r', html: '<i>r</i> 2 Ω', side: 0.45 }, { n: 'load', html: '', side: -0.5, up: 0.35, text: () => `R ${cellR.toFixed(2)} Ω` }] };
   cellDef.edges[2].n = 'w3';
   const cCell = circuit(g4, cellDef);
   const caseG = new THREE.Group(); caseG.userData = { home: V(), ex: V(-1.2, 3.2, 0) }; g4.add(caseG);
   part(caseG, box(0.62, 0.5, 2.0, 0.08), { tone: 'mid', name: 'Battery case', pos: [X4 - 1.5, Y0, 0], mat: shadeMat('paper', { opacity: 0.3 }) });
-  label('tick', 'the battery', () => (opened(g4) < 0.3 ? V(X4 - 1.85, Y0 + 0.45, -0.95) : null));
+  label('tick', '电池', () => (opened(g4) < 0.3 ? V(X4 - 1.85, Y0 + 0.45, -0.95) : null));
 
   // ---------- 5 · series and parallel ----------
   const X5 = STATIONS.sp;
-  const g5a = asm('series', root, { title: 'In series', sub: 'one path: same current, voltages add' });
+  const g5a = asm('series', root, { title: '串联', sub: '一条路径：电流相同，电压相加' });
   const SER = { edges: M.SERIES.edges.map((e, i) => ({ ...e, n: e.n || 'ws' + i })), ground: 'br' };
   const cSer = circuit(g5a, { edges: SER.edges, at: [X5 - 2.15, 0], pos: { bl: [-1.4, 1], tl: [-1.4, -1], tm: [0, -1], tr: [1.4, -1], br: [1.4, 1] }, K: K_DOT.series, IK: K_ARROW.series,
     nodes: ['tl', 'tm', 'tr'], arrows: [{ n: 'ws1', frac: 0.5, off: [-0.28, 0], html: '<i>I</i>' }],
     tags: [{ n: 'bat', html: '9 V', side: -0.45 }, { n: 'R1', html: 'R₁ 2 Ω', side: -0.3, up: 0.3 }, { n: 'R2', html: 'R₂ 4 Ω', side: -0.3, up: 0.3 }] });
-  const g5b = asm('parallel', root, { title: 'In parallel', sub: 'side by side: same voltage, currents add' });
+  const g5b = asm('parallel', root, { title: '并联', sub: '并排相连：电压相同，电流相加' });
   const PAR = { edges: M.PARALLEL.edges.map((e, i) => ({ ...e, n: e.n || 'wp' + i })), ground: 'r3' };
   const pp = {}; [-1.2, -0.4, 0.4, 1.25].forEach((z, k) => { pp['l' + k] = [-1.2, z]; pp['r' + k] = [1.2, z]; });
   const cPar = circuit(g5b, { edges: PAR.edges, at: [X5 + 2.3, 0], pos: pp, K: K_DOT.parallel, IK: K_ARROW.parallel,
@@ -249,7 +249,7 @@ export function buildWorld(E) {
 
   // ---------- 6 · a combination, reduced step by step ----------
   const X6 = STATIONS.combo, OFF = [[-2.15, -1.55], [2.15, -1.55], [-2.15, 1.55], [2.15, 1.55]];
-  const g6 = asm('combo', root, { title: 'The full circuit', sub: 'five resistors, one battery' });
+  const g6 = asm('combo', root, { title: '完整电路', sub: '五个电阻，一个电池' });
   g6.userData.minDist = 19;
   const POS6 = [{ tl: [-1.5, -1], a: [0, -1], tr: [1.5, -1], br: [1.5, 1], b: [0, 1], bl: [-1.5, 1] }, { tl: [-1.5, -1], a: [0, -1], tr: [1.5, -1], br: [1.5, 1], b: [0, 1], bl: [-1.5, 1] }, { tl: [-1.5, -1], tr: [1.5, -1], br: [1.5, 1], b: [0, 1], bl: [-1.5, 1] }, { tl: [-1.5, -1], tr: [1.5, -1], br: [1.5, 1], b: [0, 1], bl: [-1.5, 1] }];
   const TAG6 = { R1: 'R₁ 2', R2: 'R₂ 4', R3: 'R₃ 2', R4: 'R₄ 2', R5: 'R₅ 2', R245: 'R₂₄₅ 8', R2345: 'R₂₃₄₅ 1.6', Req: 'R<sub>eq</sub> 3.6' };
@@ -267,7 +267,7 @@ export function buildWorld(E) {
 
   // ---------- 7 · Kirchhoff's rules ----------
   const X7 = STATIONS.kirch;
-  const g7 = asm('kirch', root, { title: 'Two batteries, two loops', sub: 'junction rule and loop rule' });
+  const g7 = asm('kirch', root, { title: '两个电池，两个回路', sub: '节点定律与回路定律' });
   const KP = { z: [-1.8, -1.05], a: [0, -1.05], tr: [1.8, -1.05], br: [1.8, 1.05], b: [0, 1.05], bl: [-1.8, 1.05] };
   const cK = circuit(g7, { edges: M.KIRCH.edges, at: [X7, 0], pos: KP, K: K_DOT.kirch, IK: K_ARROW.kirch, nodes: ['z', 'a', 'tr', 'br', 'b'],
     arrows: [{ n: 'R1', frac: 0.5, off: [0, -0.42], html: '<i>I</i><sub>1</sub>' }, { n: 'R5', frac: 0.16, off: [0.3, 0], html: '<i>I</i><sub>2</sub>' }, { n: 'R3', frac: 0.5, off: [0, -0.42], html: '<i>I</i><sub>3</sub>' }],
@@ -281,7 +281,7 @@ export function buildWorld(E) {
 
   // ---------- 8 · RC: charge, then discharge ----------
   const X8 = STATIONS.rc;
-  const g8 = asm('rc', root, { title: 'An RC circuit', sub: 'charging, then discharging' });
+  const g8 = asm('rc', root, { title: 'RC 电路', sub: '先充电，再放电' });
   const RCP = { bl: [-1.7, 1.1], sa: [-1.7, -1.1], pv: [-0.75, -1.1], sb: [-0.75, -0.3], ct: [1.7, -1.1], cb: [1.7, 1.1], pm: [-0.75, 1.1] };
   const RCE = M.RC_EDGES.map((e, i) => ({ ...e, n: e.n || 'wr' + i }));
   let rcs = M.rc(0);
