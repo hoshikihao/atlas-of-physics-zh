@@ -58,8 +58,8 @@ const eq = s => `<div class="eq">${s}</div>`;
 export const PRACTICE = {
   0: [
     { q: `轮子从静止开始，以 ${f(W.alpha, 1)} rad/s² 的角加速度加速 ${f(W.tUp, 1)} s。在这段时间内它转了多少圈？`,
-      choices: [`${p3(Q0.th / Math.PI)} rev`, `${p3(Q0.th)} rev`, `${p3(Q0.rev)} rev`, `${p3(Q0.th * 2 * Math.PI)} rev`], answer: 2,
-      why: `<p>从静止开始做匀加速转动：Δθ = ½αt²，单位是弧度。再除以每圈 2π rad。</p>${eq(`Δθ = ½ × ${f(W.alpha, 1)} × ${f(W.tUp, 1)}² = ${f(Q0.th)} rad = ${f(Q0.th)} / 2π = ${p3(Q0.rev)} rev`)}<p>${p3(Q0.th)} rev 忘了 ½αt² 算出的是弧度；${p3(Q0.th / Math.PI)} rev 漏掉了 ½。</p>` },
+      choices: [`${p3(Q0.th / Math.PI)} 圈`, `${p3(Q0.th)} 圈`, `${p3(Q0.rev)} 圈`, `${p3(Q0.th * 2 * Math.PI)} 圈`], answer: 2,
+      why: `<p>从静止开始做匀加速转动：Δθ = ½αt²，单位是弧度。再除以每圈 2π rad。</p>${eq(`Δθ = ½ × ${f(W.alpha, 1)} × ${f(W.tUp, 1)}² = ${f(Q0.th)} rad = ${f(Q0.th)} / 2π = ${p3(Q0.rev)} 圈`)}<p>${p3(Q0.th)} 圈：忘了 ½αt² 算出的是弧度；${p3(Q0.th / Math.PI)} 圈：漏掉了 ½。</p>` },
     { q: '取逆时针为正。轮子沿逆时针方向转动，同时在制动。ω 和 α 的符号是',
       choices: ['ω > 0，α > 0', 'ω < 0，α < 0', 'ω < 0，α > 0', 'ω > 0，α < 0'], answer: 3,
       why: '<p>它沿逆时针转动，所以 ω > 0。它在减速，所以 α 与 ω 反向：α < 0。ω 的符号表示转动方向；α 只表示 ω 往哪个方向变化。</p>' },
