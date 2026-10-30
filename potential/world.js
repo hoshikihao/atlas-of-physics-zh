@@ -71,14 +71,14 @@ export function buildWorld(E) {
   // ================= 1 · a pair of charges =================
   const X0 = STATIONS.pair, Y0 = 0.4, ZL = -1.2, ZU = 1.2, x1 = X0 - 2;
   ground(X0 - 4, X0 + 4, -3, 3);
-  const gPair = asm('pair', root, { title: 'Bringing in a charge', sub: 'work in = energy stored' });
+  const gPair = asm('pair', root, { title: '移入一个电荷', sub: '做的功 = 储存的能量' });
   const q1L = charge(gPair, 1, 0.22, '+4 nC'), q1U = charge(gPair, 1, 0.22, '+4 nC');
   q1L.position.set(x1, Y0, ZL); q1U.position.set(x1, Y0, ZU);
   const q2L = charge(gPair, 1, 0.17, '+2 nC'), q2U = charge(gPair, -1, 0.17, '−2 nC');
   const fL = force(gPair), fU = force(gPair);
   label('vec', '<i>F</i>', () => tip(fL)); label('vec', '<i>F</i>', () => tip(fU));
   label('tick', '+4 nC', () => V(x1 - 0.3, Y0 + 0.32, ZL)); label('tick', '+4 nC', () => V(x1 - 0.3, Y0 + 0.32, ZU));
-  label('board', 'like charges: <i>U</i> &gt; 0', () => V(X0 + 0.6, 0.02, ZL + 0.6)); label('board', 'unlike charges: <i>U</i> &lt; 0', () => V(X0 + 0.6, 0.02, ZU + 0.8));
+  label('board', '同种电荷：<i>U</i> &gt; 0', () => V(X0 + 0.6, 0.02, ZL + 0.6)); label('board', '异种电荷：<i>U</i> &lt; 0', () => V(X0 + 0.6, 0.02, ZU + 0.8));
   lines(root, [x1, 0.02, ZL, X0 + 2.2, 0.02, ZL, x1, 0.02, ZU, X0 + 2.2, 0.02, ZU], '#c4c4c8');
   // breakdown: the path in steps, the force at each
   const stepsP = [0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10];
@@ -91,7 +91,7 @@ export function buildWorld(E) {
   // ================= 2 · four charges on a square =================
   const X1 = STATIONS.square, Y1 = 0.4;
   ground(X1 - 4, X1 + 4, -3, 3);
-  const gSq = asm('square', root, { title: 'Assembling four charges', sub: 'one at a time, from far away' });
+  const gSq = asm('square', root, { title: '组装四个电荷', sub: '从远处一个一个移过来' });
   const sq = [0, 1, 2, 3].map(i => charge(gSq, 1, 0.17, `q${i + 1}`));
   sq.forEach((m, i) => label('tick', `<i>q</i><sub>${i + 1}</sub>`, () => m.visible ? wp(m).add(V(-0.2, 0.35, 0)) : null));
   { const c = M.SQ.corners.map(p => [X1 + p[0] * S, 0.02, p[2] * S]), seg = [];
@@ -116,7 +116,7 @@ export function buildWorld(E) {
   // ================= 3 · a uniform field: A → C =================
   const X2 = STATIONS.uniform, ux = x => X2 - 1 + x * S, uz = z => 2 + z * S;
   ground(X2 - 4, X2 + 4, -3, 3);
-  const gUni = asm('uniform', root, { title: 'A charge crossing a uniform field', sub: 'ΔV = −∫ E · ds' });
+  const gUni = asm('uniform', root, { title: '穿过匀强电场的电荷', sub: 'ΔV = −∫ E · ds' });
   // equipotential sheets every 5 cm, at right angles to E
   for (let k = 0; k <= 4; k++) {
     const x = ux(k * 0.05);
@@ -141,7 +141,7 @@ export function buildWorld(E) {
   // ================= 4 · the potential hill =================
   const X3 = STATIONS.hill, RH = M.HILL.R * S;
   ground(X3 - 5, X3 + 5, -5, 5);
-  const gHill = asm('hill', root, { title: 'The potential of a point charge', sub: 'V drawn as height' });
+  const gHill = asm('hill', root, { title: '点电荷的电势', sub: '把 V 画成高度' });
   gHill.userData.minDist = 14;
   const qHill = charge(gHill, 1, 0.16, '+1 nC'); qHill.position.set(X3, 0.16, 0);
   label('tick', '+1 nC', () => V(X3 - 0.25, 0.5, 0));
@@ -173,7 +173,7 @@ export function buildWorld(E) {
   // ================= 5 · a dipole =================
   const X4 = STATIONS.dipole, DX = M.DIP.X * S, DZ = M.DIP.Z * S;
   ground(X4 - 4, X4 + 4, -3, 3);
-  const gDip = asm('dipole', root, { title: 'A dipole', sub: 'a hill beside a well' });
+  const gDip = asm('dipole', root, { title: '电偶极子', sub: '山丘旁边一个深坑' });
   gDip.userData.minDist = 14;
   const dPlus = charge(gDip, 1, 0.15, '+1 nC'), dMinus = charge(gDip, -1, 0.15, '−1 nC');
   dPlus.position.set(X4 - M.DIP.a * S, 0.0, 0); dMinus.position.set(X4 + M.DIP.a * S, 0.0, 0);
@@ -218,11 +218,11 @@ export function buildWorld(E) {
   // ================= 6 · a charged rod =================
   const X5 = STATIONS.rod, YR = 1.0, L = M.ROD.L * S, xr0 = X5 - L / 2 + 1;
   ground(X5 - 4, X5 + 4, -3, 3);
-  const gRod = asm('rod', root, { title: 'A charged rod', sub: 'λ = Q/L, dq = λ dx' });
+  const gRod = asm('rod', root, { title: '带电细棒', sub: 'λ = Q/L，dq = λ dx' });
   const NSL = 12, slices = [];
   for (let i = 0; i < NSL; i++) { const m = part(gRod, xAxis(cyl(0.09, L / NSL, 24)), { tone: 'hi', name: 'Rod' }); m.position.set(xr0 + (i + 0.5) * L / NSL, YR, 0); slices.push(m); }
   for (let i = 0; i < 5; i++) label('vec red', '+', () => V(xr0 + (i + 0.5) * L / 5, YR + 0.27, 0));
-  label('tick', '+3 nC, 30 cm', () => V(xr0 + L + 1.25, YR - 0.32, 0));
+  label('tick', '+3 nC，30 cm', () => V(xr0 + L + 1.25, YR - 0.32, 0));
   const pAx = dot(gRod, 0.07, 'P'), pBis = dot(gRod, 0.07, 'P′');
   pBis.position.set(xr0 + L / 2, YR + M.ROD.bisA * S, 0);
   label('board', 'P', () => wp(pAx).add(V(-0.15, 0.3, 0))); label('board', 'P′', () => wp(pBis).add(V(0.12, 0.25, 0)));
@@ -232,7 +232,7 @@ export function buildWorld(E) {
   // ================= 7 · ring, arc and disc =================
   const X6 = STATIONS.ring, YC = 1.9, xRing = X6 - 5.5, xArc = X6 - 0.5, xDisc = X6 + 2, RR = M.RING.R * S;
   ground(X6 - 8, X6 + 8, -3, 3);
-  const gRing = asm('ring', root, { title: 'A ring of charge', sub: 'every dq the same distance from P' });
+  const gRing = asm('ring', root, { title: '带电圆环', sub: '每个 dq 到 P 的距离都相同' });
   const NRG = 16, ringSeg = [];
   for (let i = 0; i < NRG; i++) {
     const g = new THREE.TorusGeometry(RR, 0.06, 10, 10, 2 * Math.PI / NRG).rotateZ(2 * Math.PI * i / NRG).rotateY(Math.PI / 2);
@@ -244,7 +244,7 @@ export function buildWorld(E) {
   lines(root, [xRing - 0.3, YC, 0, xRing + 2.7, YC, 0], GREY);
   const ringLines = liveLines(root, NRG, '#8a8a8f');
 
-  const gArc = asm('arc', root, { title: 'An arc of charge', sub: 'V at its centre is kQ/R' });
+  const gArc = asm('arc', root, { title: '带电圆弧', sub: '圆心处 V = kQ/R' });
   const NA = 8;
   for (let i = 0; i < NA; i++) {
     const g = new THREE.TorusGeometry(RR, 0.06, 10, 10, Math.PI / NA).rotateZ(Math.PI / 2 + Math.PI * i / NA);
@@ -255,7 +255,7 @@ export function buildWorld(E) {
   label('board', 'C', () => V(xArc + 0.15, YC + 0.25, 0)); label('tick', '+2 nC', () => V(xArc - RR - 0.15, YC + 0.35, 0));
   const arcLines = liveLines(root, NA, '#8a8a8f');
 
-  const gDisc = asm('disc', root, { title: 'A disc of charge', sub: 'rings of dq = σ·2πr dr' });
+  const gDisc = asm('disc', root, { title: '带电圆盘', sub: '由 dq = σ·2πr dr 的圆环组成' });
   const NDR = 5, discRings = [];
   for (let i = 0; i < NDR; i++) {
     const r0 = RR * i / NDR + (i ? 0.012 : 0), r1 = RR * (i + 1) / NDR - 0.012;
@@ -271,7 +271,7 @@ export function buildWorld(E) {
   const X7 = STATIONS.spheres, YS = 1.3, RS = M.SPH.R * S, xc = X7 - 2.2, xi = X7 + 2.2;
   ground(X7 - 7, X7 + 7, -3, 3);
   const sph = [];
-  for (const [key, x, dirx, title, sub, Vf, Ef] of [['conductor', xc, -1, 'A charged conducting sphere', 'charge on the surface, E = 0 inside', M.Vcond, M.Econd], ['insulator', xi, 1, 'A charged insulating sphere', 'charge spread through the volume', M.Vins, M.Eins]]) {
+  for (const [key, x, dirx, title, sub, Vf, Ef] of [['conductor', xc, -1, '带电导体球', '电荷在表面，内部 E = 0', M.Vcond, M.Econd], ['insulator', xi, 1, '带电绝缘球', '电荷分布在整个体积内', M.Vins, M.Eins]]) {
     const g = asm(key, root, { title, sub });
     part(g, new THREE.SphereGeometry(RS, 48, 32), { tone: 'mid', name: 'Sphere', pos: [x, YS, 0], mat: translucent('paper', 0.42) });
     // tiny + marks: on the surface for the conductor, through the volume for the insulator
@@ -300,7 +300,7 @@ export function buildWorld(E) {
   // ================= 9 · across 6 V: a proton and an electron =================
   const X8 = STATIONS.accel, YA = 2.2, D = M.ACC.d * SC.Sacc, xa0 = X8 - D / 2;
   ground(X8 - 5, X8 + 5, -3, 3);
-  const gAcc = asm('accel', root, { title: 'Proton and electron across 6 V', sub: 'each gains 6 eV' });
+  const gAcc = asm('accel', root, { title: '穿过 6 V 的质子和电子', sub: '各获得 6 eV' });
   for (const [x, v, s] of [[xa0, M.ACC.Vhi, 1], [xa0 + D, M.ACC.Vlo, -1]]) {
     part(root, box(0.14, 4.2, 3.0, 0.03), { tone: 'mid', pal: 'board', pos: [x - s * 0.07, YA, 0], name: 'Plate' });
     label('tick', `${v} V`, () => V(x + 0.35, YA + 2.45, -1.5));
@@ -315,7 +315,7 @@ export function buildWorld(E) {
   const eAcc = [YA + 1.75, YA - 1.75].map(y => { const a = field(root); setArrow(a, V(X8 - M.ACC.E * SC.Eacc / 2, y, 0.9), V(M.ACC.E * SC.Eacc, 0, 0)); return a; });
   label('vec blue', '<b><i>E</i></b>', () => tip(eAcc[0]));
   const prot = charge(gAcc, 1, 0.24, 'Proton'), elec = charge(gAcc, -1, 0.17, 'Electron');
-  label('tick', 'proton', () => wp(prot).add(V(0.1, -0.45, 0))); label('tick', 'electron', () => wp(elec).add(V(0.25, -0.38, 0)));
+  label('tick', '质子', () => wp(prot).add(V(0.1, -0.45, 0))); label('tick', '电子', () => wp(elec).add(V(0.25, -0.38, 0)));
   const fP = force(gAcc), fE = force(gAcc);
   label('vec', '<i>eE</i>', () => tip(fP)); label('vec', '<i>eE</i>', () => tip(fE));
   const accGhosts = [1, 2, 3, 4, 5].flatMap(k => ['p', 'e'].map(w => { const m = part(gAcc, new THREE.SphereGeometry(w === 'p' ? 0.24 : 0.17, 24, 14), { tone: 'lo', name: 'Strobe', mat: ghostMat }); return { m, u: k / 6, w }; }));
