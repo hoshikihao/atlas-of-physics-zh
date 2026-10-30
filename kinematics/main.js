@@ -20,7 +20,7 @@ startBook({
       { cls: 'vec', html: 'v<sub>x</sub>', at: () => W.anchors.vx() },
       { cls: 'vec', html: 'v<sub>y</sub>', at: () => W.anchors.vy() },
       ...[0, 1, 2, 3, 4, 5].map(q => ({ cls: 'tick', html: q ? `${q} m` : '0', at: () => W.anchors.staff(q) })),
-      ...[['boardX', 'position <i>y</i> (m)'], ['boardV', 'velocity <i>v</i> (m/s)'], ['boardA', 'acceleration <i>a</i> (m/s²)']].flatMap(([k, t]) => [
+      ...[['boardX', '位置 <i>y</i> (m)'], ['boardV', '速度 <i>v</i> (m/s)'], ['boardA', '加速度 <i>a</i> (m/s²)']].flatMap(([k, t]) => [
         { cls: 'board', html: t, at: () => W.anchors.board(k, 'title') },
         { cls: 'axis', html: '<i>t</i> (s)', at: () => W.anchors.board(k, 'axis') },
       ]),
@@ -44,8 +44,8 @@ startBook({
   },
   readout(s, page) {
     switch (page.scene) {
-      case 'rain': return `car ${f(M.RAIN.vc)} m/s   rain ${f(M.RAIN.vr)} m/s down\nfrom the car: ${f(M.vlen(M.V_RC))} m/s, ${f(M.RAIN_ANGLE, 1)}° from vertical`;
-      case 'river': { const t = s.river.t, [ax] = M.boatPos(0, t), [, by] = M.boatPos(M.AIM_UP, t); return `t ${f(Math.min(t, M.RIVER_RUN), 1)} s\nstraight: drift ${f(ax, 1)} m   upstream: across ${f(by, 1)} m`; }
+      case 'rain': return `车 ${f(M.RAIN.vc)} m/s   雨 ${f(M.RAIN.vr)} m/s 向下\n车里看：${f(M.vlen(M.V_RC))} m/s，偏离竖直 ${f(M.RAIN_ANGLE, 1)}°`;
+      case 'river': { const t = s.river.t, [ax] = M.boatPos(0, t), [, by] = M.boatPos(M.AIM_UP, t); return `t ${f(Math.min(t, M.RIVER_RUN), 1)} s\n正对：漂移 ${f(ax, 1)} m   偏上游：渡过 ${f(by, 1)} m`; }
       case 'pull': { const t = s.pull.t; return `t ${f(t)} s   x ${f(M.px(t)).padStart(5)} m\nv ${f(M.pv(t)).padStart(5)} m/s   a ${f(M.pa(t))} m/s²`; }
       case 'cube': { const t = s.cube.t; return `t ${f(t)} s   x ${f(M.cx(t)).padStart(5)} m\nv ${f(M.cv(t)).padStart(5)} m/s   a ${f(M.ca(t)).padStart(5)} m/s²`; }
     }
@@ -59,8 +59,8 @@ startBook({
     const live = document.getElementById('live-sign');
     if (live) {
       const v = M.vy(t);
-      live.textContent = resting ? 'now: resting on the ground between throws' : Math.abs(v) < 0.05 ? 'now: at the top, v = 0, a = −9.80 m/s²'
-        : v > 0 ? `now: v = +${v.toFixed(2)}, a = −9.80 → opposite signs → slowing down` : `now: v = −${(-v).toFixed(2)}, a = −9.80 → same signs → speeding up`;
+      live.textContent = resting ? '此刻：两次抛出之间，静止在地面上' : Math.abs(v) < 0.05 ? '此刻：位于最高点，v = 0，a = −9.80 m/s²'
+        : v > 0 ? `此刻：v = +${v.toFixed(2)}，a = −9.80 → 异号 → 减速` : `此刻：v = −${(-v).toFixed(2)}，a = −9.80 → 同号 → 加速`;
     }
     // live chart pieces: cursors, areas from 0 to now, tangents at now
     const cursor = (key, R, x, y) => q(`circle[data-cursor="${key}"]`).forEach(c => { c.setAttribute('cx', KC.sx(x, R)); c.setAttribute('cy', KC.sy(y, R)); });

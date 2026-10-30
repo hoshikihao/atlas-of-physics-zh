@@ -40,157 +40,157 @@ const CUR = k => `<circle class="cursor" r="4.5" data-cursor="${k}"/>`;
 
 export const PAGES = [
   {
-    kicker: 'Chapter 1', title: 'Kinematics', sub: 'the description of motion',
+    kicker: '第 1 章', title: '运动学', sub: '对运动的描述',
     body: `
-      <p class="lede">Kinematics describes motion with three quantities: where something is, how fast it is moving, and how that is changing. It doesn’t ask why.</p>
-      <p>Everything in this chapter comes from one ball, thrown straight up at ${f(M.VY0)} m/s. Once it leaves the hand, the only thing acting on it is gravity, so it is in <b>free fall</b>. That is true going up as well as coming down.</p>
-      <p>It rises for ${f(M.T / 2)} s, stops ${f(M.H)} m up, and lands ${f(M.T)} s after launch. The figure runs at half speed.</p>`,
+      <p class="lede">运动学用三个量描述运动：物体在哪里，运动得多快，以及这种快慢怎样变化。它不问为什么。</p>
+      <p>本章的一切都来自一个以 ${f(M.VY0)} m/s 竖直上抛的小球。离手之后，作用在它上面的只有重力，所以它处于<b>自由落体</b>状态。上升时如此，下落时也如此。</p>
+      <p>它上升 ${f(M.T / 2)} s，在 ${f(M.H)} m 高处停住，抛出后 ${f(M.T)} s 落地。图中以半速播放。</p>`,
     cam: { target: [-1.0, 2.7, 0], az: 22, el: 7, dist: 21 }, lit: 'ball', look: { strobe: 1, level: 1 },
-    fig: 'A ball thrown straight up',
+    fig: '竖直上抛的小球',
   },
   {
-    kicker: '1.1', title: 'Position', sub: 'displacement and distance',
+    kicker: '1.1', title: '位置', sub: '位移与路程',
     body: `
-      <p class="lede"><b>Position</b> <i>y</i> is where the ball is, measured from an origin. Here the origin is the launch point, and up is positive.</p>
-      <p><b>Displacement</b> Δ<i>y</i> = <i>y</i><sub>f</sub> − <i>y</i><sub>0</sub> is the net change in position. It is a vector: it has a size and a direction (the black arrow beside the axis).</p>
-      <p><b>Distance</b> is the total length of the path. It is a scalar and never negative.</p>
+      <p class="lede"><b>位置</b> <i>y</i> 表示小球在哪里，从原点量起。这里以抛出点为原点，向上为正。</p>
+      <p><b>位移</b> Δ<i>y</i> = <i>y</i><sub>f</sub> − <i>y</i><sub>0</sub> 是位置的净变化。它是矢量：既有大小，也有方向（坐标轴旁的黑色箭头）。</p>
+      <p><b>路程</b>是运动轨迹的总长度。它是标量，永远不为负。</p>
       <table class="data">
-        <tr><th></th><th>displacement</th><th>distance</th></tr>
-        <tr><td>launch → top</td><td>+${f(M.H)} m</td><td>${f(M.H)} m</td></tr>
-        <tr><td>launch → landing</td><td>0.00 m</td><td>${f(2 * M.H)} m</td></tr>
+        <tr><th></th><th>位移</th><th>路程</th></tr>
+        <tr><td>抛出 → 最高点</td><td>+${f(M.H)} m</td><td>${f(M.H)} m</td></tr>
+        <tr><td>抛出 → 落地</td><td>0.00 m</td><td>${f(2 * M.H)} m</td></tr>
       </table>`,
     cam: { target: [-0.3, 2.9, 0], az: -16, el: 6, dist: 15 }, lit: 'staff', look: { disp: 1 },
-    fig: 'The position axis',
+    fig: '位置坐标轴',
   },
   {
-    kicker: '1.2', title: 'Velocity', sub: 'and speed, which is not the same',
+    kicker: '1.2', title: '速度', sub: '速率与它并不相同',
     body: `
-      <p class="lede"><b>Velocity</b> <i>v</i> = Δ<i>y</i>/Δ<i>t</i> is how fast position changes, with a direction. <b>Speed</b> is its size, with no direction.</p>
-      <p>The arrow is the velocity. It starts at +${f(M.VY0)} m/s, shrinks to zero at the top, then grows pointing down until −${f(M.VY0)} m/s at landing. The speeds at launch and landing are the same; the velocities are not.</p>
-      <p>The same split applies to averages over the whole flight:</p>
+      <p class="lede"><b>速度</b> <i>v</i> = Δ<i>y</i>/Δ<i>t</i> 表示位置变化的快慢，带有方向。<b>速率</b>是速度的大小，没有方向。</p>
+      <p>箭头就是速度。它从 +${f(M.VY0)} m/s 开始，到最高点缩为零，然后指向下方逐渐变长，落地时为 −${f(M.VY0)} m/s。抛出和落地时速率相同，速度却不同。</p>
+      <p>对整段飞行取平均，也有同样的区别：</p>
       <table class="data">
-        <tr><td>average velocity</td><td>Δ<i>y</i>/Δ<i>t</i> = 0 / ${f(M.T)} = 0 m/s</td></tr>
-        <tr><td>average speed</td><td>distance/Δ<i>t</i> = ${f(2 * M.H)} / ${f(M.T)} = ${f(2 * M.H / M.T)} m/s</td></tr>
+        <tr><td>平均速度</td><td>Δ<i>y</i>/Δ<i>t</i> = 0 / ${f(M.T)} = 0 m/s</td></tr>
+        <tr><td>平均速率</td><td>路程/Δ<i>t</i> = ${f(2 * M.H)} / ${f(M.T)} = ${f(2 * M.H / M.T)} m/s</td></tr>
       </table>`,
     cam: { target: [0.1, 3.0, 0.2], az: 24, el: 8, dist: 18 }, lit: 'vArrow', look: {},
-    fig: 'Velocity',
+    fig: '速度',
   },
   {
-    kicker: '1.3', title: 'Acceleration', sub: 'the rate the velocity changes',
+    kicker: '1.3', title: '加速度', sub: '速度变化的快慢',
     body: `
-      <p class="lede"><b>Acceleration</b> <i>a</i> = Δ<i>v</i>/Δ<i>t</i>. For this ball it is −${f(M.G)} m/s² the whole time: going up, at the top, and coming down. The red arrow never changes.</p>
-      <p>The faint balls are a strobe photograph, one every ${f(tau, 1)} s. Going up, the gaps shrink by <i>g</i>τ² = ${f(M.G * tau * tau)} m each time. Coming down, the images land on exactly the same heights.</p>
-      <p><b>Speeding up or slowing down?</b> Compare signs. When <i>v</i> and <i>a</i> have opposite signs the ball slows (going up). When they have the same sign it speeds up (coming down). Both are acceleration. There is no separate “deceleration”.</p>
+      <p class="lede"><b>加速度</b> <i>a</i> = Δ<i>v</i>/Δ<i>t</i>。这个小球的加速度始终是 −${f(M.G)} m/s²：上升时、在最高点、下落时都一样。红色箭头从不改变。</p>
+      <p>浅色的球是频闪照片，每 ${f(tau, 1)} s 一张。上升时，相邻间距每次缩短 <i>g</i>τ² = ${f(M.G * tau * tau)} m。下落时，各张像恰好落在同样的高度上。</p>
+      <p><b>加速还是减速？</b>比较正负号。<i>v</i> 与 <i>a</i> 异号时小球减速（上升）；同号时加速（下落）。两者都是加速度，并没有另外一个“减速度”。</p>
       <p class="live" id="live-sign"></p>`,
     cam: { target: [0.1, 2.75, 0], az: -6, el: 5, dist: 15.5 }, lit: 'aArrow', look: { strobe: 1 },
-    fig: 'Strobe, every ' + tau.toFixed(1) + ' s',
+    fig: '频闪，每 ' + tau.toFixed(1) + ' s 一张',
   },
   {
-    kicker: '1.4', title: 'Motion graphs', sub: 'slopes and areas',
+    kicker: '1.4', title: '运动图像', sub: '斜率与面积',
     body: `
-      <p class="lede">The three graphs plot the same flight. The position graph is drawn to scale: its heights are the ball’s real heights.</p>
+      <p class="lede">三幅图像画的是同一段飞行。位置图像按实际比例绘制：图中的高度就是小球真实的高度。</p>
       <ul class="rules">
-        <li>slope of <i>x</i>–<i>t</i> = velocity</li>
-        <li>slope of <i>v</i>–<i>t</i> = acceleration</li>
-        <li>area under <i>v</i>–<i>t</i> = displacement</li>
-        <li>area under <i>a</i>–<i>t</i> = change in velocity</li>
+        <li><i>x</i>–<i>t</i> 图像的斜率 = 速度</li>
+        <li><i>v</i>–<i>t</i> 图像的斜率 = 加速度</li>
+        <li><i>v</i>–<i>t</i> 图线下的面积 = 位移</li>
+        <li><i>a</i>–<i>t</i> 图线下的面积 = 速度的变化量</li>
       </ul>
-      <p>Constant acceleration gives a flat <i>a</i>–<i>t</i> line, a straight <i>v</i>–<i>t</i> line and a parabola for <i>x</i>–<i>t</i>. Each graph is one “power” lower than the one above it.</p>
-      <p class="hintline">Click a graph to see its slope and area.</p>`,
+      <p>加速度恒定时，<i>a</i>–<i>t</i> 图线是水平直线，<i>v</i>–<i>t</i> 图线是倾斜直线，<i>x</i>–<i>t</i> 图线是抛物线。每幅图都比上面一幅低一“次”。</p>
+      <p class="hintline">点击一幅图像，查看它的斜率和面积。</p>`,
     cam: { target: [-7.6, 3.0, -1.0], az: 0, el: 3, dist: 40 }, lit: 'boardX', look: { level: 1 },
-    fig: 'Position, velocity and acceleration against time',
+    fig: '位置、速度、加速度随时间变化的图像',
   },
   {
-    kicker: '1.5', title: 'The kinematic equations', sub: 'for constant acceleration only',
+    kicker: '1.5', title: '匀变速直线运动公式', sub: '只适用于恒定加速度',
     body: `
-      <p class="lede">Five quantities describe this motion: Δ<i>y</i>, <i>v</i><sub>0</sub>, <i>v</i>, <i>a</i>, <i>t</i>. Each equation leaves one out, so pick the one without the quantity you don’t know and don’t need.</p>
+      <p class="lede">描述这种运动的有五个量：Δ<i>y</i>、<i>v</i><sub>0</sub>、<i>v</i>、<i>a</i>、<i>t</i>。每个公式都缺其中一个，所以挑那个不含“既不知道、也不需要”的量的公式。</p>
       <table class="data eqs">
-        <tr><th>equation</th><th>leaves out</th></tr>
+        <tr><th>公式</th><th>不含</th></tr>
         <tr><td><i>v</i> = <i>v</i><sub>0</sub> + <i>at</i></td><td>Δ<i>y</i></td></tr>
         <tr><td>Δ<i>y</i> = <i>v</i><sub>0</sub><i>t</i> + ½<i>at</i>²</td><td><i>v</i></td></tr>
         <tr><td><i>v</i>² = <i>v</i><sub>0</sub>² + 2<i>a</i>Δ<i>y</i></td><td><i>t</i></td></tr>
         <tr><td>Δ<i>y</i> = ½(<i>v</i><sub>0</sub> + <i>v</i>)<i>t</i></td><td><i>a</i></td></tr>
         <tr><td>Δ<i>y</i> = <i>vt</i> − ½<i>at</i>²</td><td><i>v</i><sub>0</sub></td></tr>
       </table>
-      <p>How high does it go? At the top <i>v</i> = 0, and <i>t</i> isn’t needed: 0 = ${f(M.VY0)}² + 2(−${f(M.G)})Δ<i>y</i>, so Δ<i>y</i> = ${f(M.H)} m.</p>`,
+      <p>它能升多高？在最高点 <i>v</i> = 0，且不需要 <i>t</i>：0 = ${f(M.VY0)}² + 2(−${f(M.G)})Δ<i>y</i>，所以 Δ<i>y</i> = ${f(M.H)} m。</p>`,
     cam: { target: [-3.2, 3.1, -0.4], az: 20, el: 15, dist: 34 }, lit: 'ball', look: { level: 1 },
-    fig: 'One flight, five quantities',
+    fig: '一次飞行，五个量',
   },
   {
-    kicker: '1.6', title: 'Projectile motion', sub: 'two motions at once',
+    kicker: '1.6', title: '抛体运动', sub: '两个运动同时进行',
     body: `
-      <p class="lede">A second ball is thrown at the same time with the same upward ${f(M.VY0)} m/s, plus ${f(M.VX)} m/s sideways.</p>
-      <p>It stays level with the first ball the whole way and lands at the same moment. The vertical motion is free fall, and the sideways speed doesn’t change it. Its shadow on the floor moves in equal ${f(M.VX * tau)} m steps: the horizontal motion is uniform.</p>
+      <p class="lede">同一时刻抛出第二个球，竖直向上的速度同样是 ${f(M.VY0)} m/s，另外还有 ${f(M.VX)} m/s 的水平速度。</p>
+      <p>它一路都和第一个球保持同一高度，并在同一时刻落地。竖直方向的运动是自由落体，水平速度不会改变它。它在地面上的影子以相等的 ${f(M.VX * tau)} m 步长移动：水平方向是匀速运动。</p>
       <table class="data cols">
-        <tr><th>horizontal · uniform</th><th>vertical · free fall</th></tr>
-        <tr><td><i>v</i><sub>x</sub> = ${f(M.VX)} m/s</td><td><i>v</i><sub>0</sub> = ${f(M.VY0)} m/s, <i>v</i> = −${f(M.VY0)} m/s</td></tr>
-        <tr><td>Δ<i>x</i> = <i>v</i><sub>x</sub><i>t</i> = ${f(M.RANGE, 1)} m</td><td><i>a</i> = −${f(M.G)} m/s², Δ<i>y</i> = 0</td></tr>
+        <tr><th>水平 · 匀速</th><th>竖直 · 自由落体</th></tr>
+        <tr><td><i>v</i><sub>x</sub> = ${f(M.VX)} m/s</td><td><i>v</i><sub>0</sub> = ${f(M.VY0)} m/s，<i>v</i> = −${f(M.VY0)} m/s</td></tr>
+        <tr><td>Δ<i>x</i> = <i>v</i><sub>x</sub><i>t</i> = ${f(M.RANGE, 1)} m</td><td><i>a</i> = −${f(M.G)} m/s²，Δ<i>y</i> = 0</td></tr>
         <tr><td><i>t</i> = ${f(M.T)} s</td><td><i>t</i> = ${f(M.T)} s</td></tr>
       </table>
-      <p>At the top only the vertical part <i>v</i><sub>y</sub> is zero. The ball still moves sideways at ${f(M.VX)} m/s.</p>`,
+      <p>在最高点，只有竖直分量 <i>v</i><sub>y</sub> 为零。小球仍以 ${f(M.VX)} m/s 水平运动。</p>`,
     cam: { target: [4.6, 2.7, 0.6], az: -16, el: 13, dist: 33 }, lit: 'projV', look: { proj: 1, comp: 1 },
-    fig: 'Same height, every instant',
+    fig: '每一时刻都等高',
   },
   {
-    kicker: '1.7', title: 'Reference frames', sub: 'velocity depends on who is looking',
+    kicker: '1.7', title: '参考系', sub: '速度取决于由谁来观察',
     body: `
-      <p class="lede">Every velocity is measured relative to something. Rain falls ${f(M.RAIN.vr, 1)} m/s straight down relative to the road; from a car doing ${f(M.RAIN.vc, 1)} m/s it slants at ${f(M.vlen(M.V_RC))} m/s.</p>
-      <p>Write <i>v</i><sub>AB</sub> for “A relative to B” (R rain, C car, G ground). Velocities chain, inner letters matching:</p>
+      <p class="lede">每个速度都是相对于某个物体测得的。雨滴相对路面以 ${f(M.RAIN.vr, 1)} m/s 竖直下落；在以 ${f(M.RAIN.vc, 1)} m/s 行驶的车里看，雨滴以 ${f(M.vlen(M.V_RC))} m/s 斜着落下。</p>
+      <p>用 <i>v</i><sub>AB</sub> 表示“A 相对于 B 的速度”（R 雨，C 车，G 地面）。速度可以串联，中间的字母要对上：</p>
       <div class="eq"><i>v</i><sub>AC</sub> = <i>v</i><sub>AB</sub> + <i>v</i><sub>BC</sub></div>
-      <p>So <i>v</i><sub>RC</sub> = <i>v</i><sub>RG</sub> + <i>v</i><sub>GC</sub>, added tip to tail. Swapping letters flips the arrow: from the car the road moves backward, <i>v</i><sub>GC</sub> = −<i>v</i><sub>CG</sub>. The two parts are at right angles, so |<i>v</i><sub>RC</sub>| = √(${f(M.RAIN.vc, 1)}² + ${f(M.RAIN.vr, 1)}²) = ${f(M.vlen(M.V_RC))} m/s, at tan θ = ${f(M.RAIN.vc, 1)}/${f(M.RAIN.vr, 1)}, θ = ${f(M.RAIN_ANGLE, 1)}° from vertical. Faster car, more slant:</p>
-      <div class="charts">${kchart(KR.rain, { xlabel: 'car speed (m/s)', ylabel: 'slant θ from vertical (°)', label: 'The rain’s slant, seen from the car, against the car’s speed',
+      <p>所以 <i>v</i><sub>RC</sub> = <i>v</i><sub>RG</sub> + <i>v</i><sub>GC</sub>，按首尾相接相加。交换两个字母，箭头就反向：在车里看，路面向后运动，<i>v</i><sub>GC</sub> = −<i>v</i><sub>CG</sub>。两个分量互相垂直，所以 |<i>v</i><sub>RC</sub>| = √(${f(M.RAIN.vc, 1)}² + ${f(M.RAIN.vr, 1)}²) = ${f(M.vlen(M.V_RC))} m/s，tan θ = ${f(M.RAIN.vc, 1)}/${f(M.RAIN.vr, 1)}，θ = ${f(M.RAIN_ANGLE, 1)}°（偏离竖直方向）。车开得越快，雨斜得越厉害：</p>
+      <div class="charts">${kchart(KR.rain, { xlabel: '车速 (m/s)', ylabel: '偏离竖直方向的角度 θ (°)', label: '车里看到的雨滴倾斜角随车速的变化',
         series: [{ pts: samples(60, 0, 30, M.rainAngleAt) }], marks: [[M.RAIN.vc, M.RAIN_ANGLE, `${f(M.RAIN_ANGLE, 1)}°`, 8, 16]] })}</div>
-      <p class="hintline">Drawn 1:1. Arrows ${(RAIN_V * 100).toFixed(0)} cm per m/s. ¼ speed. Click the triangle for the angle.</p>`,
+      <p class="hintline">按 1:1 绘制。箭头每 1 m/s 长 ${(RAIN_V * 100).toFixed(0)} cm。¼ 速播放。点击三角形查看角度。</p>`,
     cam: { target: [ST.rain + 11, 2.3, 0], az: -8, el: 10, dist: 60 }, lit: 'rainSum', look: {}, scene: 'rain',
-    fig: 'The same rain, two frames',
+    fig: '同一场雨，两个参考系',
   },
   {
-    kicker: '1.8', title: 'Crossing a river', sub: 'two velocities, added tip to tail',
+    kicker: '1.8', title: '小船渡河', sub: '两个速度首尾相接相加',
     body: `
-      <p class="lede">A boat’s velocity relative to the shore is its velocity through the water plus the water’s velocity relative to the shore:</p>
+      <p class="lede">小船相对河岸的速度，等于它相对水的速度加上水相对河岸的速度：</p>
       <div class="eq"><i>v</i><sub>BS</sub> = <i>v</i><sub>BW</sub> + <i>v</i><sub>WS</sub></div>
-      <p>Both boats do ${f(M.RIVER.vb, 1)} m/s through water flowing at ${f(M.RIVER.vw, 1)} m/s, across ${M.RIVER.w} m.</p>
+      <p>两条船在水中的速度都是 ${f(M.RIVER.vb, 1)} m/s，水流速度 ${f(M.RIVER.vw, 1)} m/s，河宽 ${M.RIVER.w} m。</p>
       <table class="data">
-        <tr><th>m/s, s, m</th><th>aimed straight across</th><th>aimed ${deg(M.AIM_UP)}° upstream</th></tr>
-        <tr><td>speed</td><td>√(${f(M.RIVER.vb, 1)}² + ${f(M.RIVER.vw, 1)}²) = ${f(M.vlen(M.vBS(0)))}</td><td>√(${f(M.RIVER.vb, 1)}² − ${f(M.RIVER.vw, 1)}²) = ${f(M.vlen(M.vBS(M.AIM_UP)))}</td></tr>
-        <tr><td>time</td><td>${M.RIVER.w}/${f(M.RIVER.vb, 1)} = ${f(M.crossTime(0), 1)} s</td><td>${M.RIVER.w}/${f(M.vBS(M.AIM_UP)[1], 1)} = ${f(M.crossTime(M.AIM_UP), 1)} s</td></tr>
-        <tr><td>drift</td><td>${f(M.RIVER.vw, 1)} × ${f(M.crossTime(0), 1)} = ${f(M.drift(0), 1)} m</td><td>0 m</td></tr>
+        <tr><th>m/s, s, m</th><th>船头正对对岸</th><th>船头偏向上游 ${deg(M.AIM_UP)}°</th></tr>
+        <tr><td>速率</td><td>√(${f(M.RIVER.vb, 1)}² + ${f(M.RIVER.vw, 1)}²) = ${f(M.vlen(M.vBS(0)))}</td><td>√(${f(M.RIVER.vb, 1)}² − ${f(M.RIVER.vw, 1)}²) = ${f(M.vlen(M.vBS(M.AIM_UP)))}</td></tr>
+        <tr><td>时间</td><td>${M.RIVER.w}/${f(M.RIVER.vb, 1)} = ${f(M.crossTime(0), 1)} s</td><td>${M.RIVER.w}/${f(M.vBS(M.AIM_UP)[1], 1)} = ${f(M.crossTime(M.AIM_UP), 1)} s</td></tr>
+        <tr><td>漂移</td><td>${f(M.RIVER.vw, 1)} × ${f(M.crossTime(0), 1)} = ${f(M.drift(0), 1)} m</td><td>0 m</td></tr>
       </table>
-      <p>Only the across part gets a boat over, so straight across is fastest; the current just carries it downstream. To land opposite, turn upstream until sin θ = ${f(M.RIVER.vw, 1)}/${f(M.RIVER.vb, 1)}.</p>
-      <div class="charts">${kchart(KR.map, { xlabel: 'downstream (m)', ylabel: 'across (m)', label: 'Both boats’ paths seen from above',
-        live: CUR('boatA') + CUR('boatB'), series: [{ pts: [[0, 0], [M.drift(0), M.RIVER.w]], tag: [8.6, 12.5, 'straight across'] }, { pts: [[0, 0], [0, M.RIVER.w]], tag: [0.3, 3, 'upstream'] }] })}</div>
-      <p class="hintline">Drawn 1 m = ${(RIV.s * 100).toFixed(0)} cm. Arrows ${(RIV.v * 100).toFixed(0)} cm per m/s. Shown at ${M.RIVER.rate}× speed.</p>`,
+      <p>只有垂直河岸的分量能把船送到对岸，所以船头正对对岸时渡河最快；水流只是把船带向下游。要在正对岸靠岸，就让船头偏向上游，直到 sin θ = ${f(M.RIVER.vw, 1)}/${f(M.RIVER.vb, 1)}。</p>
+      <div class="charts">${kchart(KR.map, { xlabel: '顺流方向 (m)', ylabel: '垂直河岸 (m)', label: '俯视两条船的路径',
+        live: CUR('boatA') + CUR('boatB'), series: [{ pts: [[0, 0], [M.drift(0), M.RIVER.w]], tag: [8.6, 12.5, '正对对岸'] }, { pts: [[0, 0], [0, M.RIVER.w]], tag: [0.3, 3, '偏向上游'] }] })}</div>
+      <p class="hintline">1 m 画成 ${(RIV.s * 100).toFixed(0)} cm。箭头每 1 m/s 长 ${(RIV.v * 100).toFixed(0)} cm。以 ${M.RIVER.rate}× 速度播放。</p>`,
     cam: { target: [ST.river - 1.7, 0, 0.3], az: -4, el: 44, dist: 40 }, lit: 'boatA', look: {}, scene: 'river',
-    fig: 'Pointed one way, carried another',
+    fig: '船头朝一个方向，船却走向另一个方向',
   },
   {
-    kicker: '1.9 · AP Physics C', title: 'Calculus kinematics', sub: 'when the acceleration changes',
+    kicker: '1.9 · AP 物理 C', title: '用微积分描述运动', sub: '加速度变化时',
     body: `
-      <p class="lede">The equations of 1.5 need constant <i>a</i>. This car’s <i>a</i> = ${f(M.PULL.a0, 1)} − ${f(M.PULL.k, 1)}<i>t</i> m/s² fades to zero at <i>t</i><sub>1</sub> = ${f(M.T1)} s, so integrate instead. It starts from rest at the line: <i>v</i><sub>0</sub> = 0, <i>x</i><sub>0</sub> = 0.</p>
+      <p class="lede">1.5 节的公式要求 <i>a</i> 恒定。这辆车的 <i>a</i> = ${f(M.PULL.a0, 1)} − ${f(M.PULL.k, 1)}<i>t</i> m/s²，在 <i>t</i><sub>1</sub> = ${f(M.T1)} s 时减为零，所以要改用积分。它从起跑线由静止出发：<i>v</i><sub>0</sub> = 0，<i>x</i><sub>0</sub> = 0。</p>
       <div class="eq"><i>v</i> = <i>v</i><sub>0</sub> + ∫<i>a</i> d<i>t</i> = ${f(M.PULL.a0, 1)}<i>t</i> − ${f(M.PULL.k / 2)}<i>t</i>² &nbsp;→ ${f(M.V1, 1)} m/s</div>
       <div class="eq"><i>x</i> = <i>x</i><sub>0</sub> + ∫<i>v</i> d<i>t</i> = ${f(M.PULL.a0 / 2, 1)}<i>t</i>² − ${f(M.PULL.k / 6)}<i>t</i>³ &nbsp;→ ${f(M.X1, 1)} m</div>
       <div class="charts">
-        ${kchart(KR.pa, { xlabel: 't (s)', ylabel: 'a (m/s²) · area = Δv', label: 'Acceleration against time, area shaded', live: AREA('pa') + CUR('pa'), series: [{ pts: samples(100, 0, 5, M.pa) }] })}
-        ${kchart(KR.pv, { xlabel: 't (s)', ylabel: 'v (m/s) · area = Δx, slope = a', label: 'Velocity against time, area shaded', live: AREA('pv') + TAN('pv') + CUR('pv'), series: [{ pts: samples(100, 0, 5, M.pv) }] })}
-        ${kchart(KR.px, { xlabel: 't (s)', ylabel: 'x (m) · slope = v', label: 'Position against time with its tangent', live: TAN('px') + CUR('px'), series: [{ pts: samples(100, 0, 5, M.px) }] })}
+        ${kchart(KR.pa, { xlabel: 't (s)', ylabel: 'a (m/s²) · 面积 = Δv', label: '加速度随时间变化，面积已着色', live: AREA('pa') + CUR('pa'), series: [{ pts: samples(100, 0, 5, M.pa) }] })}
+        ${kchart(KR.pv, { xlabel: 't (s)', ylabel: 'v (m/s) · 面积 = Δx，斜率 = a', label: '速度随时间变化，面积已着色', live: AREA('pv') + TAN('pv') + CUR('pv'), series: [{ pts: samples(100, 0, 5, M.pv) }] })}
+        ${kchart(KR.px, { xlabel: 't (s)', ylabel: 'x (m) · 斜率 = v', label: '位置随时间变化及其切线', live: TAN('px') + CUR('px'), series: [{ pts: samples(100, 0, 5, M.px) }] })}
       </div>
-      <p class="hintline">Shaded = integrals, red = derivatives. 1 m drawn as ${(PULLS.s * 100).toFixed(0)} cm.</p>`,
+      <p class="hintline">着色 = 积分，红线 = 导数。1 m 画成 ${(PULLS.s * 100).toFixed(0)} cm。</p>`,
     cam: { target: [ST.pull + 4.4, 0.3, 0], az: -8, el: 24, dist: 22 }, lit: 'pull', look: {}, scene: 'pull',
     fig: 'a = ' + M.PULL.a0.toFixed(1) + ' − ' + M.PULL.k.toFixed(1) + 't',
   },
   {
-    kicker: '1.10 · AP Physics C', title: 'Motion from x(t)', sub: 'differentiate down, integrate up',
+    kicker: '1.10 · AP 物理 C', title: '由 x(t) 求运动', sub: '向下求导，向上积分',
     body: `
-      <p class="lede">Given <i>x</i>(<i>t</i>), differentiate. For <i>x</i> = <i>t</i>³ − 3<i>t</i>:</p>
+      <p class="lede">已知 <i>x</i>(<i>t</i>)，就求导。对 <i>x</i> = <i>t</i>³ − 3<i>t</i>：</p>
       <div class="eq"><i>v</i> = 3<i>t</i>² − 3 &nbsp;&nbsp; <i>a</i> = 6<i>t</i></div>
-      <p>It starts left at ${f(-M.cv(0))} m/s and turns at <i>t</i> = ${f(M.T_TURN)} s, <i>x</i> = ${f(M.cx(M.T_TURN))} m. Over 2 s: displacement ${f(M.cx(2))} m, distance ${f(M.cdist(2))} m.</p>
-      <p><b>Going back up</b> needs initial conditions: from <i>a</i> = 6<i>t</i>, <i>v</i> = 3<i>t</i>² + <i>C</i><sub>1</sub> and <i>x</i> = <i>t</i>³ + <i>C</i><sub>1</sub><i>t</i> + <i>C</i><sub>2</sub>; <i>v</i>(0) = −3 and <i>x</i>(0) = 0 give <i>C</i><sub>1</sub> = −3, <i>C</i><sub>2</sub> = 0.</p>
+      <p>它开始时以 ${f(-M.cv(0))} m/s 向左运动，在 <i>t</i> = ${f(M.T_TURN)} s、<i>x</i> = ${f(M.cx(M.T_TURN))} m 处掉头。2 s 内：位移 ${f(M.cx(2))} m，路程 ${f(M.cdist(2))} m。</p>
+      <p><b>反过来积分</b>需要初始条件：由 <i>a</i> = 6<i>t</i> 得 <i>v</i> = 3<i>t</i>² + <i>C</i><sub>1</sub>，<i>x</i> = <i>t</i>³ + <i>C</i><sub>1</sub><i>t</i> + <i>C</i><sub>2</sub>；由 <i>v</i>(0) = −3 和 <i>x</i>(0) = 0 得 <i>C</i><sub>1</sub> = −3，<i>C</i><sub>2</sub> = 0。</p>
       <div class="charts">
-        ${kchart(KR.cx, { xlabel: 't (s)', ylabel: 'x (m) · slope = v', label: 'Position against time', live: TAN('cx') + CUR('cx'), series: [{ pts: samples(100, 0, 2, M.cx) }] })}
-        ${kchart(KR.cv, { xlabel: 't (s)', ylabel: 'v (m/s) · area = Δx', label: 'Velocity against time, signed area shaded', live: AREA('cv') + CUR('cv'), series: [{ pts: samples(100, 0, 2, M.cv) }] })}
-        ${kchart(KR.ca, { xlabel: 't (s)', ylabel: 'a (m/s²) · area = Δv', label: 'Acceleration against time, area shaded', live: AREA('ca') + CUR('ca'), series: [{ pts: samples(100, 0, 2, M.ca) }] })}
+        ${kchart(KR.cx, { xlabel: 't (s)', ylabel: 'x (m) · 斜率 = v', label: '位置随时间变化', live: TAN('cx') + CUR('cx'), series: [{ pts: samples(100, 0, 2, M.cx) }] })}
+        ${kchart(KR.cv, { xlabel: 't (s)', ylabel: 'v (m/s) · 面积 = Δx', label: '速度随时间变化，带正负号的面积已着色', live: AREA('cv') + CUR('cv'), series: [{ pts: samples(100, 0, 2, M.cv) }] })}
+        ${kchart(KR.ca, { xlabel: 't (s)', ylabel: 'a (m/s²) · 面积 = Δv', label: '加速度随时间变化，面积已着色', live: AREA('ca') + CUR('ca'), series: [{ pts: samples(100, 0, 2, M.ca) }] })}
       </div>
-      <p class="hintline">Every 0.2 s; the trip back is drawn in front.</p>`,
+      <p class="hintline">每 0.2 s 一个位置；返程画在前面。</p>`,
     cam: { target: [ST.cube + 0.25, 0.25, 0], az: -6, el: 28, dist: 19.5 }, lit: 'bead', look: {}, scene: 'cube',
     fig: 'x = t³ − 3t',
   },
@@ -199,49 +199,49 @@ export const PAGES = [
 // ---------- click a concept: what it breaks into ----------
 const sign = v => v > 1e-9 ? '+' : v < -1e-9 ? '−' : '';
 export const PLATES = {
-  ball: { text: `A ball in free fall. Nothing pushes it up after launch; it rises only because it is still moving up, and gravity changes that velocity by ${M.G.toFixed(2)} m/s every second.`,
-    facts: t => [['time', `${t.toFixed(2)} s`], ['position y', `${M.y(t).toFixed(2)} m`], ['velocity v', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['acceleration a', `−${M.G.toFixed(2)} m/s²`]] },
-  staff: { text: `The vertical line is the position axis. Its zero is the launch point. The short mark rides at the ball’s height; the black arrow is the displacement from zero, and it returns to nothing when the ball lands, though the ball has travelled ${(2 * M.H).toFixed(2)} m.`,
-    facts: t => [['position y', `${M.y(t).toFixed(2)} m`], ['displacement', `${sign(M.y(t))}${Math.abs(M.y(t)).toFixed(2)} m`], ['distance so far', `${M.distance(t).toFixed(2)} m`]] },
-  vArrow: { text: `The arrow’s length is the speed and its direction is the sign of the velocity. It is drawn at a fixed scale, so twice as fast is twice as long.`,
-    facts: t => [['velocity', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['speed', `${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['direction', M.vy(t) > 1e-9 ? 'up' : M.vy(t) < -1e-9 ? 'down' : 'none, for an instant']] },
-  aArrow: { text: `The acceleration is the same at every instant, so this arrow never changes. Whether the ball speeds up or slows down depends on how the velocity’s sign compares with it.`,
-    facts: t => [['acceleration', `−${M.G.toFixed(2)} m/s²`], ['velocity', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['so the ball is', M.vy(t) > 1e-9 ? 'slowing down' : M.vy(t) < -1e-9 ? 'speeding up' : 'at the top']] },
-  boardX: { text: `The red line is the tangent at this instant. Its slope (rise over run) is the velocity: steep at launch, flat at the top, steep the other way at landing.`,
-    facts: t => [['slope = v', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`]] },
-  boardV: { text: `A straight line, so the slope (the acceleration) is constant. The shaded area between the line and zero is the displacement so far. Area below zero counts as negative, so by landing the two halves cancel.`,
-    facts: t => [['slope = a', `−${M.G.toFixed(2)} m/s²`], ['area = Δy', `${sign(M.areaUnderV(t))}${Math.abs(M.areaUnderV(t)).toFixed(2)} m`]] },
-  boardA: { text: `A flat line: constant acceleration. The shaded area is the change in velocity so far, a·t.`,
-    facts: t => [['area = Δv', `${t > 0 ? '−' : ''}${(M.G * t).toFixed(2)} m/s`], ['v = v₀ + Δv', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`]] },
-  proj: { text: `Two independent motions at once: uniform sideways, free fall up and down. Each one is a one-dimensional problem with its own equations. They share only the time.`,
-    facts: t => [['x', `${M.x(t).toFixed(2)} m`], ['y', `${M.y(t).toFixed(2)} m`], ['time', `${t.toFixed(2)} s`]] },
-  projV: { text: `The velocity arrow breaks into a horizontal part that never changes and a vertical part that behaves exactly like the first ball’s velocity. Add them tip to tail and you get the arrow back.`,
-    facts: t => [['vₓ', `${M.VX.toFixed(2)} m/s`], ['v_y', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['speed √(vₓ² + v_y²)', `${Math.hypot(M.VX, M.vy(t)).toFixed(2)} m/s`]] },
-  shadow: { text: `Light from straight above flattens the motion onto the floor. What is left is the horizontal motion: equal steps in equal times, because nothing acts sideways.`,
-    facts: t => [['Δx so far', `${M.x(t).toFixed(2)} m`], ['step per ' + M.STROBE.toFixed(1) + ' s', `${(M.VX * M.STROBE).toFixed(2)} m`]] },
-  rainRoad: { text: `From the road, each drop falls straight down at ${M.RAIN.vr.toFixed(1)} m/s and the car drives under it at ${M.RAIN.vc.toFixed(1)} m/s. Nothing here is slanted.`,
-    facts: () => [['car, v_CG', `${M.RAIN.vc.toFixed(2)} m/s forward`], ['rain, v_RG', `${M.RAIN.vr.toFixed(2)} m/s down`], ['a drop’s path', 'vertical']] },
-  rainCar: { text: `From the car, the car is at rest. The road streams backward at ${M.RAIN.vc.toFixed(1)} m/s, and every drop keeps its downward motion while also moving backward with the road, so its streak slants.`,
-    facts: () => [['rain, v_RC', `${M.vlen(M.V_RC).toFixed(2)} m/s`], ['slant from vertical', `${M.RAIN_ANGLE.toFixed(1)}°`], ['road, v_GC', `${M.RAIN.vc.toFixed(2)} m/s backward`], ['car', '0 m/s']] },
-  rainSum: { text: `Tip to tail: start with the rain’s velocity over the ground, then add the ground’s velocity relative to the car. The arrow from the first tail to the last tip is the rain seen from the car.`,
-    facts: () => [['forward part', `${M.V_RC[0].toFixed(2).replace('-', '−')} m/s`], ['up part', `${M.V_RC[1].toFixed(2).replace('-', '−')} m/s`], ['|v_RC|', `${M.vlen(M.V_RC).toFixed(2)} m/s`], ['tan θ = 10.0 / 7.0', `θ = ${M.RAIN_ANGLE.toFixed(1)}°`]] },
-  river: { text: `The water moves at ${M.RIVER.vw.toFixed(1)} m/s relative to the shore. Anything floating, like these leaves or a boat, is carried along at that speed on top of its own motion through the water.`,
-    facts: (t, s) => [['current, v_WS', `${M.RIVER.vw.toFixed(2)} m/s downstream`], ['width', `${M.RIVER.w} m`], ['time', `${s.river.t.toFixed(1)} s`]] },
-  boatA: { text: `Pointed straight across, it reaches the far side in w/v_b = ${M.crossTime(0).toFixed(1)} s, the fastest possible, but the current carries it ${M.drift(0).toFixed(1)} m downstream. The boat points one way and moves another.`,
+  ball: { text: `做自由落体运动的小球。抛出后没有任何东西推它向上；它上升只是因为它仍在向上运动，而重力让它的速度每秒改变 ${M.G.toFixed(2)} m/s。`,
+    facts: t => [['时间', `${t.toFixed(2)} s`], ['位置 y', `${M.y(t).toFixed(2)} m`], ['速度 v', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['加速度 a', `−${M.G.toFixed(2)} m/s²`]] },
+  staff: { text: `这条竖线是位置坐标轴，零点在抛出点。短标记随小球的高度移动；黑色箭头是从零点起的位移。小球落地时位移回到零，尽管小球已经走过了 ${(2 * M.H).toFixed(2)} m。`,
+    facts: t => [['位置 y', `${M.y(t).toFixed(2)} m`], ['位移', `${sign(M.y(t))}${Math.abs(M.y(t)).toFixed(2)} m`], ['已走路程', `${M.distance(t).toFixed(2)} m`]] },
+  vArrow: { text: `箭头的长度表示速率，方向表示速度的正负。它按固定比例绘制，所以速度加倍，箭头也加长一倍。`,
+    facts: t => [['速度', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['速率', `${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['方向', M.vy(t) > 1e-9 ? '向上' : M.vy(t) < -1e-9 ? '向下' : '无，仅此一瞬']] },
+  aArrow: { text: `每一时刻的加速度都相同，所以这个箭头从不改变。小球是加速还是减速，取决于速度的正负号与它是否相同。`,
+    facts: t => [['加速度', `−${M.G.toFixed(2)} m/s²`], ['速度', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['所以小球正在', M.vy(t) > 1e-9 ? '减速' : M.vy(t) < -1e-9 ? '加速' : '位于最高点']] },
+  boardX: { text: `红线是这一时刻的切线。它的斜率（纵向变化除以横向变化）就是速度：抛出时陡，最高点处平，落地时朝另一方向陡。`,
+    facts: t => [['斜率 = v', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`]] },
+  boardV: { text: `一条直线，所以斜率（加速度）恒定。直线与零线之间的着色面积就是到目前为止的位移。零线以下的面积记为负，所以到落地时两半互相抵消。`,
+    facts: t => [['斜率 = a', `−${M.G.toFixed(2)} m/s²`], ['面积 = Δy', `${sign(M.areaUnderV(t))}${Math.abs(M.areaUnderV(t)).toFixed(2)} m`]] },
+  boardA: { text: `一条水平线：加速度恒定。着色面积是到目前为止速度的变化量 a·t。`,
+    facts: t => [['面积 = Δv', `${t > 0 ? '−' : ''}${(M.G * t).toFixed(2)} m/s`], ['v = v₀ + Δv', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`]] },
+  proj: { text: `两个相互独立的运动同时进行：水平方向匀速，竖直方向自由落体。每一个都是一维问题，有各自的公式。它们只共用时间。`,
+    facts: t => [['x', `${M.x(t).toFixed(2)} m`], ['y', `${M.y(t).toFixed(2)} m`], ['时间', `${t.toFixed(2)} s`]] },
+  projV: { text: `速度箭头可以分解为一个始终不变的水平分量，和一个与第一个球的速度完全相同的竖直分量。把两者首尾相接相加，就得回原来的箭头。`,
+    facts: t => [['vₓ', `${M.VX.toFixed(2)} m/s`], ['v_y', `${sign(M.vy(t))}${Math.abs(M.vy(t)).toFixed(2)} m/s`], ['速率 √(vₓ² + v_y²)', `${Math.hypot(M.VX, M.vy(t)).toFixed(2)} m/s`]] },
+  shadow: { text: `从正上方照下的光把运动压扁到地面上，剩下的就是水平方向的运动：相等时间内走相等的距离，因为水平方向不受力。`,
+    facts: t => [['已走 Δx', `${M.x(t).toFixed(2)} m`], ['每 ' + M.STROBE.toFixed(1) + ' s 的步长', `${(M.VX * M.STROBE).toFixed(2)} m`]] },
+  rainRoad: { text: `在路面上看，每个雨滴以 ${M.RAIN.vr.toFixed(1)} m/s 竖直下落，汽车以 ${M.RAIN.vc.toFixed(1)} m/s 从雨下驶过。这里没有任何东西是斜的。`,
+    facts: () => [['车，v_CG', `${M.RAIN.vc.toFixed(2)} m/s，向前`], ['雨，v_RG', `${M.RAIN.vr.toFixed(2)} m/s，向下`], ['雨滴的轨迹', '竖直']] },
+  rainCar: { text: `在车里看，车是静止的。路面以 ${M.RAIN.vc.toFixed(1)} m/s 向后流过，每个雨滴在保持向下运动的同时，还随路面一起向后运动，所以雨痕是斜的。`,
+    facts: () => [['雨，v_RC', `${M.vlen(M.V_RC).toFixed(2)} m/s`], ['偏离竖直方向', `${M.RAIN_ANGLE.toFixed(1)}°`], ['路面，v_GC', `${M.RAIN.vc.toFixed(2)} m/s，向后`], ['车', '0 m/s']] },
+  rainSum: { text: `首尾相接：先画雨相对地面的速度，再加上地面相对车的速度。从第一个箭尾指向最后一个箭头的箭头，就是车里看到的雨。`,
+    facts: () => [['向前分量', `${M.V_RC[0].toFixed(2).replace('-', '−')} m/s`], ['向上分量', `${M.V_RC[1].toFixed(2).replace('-', '−')} m/s`], ['|v_RC|', `${M.vlen(M.V_RC).toFixed(2)} m/s`], ['tan θ = 10.0 / 7.0', `θ = ${M.RAIN_ANGLE.toFixed(1)}°`]] },
+  river: { text: `水相对河岸以 ${M.RIVER.vw.toFixed(1)} m/s 流动。漂在水上的任何东西，比如这些树叶或一条船，除了自身在水中的运动之外，还会以这个速度被水带着走。`,
+    facts: (t, s) => [['水流，v_WS', `${M.RIVER.vw.toFixed(2)} m/s，顺流`], ['河宽', `${M.RIVER.w} m`], ['时间', `${s.river.t.toFixed(1)} s`]] },
+  boatA: { text: `船头正对对岸，经 w/v_b = ${M.crossTime(0).toFixed(1)} s 到达对岸，这是最快的渡河方式，但水流把它向下游带了 ${M.drift(0).toFixed(1)} m。船头朝一个方向，船却走向另一个方向。`,
     facts: (t, s) => boatFacts(0, s.river.t) },
-  boatB: { text: `Turned ${deg(M.AIM_UP)}° upstream, its upstream part (${M.RIVER.vb.toFixed(1)} sin θ = ${M.RIVER.vw.toFixed(1)} m/s) cancels the current. It lands straight across, but only ${M.vBS(M.AIM_UP)[1].toFixed(1)} m/s is left to cross with, so it takes ${M.crossTime(M.AIM_UP).toFixed(1)} s.`,
+  boatB: { text: `船头偏向上游 ${deg(M.AIM_UP)}°，它沿上游方向的分量（${M.RIVER.vb.toFixed(1)} sin θ = ${M.RIVER.vw.toFixed(1)} m/s）抵消了水流。它在正对岸靠岸，但只剩 ${M.vBS(M.AIM_UP)[1].toFixed(1)} m/s 用来渡河，所以要用 ${M.crossTime(M.AIM_UP).toFixed(1)} s。`,
     facts: (t, s) => boatFacts(M.AIM_UP, s.river.t) },
-  pull: { text: `Its acceleration is not constant, so the kinematic equations of 1.5 don’t apply. Its velocity is the area under a–t so far, and its position the area under v–t. Gaps between the outlines keep growing, but by less each time, until they are equal once a = 0.`,
-    facts: (t, s) => { const u = s.pull.t; return [['time', `${u.toFixed(2)} s`], ['x = ∫v dt', `${M.px(u).toFixed(2)} m`], ['v = ∫a dt', `${M.pv(u).toFixed(2)} m/s`], ['a', `${M.pa(u).toFixed(2)} m/s²`]]; } },
-  pullA: { text: `a = ${M.PULL.a0.toFixed(1)} − ${M.PULL.k.toFixed(1)}t: the slope of the v–t graph, falling steadily to zero at t₁ = ${M.T1.toFixed(2)} s. Its rate of change, da/dt = −${M.PULL.k.toFixed(1)} m/s³, is called the jerk.`,
-    facts: (t, s) => { const u = s.pull.t; return [['a = dv/dt', `${M.pa(u).toFixed(2)} m/s²`], ['da/dt', u < M.T1 ? `−${M.PULL.k.toFixed(2)} m/s³` : '0'], ['area so far = v', `${M.pv(u).toFixed(2)} m/s`]]; } },
-  bead: { text: `x = t³ − 3t. Differentiate once for the velocity, twice for the acceleration. At the turn, v = 0 but a = ${M.ca(M.T_TURN).toFixed(1)} m/s²: zero velocity does not mean zero acceleration.`,
-    facts: (t, s) => { const u = s.cube.t, v = M.cv(u), a = M.ca(u); return [['time', `${u.toFixed(2)} s`], ['x', `${f(M.cx(u))} m`], ['v = 3t² − 3', `${f(v)} m/s`], ['a = 6t', `${f(a)} m/s²`], ['so it is', Math.abs(v) < 0.02 ? 'turning around' : v * a > 0 ? 'speeding up' : a === 0 ? 'a = 0, for an instant' : 'slowing down']]; } },
-  cubeLine: { text: `The black arrow is the displacement from the start. The particle goes 2 m left and then 4 m right: the displacement at 2 s is +2 m, but the distance travelled is 6 m.`,
-    facts: (t, s) => { const u = s.cube.t; return [['position x', `${f(M.cx(u))} m`], ['displacement', `${f(M.cx(u))} m`], ['distance so far', `${M.cdist(u).toFixed(2)} m`]]; } },
+  pull: { text: `它的加速度不恒定，所以 1.5 节的匀变速直线运动公式不适用。它的速度是到目前为止 a–t 图线下的面积，位置是 v–t 图线下的面积。相邻轮廓之间的间距不断增大，但增量越来越小，直到 a = 0 后间距相等。`,
+    facts: (t, s) => { const u = s.pull.t; return [['时间', `${u.toFixed(2)} s`], ['x = ∫v dt', `${M.px(u).toFixed(2)} m`], ['v = ∫a dt', `${M.pv(u).toFixed(2)} m/s`], ['a', `${M.pa(u).toFixed(2)} m/s²`]]; } },
+  pullA: { text: `a = ${M.PULL.a0.toFixed(1)} − ${M.PULL.k.toFixed(1)}t：v–t 图像的斜率，均匀减小，在 t₁ = ${M.T1.toFixed(2)} s 时减为零。它的变化率 da/dt = −${M.PULL.k.toFixed(1)} m/s³ 叫作加加速度（急动度）。`,
+    facts: (t, s) => { const u = s.pull.t; return [['a = dv/dt', `${M.pa(u).toFixed(2)} m/s²`], ['da/dt', u < M.T1 ? `−${M.PULL.k.toFixed(2)} m/s³` : '0'], ['目前面积 = v', `${M.pv(u).toFixed(2)} m/s`]]; } },
+  bead: { text: `x = t³ − 3t。求一次导得到速度，求两次导得到加速度。掉头时 v = 0，但 a = ${M.ca(M.T_TURN).toFixed(1)} m/s²：速度为零并不意味着加速度为零。`,
+    facts: (t, s) => { const u = s.cube.t, v = M.cv(u), a = M.ca(u); return [['时间', `${u.toFixed(2)} s`], ['x', `${f(M.cx(u))} m`], ['v = 3t² − 3', `${f(v)} m/s`], ['a = 6t', `${f(a)} m/s²`], ['所以它正在', Math.abs(v) < 0.02 ? '掉头' : v * a > 0 ? '加速' : a === 0 ? 'a = 0，仅此一瞬' : '减速']]; } },
+  cubeLine: { text: `黑色箭头是从起点算起的位移。质点先向左走 2 m，再向右走 4 m：2 s 时位移是 +2 m，但走过的路程是 6 m。`,
+    facts: (t, s) => { const u = s.cube.t; return [['位置 x', `${f(M.cx(u))} m`], ['位移', `${f(M.cx(u))} m`], ['已走路程', `${M.cdist(u).toFixed(2)} m`]]; } },
 };
 function boatFacts(phi, t) {
   const tt = Math.min(t, M.crossTime(phi)), [dx, dy] = M.boatPos(phi, t);
-  return [['time', `${tt.toFixed(1)} s`], ['across', `${dy.toFixed(1)} of ${M.RIVER.w} m`], ['downstream', `${Math.abs(dx) < 0.05 ? '0.0' : dx.toFixed(1)} m`], ['speed |v_BS|', `${M.vlen(M.vBS(phi)).toFixed(2)} m/s`], ['lands', `${M.crossTime(phi).toFixed(1)} s, ${Math.abs(M.drift(phi)) < 0.05 ? '0.0' : M.drift(phi).toFixed(1)} m down`]];
+  return [['时间', `${tt.toFixed(1)} s`], ['垂直河岸', `${dy.toFixed(1)} / ${M.RIVER.w} m`], ['顺流', `${Math.abs(dx) < 0.05 ? '0.0' : dx.toFixed(1)} m`], ['速率 |v_BS|', `${M.vlen(M.vBS(phi)).toFixed(2)} m/s`], ['靠岸', `${M.crossTime(phi).toFixed(1)} s，向下游 ${Math.abs(M.drift(phi)) < 0.05 ? '0.0' : M.drift(phi).toFixed(1)} m`]];
 }
 
