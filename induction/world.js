@@ -193,7 +193,7 @@ export function buildWorld(E) {
   // ======================================================================================
   // 0 · a bar magnet slides toward a loop and back: flux and Faraday's law
   const X0 = STATIONS.flux, D0 = DRAW.flux, CY0 = 1.7, c0 = V(X0, CY0, 0), A0 = M.FLUX.a * D0;
-  const g0 = asm('flux', root, { title: 'Flux through the loop', sub: 'Φ = ∫B·dA, summed over little patches dA' });
+  const g0 = asm('flux', root, { title: '穿过线圈的磁通量', sub: 'Φ = ∫B·dA，在小块 dA 上求和' });
   ring(g0, c0, A0, 0.024, 'Wire loop');
   const mag0 = magnet(g0, D0, true);
   const lineMat0 = shadeMat('dark', { opacity: 0.6 });
@@ -220,13 +220,13 @@ export function buildWorld(E) {
   const X1 = STATIONS.lenz, D1 = DRAW.lenz, A1 = M.LENZ.a * D1;
   const LZ = M.CASES.map((c, i) => {
     const o = V(X1 + (i % 2 ? 0.9 : -3.3), i < 2 ? 3.15 : 1.05, 0);
-    const g = asm(c.key, root, { title: c.name, sub: c.move === 'in' ? 'more flux: the loop’s field pushes back' : 'less flux: the loop’s field tries to keep it' });
+    const g = asm(c.key, root, { title: `${c.pole} 极${c.move === 'in' ? '靠近' : '离开'}`, sub: c.move === 'in' ? '磁通量增多：线圈的磁场把磁体推回' : '磁通量减少：线圈的磁场试图留住它' });
     ring(g, o, A1, 0.022, 'Wire loop');
     const mg = magnet(g, D1, c.pole === 'N');
     magnetLines(mg, D1, c.pole === 'N', { thetas: [22, 48, 80, 118], phis: [0, 180], box: 0.16, mat: shadeMat('dark', { opacity: 0.8 }), r: 0.01 });
     const B = bArrow(g, 0.018, 'Magnet’s field at the loop'), ind = dashArrow(g), cur = ringArrows(g);
     const v = arrow(g, 'ink', { r: 0.014, head: 0.09, headR: 0.042, name: 'Velocity' });
-    label('board', c.name, () => o.clone().add(V(-0.75, 0.82, 0)));
+    label('board', `${c.pole} 极${c.move === 'in' ? '靠近' : '离开'}`, () => o.clone().add(V(-0.75, 0.82, 0)));
     label('vec', grey('<i>B</i>'), () => tipOf(B, 0.14));
     label('vec', grey('<i>B</i><sub>ind</sub>'), () => ind.tip(-0.22));
     g.userData.focus = () => ({ target: [o.x + 1.0, o.y, 0], radius: 1.7 });
@@ -243,7 +243,7 @@ export function buildWorld(E) {
   // 2a · two coils on one axis: a changing current in one induces a current in the other
   const X2 = STATIONS.mutual, D2 = DRAW.mutual, A2 = M.COILS.a * D2, y2 = 2.95;
   const c21 = V(X2 - M.COILS.sep * D2 / 2, y2, 0), c22 = V(X2 + M.COILS.sep * D2 / 2, y2, 0);
-  const gC = asm('mutual', root, { title: 'Two coils', sub: 'coil 1’s changing field threads coil 2' });
+  const gC = asm('mutual', root, { title: '两个线圈', sub: '线圈 1 变化的磁场穿过线圈 2' });
   ring(gC, c21, A2, 0.06, 'Coil 1 (100 turns, driven)');
   ring(gC, c22, A2, 0.06, 'Coil 2 (100 turns)');
   const lineMatC = shadeMat('dark', { opacity: 0.8 });
@@ -256,15 +256,15 @@ export function buildWorld(E) {
   label('vec', grey('<i>B</i><sub>1</sub>'), () => tipOf(B1C, 0.14));
   label('vec', grey('<i>B</i><sub>ind</sub>'), () => indC.tip(-0.22));
   gC.userData.focus = () => ({ target: [X2, y2, 0], radius: 1.25 });
-  label('tick', 'coil 1', () => c21.clone().add(V(-0.1, -A2 - 0.32, 0)));
-  label('tick', 'coil 2', () => c22.clone().add(V(0.5, -A2 - 0.32, 0)));
+  label('tick', '线圈 1', () => c21.clone().add(V(-0.1, -A2 - 0.32, 0)));
+  label('tick', '线圈 2', () => c22.clone().add(V(0.5, -A2 - 0.32, 0)));
   const discC = part(gC, (() => { const d = new THREE.CircleGeometry(A2 - 0.05, 48); d.rotateY(Math.PI / 2); return d; })(), { tone: 'lo', name: 'Coil 2’s area', mat: flatMat('board', 0.55), pos: c22.toArray() });
   discC.userData.noEdge = true;
   label('tick', 'Φ<sub>2</sub> = <i>MI</i><sub>1</sub>/<i>N</i><sub>2</sub>', when(gC, () => c22.clone().add(V(0.9, A2 + 0.3, 0))));
 
   // 2b · two windings on an iron rod
   const DC = DRAW.core, yC = 0.95, RC = M.CORE.r * DC, LC = M.CORE.len * DC;
-  const gK = asm('core', root, { title: 'An iron core', sub: 'the iron carries the flux from one winding to the other' });
+  const gK = asm('core', root, { title: '铁芯', sub: '铁芯把磁通量从一个绕组引到另一个绕组' });
   part(gK, xAxis(new THREE.CylinderGeometry(RC, RC, LC, 40)), { tone: 'hi', pal: 'dark', pos: [X2, yC, 0], name: 'Iron core', mat: shadeMat('dark', { opacity: 0.55 }) });
   const prim = new THREE.Group(); gK.add(prim);
   helix(prim, V(X2 + 0.3, yC, 0), V(X2 + 1.3, yC, 0), RC + 0.04, 10, 0.022, 'Primary (200 turns)');
@@ -278,13 +278,13 @@ export function buildWorld(E) {
   gK.userData.focus = () => ({ target: [X2, yC + 0.25, 0], radius: 1.45 });
   label('vec', '<i>I</i>(<i>t</i>)', () => tipOf(I1K, 0.14));
   label('vec', '<i>I</i><sub>ind</sub>', () => tipOf(I2K, 0.14));
-  label('tick', 'iron', () => V(X2 - 0.05, yC - RC - 0.25, 0.2));
-  label('tick', 'Φ = <i>BA</i> through every turn', when(gK, () => V(X2 - 0.2, yC + RC + 0.45, 0)));
+  label('tick', '铁芯', () => V(X2 - 0.05, yC - RC - 0.25, 0.2));
+  label('tick', 'Φ = <i>BA</i> 穿过每一匝', when(gK, () => V(X2 - 0.2, yC + RC + 0.45, 0)));
 
   // ======================================================================================
   // 3 · a rectangular loop moving away from a long straight wire
   const X3 = STATIONS.wire, D3 = DRAW.wire, yW = 3.7, b3 = M.WIRE.b * D3, a3 = M.WIRE.a * D3;
-  const g3 = asm('wire', root, { title: 'A loop leaving a wire', sub: 'Φ = ∫B b dr, with B falling as 1/r' });
+  const g3 = asm('wire', root, { title: '远离导线的线圈', sub: 'Φ = ∫B b dr，B 按 1/r 减小' });
   rod(g3, V(X3 - 3.1, yW, 0), V(X3 + 2.4, yW, 0), 0.035, 'ink', 'Long straight wire (50 A)');
   const Iw = iArrow(g3, 'Long straight wire (50 A)'); setArrow(Iw, V(X3 - 3.05, yW + 0.15, 0), V(0.6, 0, 0));
   label('vec', '<i>I</i> = 50 A', () => V(X3 - 2.75, yW + 0.45, 0));
@@ -313,7 +313,7 @@ export function buildWorld(E) {
   // ======================================================================================
   // 4 · a metal bar moving through a field: the charges separate
   const X4 = STATIONS.bar, D4 = DRAW.bar, yB = 1.75, L4 = M.BAR.L * D4;
-  const g4 = asm('bar', root, { title: 'A moving metal bar', sub: 'qv×B pushes charge until qE balances it' });
+  const g4 = asm('bar', root, { title: '运动的金属棒', sub: 'qv×B 推动电荷，直到与 qE 平衡' });
   { const mk = []; for (let i = 0; i < 8; i++) for (let j = 0; j < 6; j++) mk.push({ p: V(X4 - 1.75 + i * 0.5, 0.5 + j * 0.5, -0.1), r: 0.08 }); bMarkers(g4, mk); }
   label('vec', grey('<i>B</i>'), () => V(X4 - 2.2, 3.05, 0));
   const bar4 = new THREE.Group(); g4.add(bar4);
@@ -334,7 +334,7 @@ export function buildWorld(E) {
   // ======================================================================================
   // 5 · a loop crossing a field region
   const X5 = STATIONS.crossing, D5 = DRAW.crossing, xR0 = X5 - M.CROSS.W * D5 / 2, w5 = M.CROSS.w * D5, h5 = M.CROSS.h * D5, y5 = 1.75;
-  const g5 = asm('crossing', root, { title: 'A loop crossing a field', sub: 'each side in the field carries BLv' });
+  const g5 = asm('crossing', root, { title: '穿过磁场的线圈', sub: '场中的每条边都有 BLv' });
   { const mk = []; for (let i = 0; i < 5; i++) for (let j = 0; j < 4; j++) mk.push({ p: V(xR0 + 0.2 + i * 0.5, y5 - 0.75 + j * 0.5, -0.06), r: 0.08 }); bMarkers(g5, mk);
     const x1 = xR0 + M.CROSS.W * D5, yb = y5 - 0.95, yt = y5 + 0.95; lines(g5, [xR0, yb, -0.06, x1, yb, -0.06, x1, yb, -0.06, x1, yt, -0.06, x1, yt, -0.06, xR0, yt, -0.06, xR0, yt, -0.06, xR0, yb, -0.06], '#a6a6ac'); }
   label('vec', grey('<i>B</i>'), () => V(xR0 + 0.05, y5 + 1.18, 0));
@@ -352,7 +352,7 @@ export function buildWorld(E) {
   // ======================================================================================
   // 6 · a bar sliding on rails, closed by a resistor
   const X6 = STATIONS.rails, D6 = DRAW.rails, xL6 = X6 - 2.2, yb6 = 1.15, yt6 = yb6 + M.RAIL.L * D6, xEnd6 = xL6 + M.RAIL.len * D6;
-  const g6 = asm('rails', root, { title: 'A bar on rails', sub: 'the current through the bar brakes it' });
+  const g6 = asm('rails', root, { title: '导轨上的导体棒', sub: '流过棒的电流使它减速' });
   { const mk = []; for (let i = 0; i < 9; i++) for (const y of [0.75, 1.55, 2.0, 2.75]) mk.push({ p: V(X6 - 1.95 + i * 0.5, y + (y === 1.55 || y === 2.0 ? 0.0 : 0), -0.08), r: 0.08 }); bMarkers(g6, mk); }
   label('vec', grey('<i>B</i>'), () => V(X6 - 2.6, 2.95, 0));
   rod(g6, V(xL6, yb6, 0), V(xEnd6, yb6, 0), 0.03, 'dark', 'Rails'); rod(g6, V(xL6, yt6, 0), V(xEnd6, yt6, 0), 0.03, 'dark', 'Rails');
@@ -376,7 +376,7 @@ export function buildWorld(E) {
   // ======================================================================================
   // 7 · a solenoid: inductance and back emf
   const X7 = STATIONS.solenoid, D7 = DRAW.solenoid, y7 = 1.75, R7 = M.SOL.r * D7, L7 = M.SOL.len * D7;
-  const g7 = asm('solenoid', root, { title: 'Flux through each turn', sub: 'NΦ = LI' });
+  const g7 = asm('solenoid', root, { title: '每一匝的磁通量', sub: 'NΦ = LI' });
   helix(g7, V(X7 - L7 / 2, y7, 0), V(X7 + L7 / 2, y7, 0), R7, 25, 0.018, 'Solenoid (400 turns)');
   const hi7 = y7 + R7 + 0.45;
   path(g7, [V(X7 - L7 / 2, y7 + R7, 0), V(X7 - L7 / 2, hi7, 0), V(X7 - L7 / 2 - 0.8, hi7, 0)], 0.022, 'ink', 'Leads');
@@ -394,12 +394,12 @@ export function buildWorld(E) {
   disc7.userData.noEdge = true;
   const dA7 = [[0, 0], ...[0, 1, 2, 3, 4, 5].map(i => [0.2 * Math.cos(i * Math.PI / 3), 0.2 * Math.sin(i * Math.PI / 3)])].map(([y, z]) => ({ y, z, a: bArrow(g7, 0.013, 'B·dA through one turn') }));
   g7.userData.focus = () => ({ target: [X7, y7 + 0.2, 0], radius: 1.7 });
-  label('tick', 'Φ = <i>BA</i> per turn', when(g7, () => V(X7 + 0.95, y7 - R7 - 0.35, 0)));
+  label('tick', '每匝 Φ = <i>BA</i>', when(g7, () => V(X7 + 0.95, y7 - R7 - 0.35, 0)));
 
   // ======================================================================================
   // 8 · an RL circuit: growth and decay
   const X8 = STATIONS.rl, yb8 = 0.5, yt8 = 2.7, xR8 = X8 + 1.5, xB8 = X8 - 1.9, xS8 = X8 - 1.45, P8 = V(X8 - 0.85, yt8, 0), cA = V(xS8, yt8 + 0.38, 0), cB = V(xS8, yt8 - 0.38, 0);
-  const g8 = asm('rl', root, { title: 'Around the RL loop', sub: 'ε − IR − L dI/dt = 0' });
+  const g8 = asm('rl', root, { title: '绕 RL 回路一周', sub: 'ε − IR − L dI/dt = 0' });
   // bottom, right (with the inductor), top (with the resistor)
   path(g8, [V(xB8, yb8, 0), V(xR8, yb8, 0), V(xR8, 1.05, 0), V(xR8 + 0.19, 1.05, 0)]);
   helix(g8, V(xR8, 1.05, 0), V(xR8, 2.15, 0), 0.19, 9, 0.024, 'Inductor (2 H)');
@@ -420,12 +420,12 @@ export function buildWorld(E) {
   label('board', 'ε = 12 V', () => V(xB8 - 0.95, 1.5, 0));
   label('board', '<i>R</i> = 4 Ω', () => V(X8 + 0.0, yt8 + 0.4, 0));
   label('board', '<i>L</i> = 2 H', () => V(xR8 + 0.32, 1.6, 0));
-  label('board', '', () => V(X8 - 1.2, yt8 + 0.75, 0), () => S.rl ? (S.rl.growing ? 'switch to the battery: growth' : 'battery out of the loop: decay') : '');
+  label('board', '', () => V(X8 - 1.2, yt8 + 0.75, 0), () => S.rl ? (S.rl.growing ? '开关接电池：增长' : '电池移出回路：衰减') : '');
   // breakdown: each ΔV around the loop, live
   label('tick', '', when(g8, () => V(xB8 - 0.25, 1.2, 0)), () => S.rl ? `+${fmt(S.rl.emfBat, 1)} V` : '');
   label('tick', '', when(g8, () => V(X8 + 0.65, yt8 - 0.35, 0)), () => S.rl ? `−<i>IR</i> = −${fmt(S.rl.VR, 1)} V` : '');
   label('board', '', when(g8, () => V(xR8 + 0.32, 1.25, 0)), () => S.rl ? `−<i>L dI</i>/<i>dt</i> = ${fmt(-S.rl.VL, 1)} V` : '');
-  label('board', '', when(g8, () => V(X8 - 1.2, yb8 - 0.3, 0)), () => S.rl ? `sum: ${fmt(S.rl.emfBat, 1)} − ${fmt(S.rl.VR, 1)} − (${fmt(S.rl.VL, 1)}) = 0` : '');
+  label('board', '', when(g8, () => V(X8 - 1.2, yb8 - 0.3, 0)), () => S.rl ? `总和：${fmt(S.rl.emfBat, 1)} − ${fmt(S.rl.VR, 1)} − (${fmt(S.rl.VL, 1)}) = 0` : '');
 
   // ======================================================================================
   // 9 · an LC circuit: the charge sloshes between the plates through the coil
@@ -437,7 +437,7 @@ export function buildWorld(E) {
   const I9 = [0, 1, 2].map(() => iArrow(wires9, 'Current'));
   label('vec', '<i>I</i>', () => tipOf(I9[0], 0.14));
   // the capacitor: two plates, the top one holding q
-  const g9 = asm('lcCap', root, { title: 'The capacitor', sub: 'U_E = q²/2C, in the field between the plates' });
+  const g9 = asm('lcCap', root, { title: '电容器', sub: 'U_E = q²/2C，储存在两板间的电场中' });
   part(g9, box(pw9, pt9, pd9, 0.01), { tone: 'hi', pos: [xC9, yTop9 + pt9 / 2, 0], name: 'Plates (25 µF)' });
   part(g9, box(pw9, pt9, pd9, 0.01), { tone: 'hi', pos: [xC9, yBot9 - pt9 / 2, 0], name: 'Plates (25 µF)' });
   const plus9 = marks(g9, RED, 8), minus9 = marks(g9, BLUE, 8);
@@ -451,7 +451,7 @@ export function buildWorld(E) {
   label('tick', '', when(g9, () => V(xC9 - 1.2, yc9 + 0.2, 0)), () => S.lc ? `Δ<i>V</i> = <i>q</i>/<i>C</i> = ${fmt(S.lc.V, 2)} V` : '');
   label('tick', '', when(g9, () => V(xC9 - 1.2, yc9 - 0.12, 0)), () => S.lc ? `<i>U<sub>E</sub></i> = ${fmt(S.lc.UE * 1e3, 3)} mJ` : '');
   // the coil: 1600 turns, 12 drawn
-  const gC9 = asm('lcCoil', root, { title: 'The coil', sub: 'U_B = ½LI², in the field inside the coil' });
+  const gC9 = asm('lcCoil', root, { title: '线圈', sub: 'U_B = ½LI²，储存在线圈内的磁场中' });
   helix(gC9, V(xR9, c0y9, 0), V(xR9, c1y9, 0), R9, 9, 0.022, 'Inductor (40 mH)');
   const B9 = [-0.1, 0.1].map(x => ({ x, a: bArrow(gC9, 0.016) }));
   label('vec', grey('<i>B</i>'), () => B9[1].a.visible ? V(xR9 - R9 - 0.2, yc9, 0) : null);
@@ -462,7 +462,7 @@ export function buildWorld(E) {
   gC9.userData.focus = () => ({ target: [xR9, yc9, 0], radius: 1.7 });
   label('tick', '', when(gC9, () => V(xR9 - 1.05, yc9 + 0.2, 0)), () => S.lc ? `<i>L dI</i>/<i>dt</i> = ${fmt(S.lc.dI * M.LC.L, 2)} V` : '');
   label('tick', '', when(gC9, () => V(xR9 - 1.05, yc9 - 0.12, 0)), () => S.lc ? `<i>U<sub>B</sub></i> = ${fmt(S.lc.UB * 1e3, 3)} mJ` : '');
-  label('board', `slowed ${Math.round(M.LC.slow / 10) * 10}×: one ${f3(M.LC.T * 1e3)} ms swing takes ${M.LC.show} s`, () => V(X9, yt9 + 0.5, 0));
+  label('board', `放慢 ${Math.round(M.LC.slow / 10) * 10}×：一次 ${f3(M.LC.T * 1e3)} ms 的振荡要用 ${M.LC.show} s`, () => V(X9, yt9 + 0.5, 0));
 
   // ---------- per-frame ----------
   const S = {};
