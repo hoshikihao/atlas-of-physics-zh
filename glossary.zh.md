@@ -301,6 +301,26 @@
 | back emf | 自感电动势 |
 | tesla / gauss / weber / henry | 特斯拉 / 高斯 / 韦伯 / 亨利 |
 
+## Equation Sheet
+| English | 中文 |
+|---|---|
+| equation sheet / sheet | 公式表 |
+| constants and conversion factors | 常量与换算因子 |
+| prefix / factor / unit symbol | 词头 / 因数 / 单位符号 |
+| conventions | 约定 |
+| Coulomb constant | 静电力常量 |
+| vacuum permittivity / electric permittivity | 真空介电常量 / 介电常量 |
+| vacuum / magnetic permeability | 真空磁导率 / 磁导率 |
+| elementary charge | 元电荷 |
+| unified atomic mass unit | 原子质量单位 |
+| magnetic field（符号 B 的名称） | 磁感应强度 |
+| electric field（符号 E 的名称） | 电场强度 |
+| current density | 电流密度 |
+| tangential acceleration | 切向加速度 |
+| rotational kinetic energy | 转动动能 |
+| dot / cross product | 点积 / 叉积 |
+| chain rule | 链式法则 |
+
 ## Subscripts
 | English | 中文 |
 |---|---|
