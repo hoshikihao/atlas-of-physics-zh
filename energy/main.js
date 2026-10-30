@@ -30,8 +30,8 @@ startBook({
       case 'push': { const r = M.push(s.push.t); return `x ${f(r.x)} m   F ${f(r.F)} N   v ${f(r.v)} m/s\nW = ∫F dx ${f(r.W)} J   K ${f(r.K)} J`; }
       case 'bead': { const r = M.bead(s.bead.t); return `x ${f(r.x)} m   dU/dx ${f(r.slope)} J/m   F ${f(r.F)} N\nK ${f(r.K)} J + U ${f(r.U)} J = ${f(r.K + r.U)} J`; }
       case 'bond': { const r = M.bond(s.bond.t); return `r ${f(r.r * 1e9, 4)} nm   F ${f(r.F * 1e9)} nN\nK ${f(r.K / M.EV, 3)} eV + U ${f(r.U / M.EV, 3)} eV = ${f((r.K + r.U) / M.EV, 3)} eV`; }
-      case 'slide': { const r = M.slide(s.slide.t); return `Δx ${f(r.x)} m   v ${f(r.v)} m/s\nK ${f(r.K)} J + thermal ${f(r.Eth)} J = ${f(r.K + r.Eth)} J`; }
-      case 'lift': { const a = M.lift(s.lift.t, M.LIFT.vFast), b = M.lift(s.lift.t, M.LIFT.vSlow); return `t ${f(s.lift.t)} s\nfast W ${f(a.W, 0)} J  P ${f(a.P, 0)} W   slow W ${f(b.W, 0)} J  P ${f(b.P, 0)} W`; }
+      case 'slide': { const r = M.slide(s.slide.t); return `Δx ${f(r.x)} m   v ${f(r.v)} m/s\nK ${f(r.K)} J + 内能 ${f(r.Eth)} J = ${f(r.K + r.Eth)} J`; }
+      case 'lift': { const a = M.lift(s.lift.t, M.LIFT.vFast), b = M.lift(s.lift.t, M.LIFT.vSlow); return `t ${f(s.lift.t)} s\n快 W ${f(a.W, 0)} J  P ${f(a.P, 0)} W   慢 W ${f(b.W, 0)} J  P ${f(b.P, 0)} W`; }
     }
     return '';
   },
@@ -48,7 +48,7 @@ startBook({
     const sp = M.spring(s.spring.t), Rs = R.spring, X = v => CH.sx(v, Rs.x0, Rs.x1), Y = v => CH.sy(v, Rs.y0, Rs.y1);
     put('spring', Rs, sp.x, -sp.F);
     q('path[data-area="spring"]').forEach(p => p.setAttribute('d', `M${X(0)},${Y(0)}L${X(sp.x)},${Y(0)}L${X(sp.x)},${Y(-sp.F)}Z`));
-    q('#springlive').forEach(el => { el.textContent = `shaded area ½·${f(sp.x, 3)}·${f(-sp.F, 1)} = ${f(sp.U)} J = U_s`; });
+    q('#springlive').forEach(el => { el.textContent = `着色面积 ½·${f(sp.x, 3)}·${f(-sp.F, 1)} = ${f(sp.U)} J = U_s`; });
     // push: the area under F(x) up to the crate is the work so far
     { const r = M.push(s.push.t), Rp = R.push, X = v => CH.sx(v, Rp.x0, Rp.x1), Y = v => CH.sy(v, Rp.y0, Rp.y1, Rp.h), xe = Math.min(r.x, M.PUSH.L);
       put('push', Rp, Math.min(r.x, Rp.x1), r.F);

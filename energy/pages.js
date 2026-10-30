@@ -27,7 +27,7 @@ const samples = (n, a, b, fn) => Array.from({ length: n + 1 }, (_, i) => { const
 
 // live energy bars on the left page (the pendulum): heights set in main.js
 export const BARS = { x: 70, w: 64, gap: 46, base: 150, top: 20 };
-const barChart = (key, items, Emax) => `<svg class="chart" viewBox="0 0 ${W} ${H + 10}" role="img" aria-label="Energy bar chart, live">
+const barChart = (key, items, Emax) => `<svg class="chart" viewBox="0 0 ${W} ${H + 10}" role="img" aria-label="实时能量条形图">
   <line class="zero" x1="${BARS.x - 20}" x2="${BARS.x + items.length * (BARS.w + BARS.gap)}" y1="${BARS.base}" y2="${BARS.base}"/>
   <line class="grid" x1="${BARS.x - 20}" x2="${BARS.x + items.length * (BARS.w + BARS.gap)}" y1="${BARS.top}" y2="${BARS.top}"/>
   <text class="ax" x="${BARS.x - 26}" y="${BARS.top + 4}" text-anchor="end">${f(Emax)} J</text><text class="ax" x="${BARS.x - 26}" y="${BARS.base + 4}" text-anchor="end">0</text>
@@ -54,183 +54,183 @@ const P0 = M.pull(M.PULL.run), XS = M.SPRING.xmax;
 
 export const PAGES = [
   {
-    kicker: 'Chapter 4', title: 'Work', sub: 'a force over a distance',
+    kicker: '第 4 章', title: '功', sub: '力沿一段距离的作用',
     body: `
-      <p class="lede"><b>Work</b> is energy moved into or out of an object by a force. A force does work only if the object moves while the force acts.</p>
+      <p class="lede"><b>功</b>是力传给物体或从物体取走的能量。只有物体在力作用期间发生了移动，这个力才做功。</p>
       <div class="eq"><i>W</i> = |<i>F</i>| |Δ<i>x</i>| cos θ</div>
-      <p>θ is the angle between the force and the displacement. Work is in joules: 1 J is 1 N acting through 1 m.</p>
-      <p>A rope pulls this ${f(M.PULL.m, 1)} kg box with ${f(M.PULL.F, 0)} N at ${M.PULL.deg}° across a frictionless floor. Only <i>F</i> cos θ = ${f(M.PULL.Fx, 1)} N points along the motion. <i>F</i> sin θ = ${f(M.PULL.Fy, 1)} N pulls across it and does no work. Over ${f(P0.x)} m the rope does ${f(P0.W, 1)} J, less than the ${f(M.PULL.F * P0.x, 1)} J a level pull would.</p>
-      <div class="charts">${chart({ ...R.pull, xlabel: 'displacement Δx (m)', ylabel: 'work by the rope (J)', cursors: [['pull']], label: 'Work against displacement',
+      <p>θ 是力与位移之间的夹角。功的单位是焦耳：1 J 就是 1 N 的力作用 1 m 所做的功。</p>
+      <p>绳以与水平成 ${M.PULL.deg}° 的 ${f(M.PULL.F, 0)} N 拉力拉着这个 ${f(M.PULL.m, 1)} kg 的箱子在光滑地板上运动。只有 <i>F</i> cos θ = ${f(M.PULL.Fx, 1)} N 沿运动方向。<i>F</i> sin θ = ${f(M.PULL.Fy, 1)} N 垂直于运动方向，不做功。在 ${f(P0.x)} m 内，绳做功 ${f(P0.W, 1)} J，比水平拉时的 ${f(M.PULL.F * P0.x, 1)} J 少。</p>
+      <div class="charts">${chart({ ...R.pull, xlabel: '位移 Δx (m)', ylabel: '绳做的功 (J)', cursors: [['pull']], label: '功随位移的变化',
         series: [{ cls: 'trend', pts: [[0, 0], [3.2, M.PULL.F * 3.2]], tag: [1.7, M.PULL.F * 1.7 + 3, 'θ = 0°'] }, { pts: [[0, 0], [3.2, M.PULL.Fx * 3.2]], tag: [2.45, M.PULL.Fx * 2.45 - 13, 'θ = 30°'] }] })}</div>
-      <p class="hintline">Click the box to split the pull. Arrows: ${SC.pull.F * 100} cm per newton.</p>`,
+      <p class="hintline">点击箱子分解拉力。箭头：每牛顿长 ${SC.pull.F * 100} cm。</p>`,
     cam: { target: [ST.pull + 0.75, 0.6, 0], az: -20, el: 12, dist: 17 }, lit: 'pull', scene: 'pull', look: {},
-    fig: 'A pull at 30°',
+    fig: '与水平成 30° 的拉力',
   },
   {
-    kicker: '4.1', title: 'Positive and negative work', sub: 'with the motion or against it',
+    kicker: '4.1', title: '正功与负功', sub: '顺着运动还是逆着运动',
     body: `
-      <p class="lede">A force along the motion (θ &lt; 90°) does <b>positive</b> work: the object gains kinetic energy. A force against it (θ &gt; 90°) does <b>negative</b> work: the object loses kinetic energy.</p>
-      <p>A ${f(M.TOSS.m)} kg ball thrown up at ${f(M.TOSS.v0, 1)} m/s: rising, gravity is opposite the motion (θ = 180°) and does ${f(-M.TOSS.m * M.G * M.TOSS.h, 1)} J of work by the top, where the ball stops. Falling (θ = 0°), gravity gives the ${f(M.TOSS.m * M.G * M.TOSS.h, 1)} J back. The bars add up: <i>K</i><sub>0</sub> + <i>W</i><sub>g</sub> = <i>K</i>.</p>
-      <div class="charts">${chart({ ...R.toss, zero: true, xlabel: 'time (s)', ylabel: 'energy (J)', cursors: [['tossK', BLUE], ['tossW']], label: 'Kinetic energy and work by gravity against time',
-        series: [{ color: BLUE, pts: samples(40, 0, M.TOSS.run, t => M.toss(t).K), tag: [0.02, 7.2, 'K'] }, { pts: samples(40, 0, M.TOSS.run, t => M.toss(t).Wg), tag: [0.5, -9.6, 'work by gravity'] }] })}</div>
-      <p class="hintline">Arrows: <b>v</b> ${SC.toss.v * 100} cm per m/s, <i>F</i><sub>g</sub> ${SC.toss.F * 100} cm/N. Bars: ${SC.toss.E * 100} cm/J.</p>`,
+      <p class="lede">沿运动方向的力（θ &lt; 90°）做<b>正</b>功：物体获得动能。逆着运动方向的力（θ &gt; 90°）做<b>负</b>功：物体失去动能。</p>
+      <p>以 ${f(M.TOSS.v0, 1)} m/s 上抛一个 ${f(M.TOSS.m)} kg 的小球：上升时，重力与运动方向相反（θ = 180°），到最高点小球停住时，重力做功 ${f(-M.TOSS.m * M.G * M.TOSS.h, 1)} J。下落时（θ = 0°），重力把这 ${f(M.TOSS.m * M.G * M.TOSS.h, 1)} J 还回来。能量条满足：<i>K</i><sub>0</sub> + <i>W</i><sub>g</sub> = <i>K</i>。</p>
+      <div class="charts">${chart({ ...R.toss, zero: true, xlabel: '时间 (s)', ylabel: '能量 (J)', cursors: [['tossK', BLUE], ['tossW']], label: '动能和重力做的功随时间的变化',
+        series: [{ color: BLUE, pts: samples(40, 0, M.TOSS.run, t => M.toss(t).K), tag: [0.02, 7.2, 'K'] }, { pts: samples(40, 0, M.TOSS.run, t => M.toss(t).Wg), tag: [0.5, -9.6, '重力做的功'] }] })}</div>
+      <p class="hintline">箭头：<b>v</b> 每 1 m/s 长 ${SC.toss.v * 100} cm，<i>F</i><sub>g</sub> 每牛顿长 ${SC.toss.F * 100} cm。能量条：每焦耳长 ${SC.toss.E * 100} cm。</p>`,
     cam: { target: [ST.toss + 0.8, 1.25, 0], az: -16, el: 7, dist: 12 }, lit: 'toss', scene: 'toss', look: {},
-    fig: 'Up against gravity, down with it',
+    fig: '上升时逆着重力，下落时顺着重力',
   },
   {
-    kicker: '4.2', title: 'Forces that do no work', sub: 'at right angles to the motion',
+    kicker: '4.2', title: '不做功的力', sub: '与运动方向垂直',
     body: `
-      <p class="lede">A force at 90° to the displacement does no work, because cos 90° = 0. It can change the direction of motion, but never the speed.</p>
-      <p>A ${f(M.WHIRL.m)} kg ball on a ${f(M.WHIRL.r, 1)} m string circles a smooth table at ${f(M.WHIRL.v, 1)} m/s. The string pulls it toward the centre with <i>T</i> = ${f(M.WHIRL.T, 1)} N, always across its velocity. Its kinetic energy stays ${f(M.WHIRL.K)} J.</p>
-      <p>A satellite in a circular orbit is the same: gravity points at the planet, across the velocity, so gravity does no work on it. So does the normal force on a level floor.</p>
-      <div class="charts">${chart({ x0: 0, x1: 180, y0: -10, y1: 10, zero: true, xlabel: 'angle θ (°)', ylabel: 'work by 10 N over 1 m (J)', label: 'Work against angle',
-        series: [{ pts: samples(60, 0, 180, d => M.work(10, 1, d)) }, { cls: 'trend', pts: [], tag: [20, 2.5, 'positive'] }, { cls: 'trend', pts: [], tag: [120, -8, 'negative'] }], marks: [[90, 0, 'zero at 90°', 8, -8]] })}</div>
-      <p class="hintline">Click the ball for earlier moments. <b>v</b>: ${SC.whirl.v * 100} cm per m/s; <i>T</i>: ${SC.whirl.F * 100} cm/N.</p>`,
+      <p class="lede">与位移成 90° 的力不做功，因为 cos 90° = 0。它可以改变运动方向，但永远不能改变速率。</p>
+      <p>一个 ${f(M.WHIRL.m)} kg 的小球用 ${f(M.WHIRL.r, 1)} m 长的绳拴着，在光滑桌面上以 ${f(M.WHIRL.v, 1)} m/s 做圆周运动。绳以 <i>T</i> = ${f(M.WHIRL.T, 1)} N 把它拉向圆心，始终垂直于它的速度。它的动能保持 ${f(M.WHIRL.K)} J。</p>
+      <p>圆轨道上的卫星也是如此：万有引力指向行星，垂直于速度，所以引力对它不做功。水平地面上的支持力同样不做功。</p>
+      <div class="charts">${chart({ x0: 0, x1: 180, y0: -10, y1: 10, zero: true, xlabel: '夹角 θ (°)', ylabel: '10 N 的力在 1 m 内做的功 (J)', label: '功随夹角的变化',
+        series: [{ pts: samples(60, 0, 180, d => M.work(10, 1, d)) }, { cls: 'trend', pts: [], tag: [20, 2.5, '正功'] }, { cls: 'trend', pts: [], tag: [120, -8, '负功'] }], marks: [[90, 0, '90° 时为零', 8, -8]] })}</div>
+      <p class="hintline">点击小球查看更早的时刻。<b>v</b>：每 1 m/s 长 ${SC.whirl.v * 100} cm；<i>T</i>：每牛顿长 ${SC.whirl.F * 100} cm。</p>`,
     cam: { target: [ST.whirl, 0.1, 0], az: -14, el: 36, dist: 8.8 }, lit: 'whirl', scene: 'whirl', look: {},
-    fig: 'Tension across the velocity',
+    fig: '拉力垂直于速度',
   },
   {
-    kicker: '4.3', title: 'Kinetic energy', sub: 'the work–energy theorem',
+    kicker: '4.3', title: '动能', sub: '动能定理',
     body: `
-      <p class="lede"><b>Kinetic energy</b> is energy of motion, <i>K</i> = ½<i>mv</i>². It is a scalar, in joules, and never negative.</p>
-      <p>The <b>work–energy theorem</b>: net work equals the change in kinetic energy.</p>
+      <p class="lede"><b>动能</b>是物体由于运动而具有的能量，<i>K</i> = ½<i>mv</i>²。它是标量，单位焦耳，永远不为负。</p>
+      <p><b>动能定理</b>：合力做的功等于动能的变化量。</p>
       <div class="eq"><i>W</i><sub>net</sub> = Δ<i>K</i> = ½<i>mv</i><sub>f</sub>² − ½<i>mv</i><sub>0</sub>²</div>
-      <p>The road pushes this ${M.CAR.m} kg car forward with ${f(M.CAR.F / 1000, 1)} kN (drag ignored). After ${f(M.car(M.CAR.run).x)} m it has done ${f(M.car(M.CAR.run).Wnet / 1000)} kJ of work, and the car moves at ${f(M.car(M.CAR.run).v, 1)} m/s: ½ × ${M.CAR.m} × ${f(M.car(M.CAR.run).v, 1)}² = ${f(M.car(M.CAR.run).K / 1000)} kJ. The two bars grow together.</p>
-      <div class="charts">${chart({ ...R.car, xlabel: 'distance (m)', ylabel: 'K = W_net (kJ)', cursors: [['car', BLUE]], label: 'Kinetic energy against distance',
-        series: [{ color: BLUE, pts: [[0, 0], [8, M.CAR.F * 8 / 1000]], tag: [3.2, M.CAR.F * 3.2 / 1000 + 3, 'slope = F = 3.0 kN'] }] })}</div>
-      <p class="hintline">Click the car: weight and normal force do no work. Arrows: 25 cm per kN. Bars: 7.5 cm per kJ.</p>`,
+      <p>路面以 ${f(M.CAR.F / 1000, 1)} kN 的力向前推这辆 ${M.CAR.m} kg 的汽车（不计阻力）。行驶 ${f(M.car(M.CAR.run).x)} m 后，它做功 ${f(M.car(M.CAR.run).Wnet / 1000)} kJ，汽车速率为 ${f(M.car(M.CAR.run).v, 1)} m/s：½ × ${M.CAR.m} × ${f(M.car(M.CAR.run).v, 1)}² = ${f(M.car(M.CAR.run).K / 1000)} kJ。两个能量条同步增长。</p>
+      <div class="charts">${chart({ ...R.car, xlabel: '路程 (m)', ylabel: 'K = W_net (kJ)', cursors: [['car', BLUE]], label: '动能随路程的变化',
+        series: [{ color: BLUE, pts: [[0, 0], [8, M.CAR.F * 8 / 1000]], tag: [3.2, M.CAR.F * 3.2 / 1000 + 3, '斜率 = F = 3.0 kN'] }] })}</div>
+      <p class="hintline">点击汽车：重力和支持力不做功。箭头：每千牛长 25 cm。能量条：每千焦长 7.5 cm。</p>`,
     cam: { target: [ST.car + 4.6, 1.0, 0], az: -16, el: 12, dist: 36 }, lit: 'car', scene: 'car', look: {},
-    fig: 'Net work in, kinetic energy out',
+    fig: '合力做功，变成动能',
   },
   {
-    kicker: '4.4', title: 'Gravitational potential energy', sub: 'energy of height',
+    kicker: '4.4', title: '重力势能', sub: '与高度有关的能量',
     body: `
-      <p class="lede"><b>Potential energy</b> is stored energy that depends on position. Near Earth’s surface</p>
+      <p class="lede"><b>势能</b>是与位置有关的储存的能量。在地面附近</p>
       <div class="eq"><i>U</i><sub>g</sub> = <i>mg</i>Δ<i>y</i></div>
-      <p>with Δ<i>y</i> measured from wherever you choose <i>U</i><sub>g</sub> = 0. It equals the least work needed to lift the object there against gravity.</p>
-      <p>This ${f(M.DROP.m)} kg ball is dropped from ${f(M.DROP.h, 1)} m: <i>U</i><sub>g</sub> = ${f(M.DROP.E, 1)} J, <i>K</i> = 0. As it falls <i>U</i><sub>g</sub> turns into <i>K</i>; just before landing <i>K</i> = ${f(M.DROP.E, 1)} J, so <i>v</i> = ${f(Math.sqrt(2 * M.G * M.DROP.h))} m/s. Dropped from a height, <i>U</i><sub>g0</sub> = <i>K</i><sub>f</sub>.</p>
-      <div class="charts">${chart({ ...R.drop, xlabel: 'height above the ground (m)', ylabel: 'energy (J)', cursors: [['dropU', AMBER], ['dropK', BLUE]], label: 'Potential and kinetic energy against height',
+      <p>Δ<i>y</i> 从你选定 <i>U</i><sub>g</sub> = 0 的位置量起。它等于克服重力把物体举到那里所需的最小功。</p>
+      <p>这个 ${f(M.DROP.m)} kg 的小球从 ${f(M.DROP.h, 1)} m 高处释放：<i>U</i><sub>g</sub> = ${f(M.DROP.E, 1)} J，<i>K</i> = 0。下落过程中 <i>U</i><sub>g</sub> 转化为 <i>K</i>；即将落地时 <i>K</i> = ${f(M.DROP.E, 1)} J，所以 <i>v</i> = ${f(Math.sqrt(2 * M.G * M.DROP.h))} m/s。从某一高度释放时，<i>U</i><sub>g0</sub> = <i>K</i><sub>f</sub>。</p>
+      <div class="charts">${chart({ ...R.drop, xlabel: '离地高度 (m)', ylabel: '能量 (J)', cursors: [['dropU', AMBER], ['dropK', BLUE]], label: '势能和动能随高度的变化',
         series: [{ cls: 'trend', pts: [[0, M.DROP.E], [3, M.DROP.E]], tag: [1.25, M.DROP.E - 1, 'E'] }, { color: AMBER, pts: [[0, 0], [3, M.DROP.E]], tag: [2.2, 8.5, 'U<tspan dy="3" font-size="8">g</tspan>'] }, { color: BLUE, pts: [[0, M.DROP.E], [3, 0]], tag: [0.35, 10.0, 'K'] }] })}</div>
-      <p class="hintline">Click the ball to move the zero. Bars: ${SC.drop.E * 100} cm per joule.</p>`,
+      <p class="hintline">点击小球移动零点。能量条：每焦耳长 ${SC.drop.E * 100} cm。</p>`,
     cam: { target: [ST.drop + 0.7, 1.5, 0], az: -14, el: 6, dist: 14 }, lit: 'drop', scene: 'drop', look: {},
-    fig: 'Height becomes speed',
+    fig: '高度变成速度',
   },
   {
-    kicker: '4.5', title: 'Spring potential energy', sub: 'Hooke’s law',
+    kicker: '4.5', title: '弹性势能', sub: '胡克定律',
     body: `
-      <p class="lede">A spring pushes back toward its natural length, harder the further it is squashed or stretched.</p>
-      <table class="data eqs"><tr><td><i>F</i><sub>s</sub> = −<i>k</i>Δ<i>x</i></td><td>opposite Δx; <i>k</i> in N/m</td></tr><tr><td><i>U</i><sub>s</sub> = ½<i>k</i>Δ<i>x</i>²</td><td>energy stored</td></tr></table>
-      <p>With <i>k</i> = ${M.SPRING.k} N/m, the ${f(M.SPRING.m, 1)} kg block (<i>K</i> = ${f(M.SPRING.E, 1)} J) stops at Δ<i>x</i> = ${f(XS)} m: all ${f(M.SPRING.E, 1)} J is stored, then given back. Work is the <b>area under a force–displacement graph</b>; under <i>kx</i> it is a triangle, ½ · Δ<i>x</i> · <i>k</i>Δ<i>x</i>.</p>
-      <div class="charts">${chart({ ...R.spring, xlabel: 'compression Δx (m)', ylabel: 'spring force (N)', cursors: [['spring']], label: 'Spring force against compression, with the shaded area equal to the stored energy',
+      <p class="lede">弹簧总是朝恢复原长的方向推回，压缩或拉伸得越多，推力越大。</p>
+      <table class="data eqs"><tr><td><i>F</i><sub>s</sub> = −<i>k</i>Δ<i>x</i></td><td>与 Δx 方向相反；<i>k</i> 的单位为 N/m</td></tr><tr><td><i>U</i><sub>s</sub> = ½<i>k</i>Δ<i>x</i>²</td><td>储存的能量</td></tr></table>
+      <p>劲度系数 <i>k</i> = ${M.SPRING.k} N/m，${f(M.SPRING.m, 1)} kg 的木块（<i>K</i> = ${f(M.SPRING.E, 1)} J）在 Δ<i>x</i> = ${f(XS)} m 处停住：全部 ${f(M.SPRING.E, 1)} J 都储存起来，然后又还回去。功是<b>力–位移图像下的面积</b>；<i>kx</i> 下的面积是一个三角形，½ · Δ<i>x</i> · <i>k</i>Δ<i>x</i>。</p>
+      <div class="charts">${chart({ ...R.spring, xlabel: '压缩量 Δx (m)', ylabel: '弹力 (N)', cursors: [['spring']], label: '弹力随压缩量的变化，着色面积等于储存的能量',
         under: `<path data-area="spring" style="fill:${BAR_COLORS.U};opacity:.45" d=""/>`, series: [{ pts: [[0, 0], [0.5, M.SPRING.k * 0.5]] }] })}</div>
       <p class="live" id="springlive"></p>
-      <p class="hintline">Frictionless. Arrows: ${SC.spring.F * 100} cm/N. Bars: ${SC.spring.E * 100} cm/J.</p>`,
+      <p class="hintline">无摩擦。箭头：每牛顿长 ${SC.spring.F * 100} cm。能量条：每焦耳长 ${SC.spring.E * 100} cm。</p>`,
     cam: { target: [ST.spring - 0.05, 0.6, 0], az: -14, el: 20, dist: 14 }, lit: 'spring', scene: 'spring', look: {},
-    fig: 'Squeezing a spring',
+    fig: '压缩弹簧',
   },
   {
-    kicker: '4.6 · AP Physics C', title: 'Work by a changing force', sub: 'the area under F(x)',
+    kicker: '4.6 · AP 物理 C', title: '变力做功', sub: 'F(x) 图线下的面积',
     body: `
-      <p class="lede">When the force changes along the way, cut the path into thin strips, add <i>F</i>Δ<i>x</i> for each, and let the strips shrink. The sum becomes the <b>area under the F(x) graph</b>:</p>
+      <p class="lede">力沿途变化时，把路径切成细条，对每一条加上 <i>F</i>Δ<i>x</i>，再让细条越来越窄。这个和就变成 <b>F(x) 图线下的面积</b>：</p>
       <div class="eq"><i>W</i> = lim Σ <i>F</i>(<i>x</i><sub>i</sub>)Δ<i>x</i> = ∫ <i>F</i>(<i>x</i>) d<i>x</i></div>
-      <p>A ${f(M.PUSH.m, 1)} kg crate on a smooth floor gets <i>F</i> = <i>F</i><sub>0</sub>(1 − <i>x</i>/<i>L</i>)(1 + 2<i>x</i>/<i>L</i>), ${M.PUSH.F0} N fading to 0 at <i>L</i> = ${f(M.PUSH.L, 1)} m. Integrating, <i>W</i> = ⅚<i>F</i><sub>0</sub><i>L</i> = ${f(M.PUSH.W, 1)} J, all of it kinetic energy.</p>
-      <div class="charts">${chart({ ...R.push, xlabel: 'position x (m)', ylabel: 'push F(x) (N)', cursors: [['push']], label: 'Push against position, with the area up to the crate shaded and six strips outlined',
+      <p>光滑地板上一个 ${f(M.PUSH.m, 1)} kg 的板条箱受到推力 <i>F</i> = <i>F</i><sub>0</sub>(1 − <i>x</i>/<i>L</i>)(1 + 2<i>x</i>/<i>L</i>)，从 ${M.PUSH.F0} N 逐渐减小到 <i>L</i> = ${f(M.PUSH.L, 1)} m 处的 0。积分得 <i>W</i> = ⅚<i>F</i><sub>0</sub><i>L</i> = ${f(M.PUSH.W, 1)} J，全部变成动能。</p>
+      <div class="charts">${chart({ ...R.push, xlabel: '位置 x (m)', ylabel: '推力 F(x) (N)', cursors: [['push']], label: '推力随位置的变化，到板条箱处的面积已着色，并画出六个细条',
         under: `<path data-area="push" style="fill:#86868c;opacity:.35" d=""/>` + Array.from({ length: 6 }, (_, i) => { const dx = M.PUSH.L / 6, x = i * dx, F = M.pushF(x + dx / 2), X = v => CH.sx(v, R.push.x0, R.push.x1), Y = v => CH.sy(v, R.push.y0, R.push.y1, R.push.h); return `<rect class="trend" x="${X(x)}" y="${Y(F)}" width="${X(dx) - X(0)}" height="${Y(0) - Y(F)}"/>`; }).join(''),
         series: [{ pts: [...samples(60, 0, M.PUSH.L, M.pushF), [R.push.x1, 0]] }] })}</div>
-      <p class="hintline">6 strips (dashed) ${f(M.pushStrips(6))} J; 64 strips ${f(M.pushStrips(64), 3)} J. ${SC.push.F * 100} cm/N.</p>`,
+      <p class="hintline">6 个细条（虚线）${f(M.pushStrips(6))} J；64 个细条 ${f(M.pushStrips(64), 3)} J。每牛顿长 ${SC.push.F * 100} cm。</p>`,
     cam: { target: [ST.push + 0.1, 0.8, 0], az: -12, el: 9, dist: 14.5 }, lit: 'push', scene: 'push', look: {},
-    fig: 'Work is the area under F(x)',
+    fig: '功是 F(x) 图线下的面积',
   },
   {
-    kicker: '4.7', title: 'Conservation of energy', sub: 'mechanical energy stays constant',
+    kicker: '4.7', title: '机械能守恒', sub: '机械能保持不变',
     body: `
-      <p class="lede">Mechanical energy, <i>E</i> = <i>K</i> + <i>U</i><sub>g</sub> + <i>U</i><sub>s</sub>, stays the same when there is no friction or drag.</p>
+      <p class="lede">没有摩擦和阻力时，机械能 <i>E</i> = <i>K</i> + <i>U</i><sub>g</sub> + <i>U</i><sub>s</sub> 保持不变。</p>
       <div class="eq"><i>U</i><sub>g0</sub> + <i>U</i><sub>s0</sub> + <i>K</i><sub>0</sub> = <i>U</i><sub>gf</sub> + <i>U</i><sub>sf</sub> + <i>K</i><sub>f</sub></div>
-      <p>A ${f(M.PEND.m, 1)} kg bob on a ${f(M.PEND.L, 1)} m string, let go at ${M.PEND.deg0}°. At the ends it is all <i>U</i><sub>g</sub>, ${f(M.PEND.E)} J. At the bottom it is all <i>K</i>, at ${f(Math.sqrt(2 * M.PEND.E / M.PEND.m))} m/s. The string pulls across the motion and does no work. Tip: find the zero terms first (<i>v</i> = 0 at the ends, Δ<i>y</i> = 0 at the bottom).</p>
+      <p>${f(M.PEND.L, 1)} m 长的绳上挂着 ${f(M.PEND.m, 1)} kg 的摆球，从 ${M.PEND.deg0}° 处释放。在两端，能量全部是 <i>U</i><sub>g</sub>，${f(M.PEND.E)} J。在最低点，能量全部是 <i>K</i>，速率为 ${f(Math.sqrt(2 * M.PEND.E / M.PEND.m))} m/s。绳的拉力垂直于运动方向，不做功。技巧：先找出为零的项（两端 <i>v</i> = 0，最低点 Δ<i>y</i> = 0）。</p>
             <div class="charts">${barChart('pend', [['K', 'K', BAR_COLORS.K], ['U', 'U<tspan dy="3" font-size="8">g</tspan>', BAR_COLORS.U], ['E', 'E', BAR_COLORS.E]], M.PEND.E)}</div>
-      <p class="hintline">Click the bob to split its weight. Arrows: ${SC.pendulum.F * 100} cm/N. Bars: ${SC.pendulum.E * 100} cm/J.</p>`,
+      <p class="hintline">点击摆球分解它的重力。箭头：每牛顿长 ${SC.pendulum.F * 100} cm。能量条：每焦耳长 ${SC.pendulum.E * 100} cm。</p>`,
     cam: { target: [ST.pendulum + 0.7, 1.8, 0], az: -10, el: 6, dist: 14 }, lit: 'pendulum', scene: 'pendulum', look: {},
-    fig: 'K and U trade places',
+    fig: 'K 与 U 相互转化',
   },
   {
-    kicker: '4.8 · AP Physics C', title: 'Force from potential energy', sub: 'minus the slope of U',
+    kicker: '4.8 · AP 物理 C', title: '由势能求力', sub: 'U 的斜率取负',
     body: `
-      <p class="lede">Since d<i>W</i> = <i>F</i> d<i>x</i> = −d<i>U</i>, a conservative force is <b>minus the slope</b> of <i>U</i>(<i>x</i>): it points downhill, and is zero where <i>U</i> is flat.</p>
+      <p class="lede">由于 d<i>W</i> = <i>F</i> d<i>x</i> = −d<i>U</i>，保守力就是 <i>U</i>(<i>x</i>) 的<b>斜率取负</b>：它指向“下坡”方向，在 <i>U</i> 平坦处为零。</p>
       <div class="eq"><i>F</i><sub>x</sub> = −d<i>U</i>/d<i>x</i></div>
-      <p>A ${f(M.BEAD.m)} kg bead on a smooth wire, <i>x</i> measured along it: <i>U</i> = <i>mgh</i>(<i>x</i>).</p>
-      <div class="charts">${chart({ ...R.beadU, xlabel: 'x along the wire (m)', ylabel: 'U (J) and its tangent', cursors: [['beadU']], label: 'Potential energy along the wire, with the tangent at the bead',
+      <p>一个 ${f(M.BEAD.m)} kg 的珠子套在光滑的金属丝上，<i>x</i> 沿金属丝量取：<i>U</i> = <i>mgh</i>(<i>x</i>)。</p>
+      <div class="charts">${chart({ ...R.beadU, xlabel: '沿金属丝的 x (m)', ylabel: 'U (J) 及其切线', cursors: [['beadU']], label: '沿金属丝的势能，以及珠子所在处的切线',
         under: `<line data-tangent="bead" class="curve" style="stroke:#e5484d;stroke-width:1.3"/>`,
         series: [{ cls: 'trend', pts: [[0, M.BEAD.E], [R.beadU.x1, M.BEAD.E]], tag: [5.3, M.BEAD.E - 0.55, 'E'] }, { pts: samples(120, 0, M.BEAD.len, M.beadU) }] })}
-        ${chart({ ...R.beadF, zero: true, xlabel: 'x along the wire (m)', ylabel: 'F = −dU/dx (N)', cursors: [['beadF']], label: 'Force along the wire',
-        series: [{ pts: samples(120, 0, M.BEAD.len, M.beadF) }], marks: [[M.BEAD.stable, 0, 'stable', -16, 14], [M.BEAD.unstable, 0, 'unstable', 6, -6]] })}</div>
-      <p class="hintline">Click the bead for the tangent. ${SC.bead.F * 100} cm/N.</p>`,
+        ${chart({ ...R.beadF, zero: true, xlabel: '沿金属丝的 x (m)', ylabel: 'F = −dU/dx (N)', cursors: [['beadF']], label: '沿金属丝方向的力',
+        series: [{ pts: samples(120, 0, M.BEAD.len, M.beadF) }], marks: [[M.BEAD.stable, 0, '稳定', -16, 14], [M.BEAD.unstable, 0, '不稳定', 6, -6]] })}</div>
+      <p class="hintline">点击珠子查看切线。每牛顿长 ${SC.bead.F * 100} cm。</p>`,
     cam: { target: [ST.bead - 0.1, 0.85, 0], az: -10, el: 8, dist: 14.5 }, lit: 'bead', scene: 'bead', look: {},
-    fig: 'Downhill on the U graph',
+    fig: '沿 U 图像“下坡”',
   },
   {
-    kicker: '4.9 · AP Physics C', title: 'Energy diagrams', sub: 'turning points and equilibrium',
+    kicker: '4.9 · AP 物理 C', title: '势能曲线', sub: '转折点与平衡',
     body: `
-      <p class="lede">Draw a line at the total energy <i>E</i>: the gap above <i>U</i>(<i>x</i>) is <i>K</i>. The particle turns back at the <b>turning points</b>, where <i>U</i> = <i>E</i>.</p>
-      <table class="data eqs"><tr><td>stable</td><td>U minimum, U″ &gt; 0: F pushes back</td></tr><tr><td>unstable</td><td>U maximum, U″ &lt; 0: F pushes away (hump)</td></tr><tr><td>neutral</td><td>U flat: no force (wire’s right end)</td></tr></table>
-      <p>A light atom bound to a heavy one, at <i>E</i> = ${f(M.BOND.E / M.EV, 1)} eV. Near the bottom a well acts as a spring, <i>k</i> = <i>U</i>″:</p>
+      <p class="lede">在总能量 <i>E</i> 处画一条水平线：它高出 <i>U</i>(<i>x</i>) 的部分就是 <i>K</i>。粒子在 <i>U</i> = <i>E</i> 的<b>转折点</b>处折返。</p>
+      <table class="data eqs"><tr><td>稳定平衡</td><td>U 极小，U″ &gt; 0：F 把它推回</td></tr><tr><td>不稳定平衡</td><td>U 极大，U″ &lt; 0：F 把它推开（驼峰）</td></tr><tr><td>随遇平衡</td><td>U 平坦：不受力（金属丝的右端）</td></tr></table>
+      <p>一个轻原子与一个重原子成键，<i>E</i> = ${f(M.BOND.E / M.EV, 1)} eV。在势阱底部附近，势阱就像一根弹簧，<i>k</i> = <i>U</i>″：</p>
       <div class="eq">ω² = <i>U</i>″(<i>x</i><sub>0</sub>)/<i>m</i> → <i>T</i> = ${f(2 * Math.PI / M.BOND.w * 1e15, 1)} fs</div>
-      <div class="charts">${chart({ ...R.bondU, xlabel: 'separation r (nm)', ylabel: 'U (eV)', cursors: [['bondU']], zero: true, label: 'Bond potential energy with the total-energy line and turning points',
+      <div class="charts">${chart({ ...R.bondU, xlabel: '原子间距 r (nm)', ylabel: 'U (eV)', cursors: [['bondU']], zero: true, label: '化学键的势能曲线，以及总能量线和转折点',
         series: [{ cls: 'trend', pts: [[R.bondU.x0, M.BOND.E / M.EV], [R.bondU.x1, M.BOND.E / M.EV]], tag: [0.315, M.BOND.E / M.EV + 0.06, 'E'] }, { pts: samples(120, 0.1355, R.bondU.x1, r => M.bondU(r * 1e-9) / M.EV) }],
-        marks: [[M.BOND.r1 * 1e9, M.BOND.E / M.EV, 'turn', -32, 4], [M.BOND.r2 * 1e9, M.BOND.E / M.EV, 'turn', 6, 14]] })}</div>
-      <p class="hintline">Drawn 0.1 nm = 1 m, <i>F</i> ${SC.bond.F * 100} cm/nN, ${(() => { const [a, e] = (1 / (M.SLOW * M.BOND.tscale)).toExponential(1).split('e+'); return `${a}×10<sup>${e}</sup>`; })()}× slower.</p>`,
+        marks: [[M.BOND.r1 * 1e9, M.BOND.E / M.EV, '转折点', -40, 4], [M.BOND.r2 * 1e9, M.BOND.E / M.EV, '转折点', 6, 14]] })}</div>
+      <p class="hintline">按 0.1 nm = 1 m 绘制，<i>F</i> 每 nN 长 ${SC.bond.F * 100} cm，放慢 ${(() => { const [a, e] = (1 / (M.SLOW * M.BOND.tscale)).toExponential(1).split('e+'); return `${a}×10<sup>${e}</sup>`; })()} 倍。</p>`,
     cam: { target: [ST.bond - 0.45, 1.25, 0], az: -10, el: 6, dist: 12.5 }, lit: 'bond', scene: 'bond', look: {},
-    fig: 'A particle in a well',
+    fig: '势阱中的粒子',
   },
   {
-    kicker: '4.10', title: 'When it isn’t conserved', sub: 'friction turns energy into heat',
+    kicker: '4.10', title: '机械能不守恒时', sub: '摩擦把能量变成热',
     body: `
-      <p class="lede">Friction and drag are <b>resistive</b> forces. They point against the motion, so their work is always negative. The mechanical energy they remove becomes thermal energy.</p>
-      <div class="eq"><i>E</i><sub>mech,i</sub> = <i>E</i><sub>mech,f</sub> + |<i>W</i><sub>resistive</sub>|</div>
-      <p>The ${f(M.SLIDE.m, 1)} kg block slides onto a rough floor at ${f(M.SLIDE.v0, 1)} m/s. With μ<sub>k</sub> = ${f(M.SLIDE.mu)}, friction is <i>f</i> = μ<sub>k</sub><i>mg</i> = ${f(M.SLIDE.f)} N. It stops after ${f(M.SLIDE.d)} m: |<i>W</i><sub>f</sub>| = <i>f</i>·<i>d</i> = ${f(M.SLIDE.E, 1)} J, all of its <i>K</i>. <i>E</i><sub>mech</sub> falls to zero; the total, heat included, never changes.</p>
-      <div class="charts">${chart({ ...R.slide, xlabel: 'distance slid (m)', ylabel: 'energy (J)', cursors: [['slideK', BLUE], ['slideT', GREY]], label: 'Kinetic and thermal energy against distance',
-        series: [{ cls: 'trend', pts: [[0, M.SLIDE.E], [M.SLIDE.d, M.SLIDE.E]], tag: [0.85, M.SLIDE.E - 0.2, 'total'] }, { color: BLUE, pts: [[0, M.SLIDE.E], [M.SLIDE.d, 0]], tag: [0.2, 11.5, 'K'] }, { color: GREY, pts: [[0, 0], [M.SLIDE.d, M.SLIDE.E]], tag: [1.45, 8.0, 'thermal'] }] })}</div>
-      <p class="hintline">Click the block. Arrows: ${SC.slide.F * 100} cm/N. Bars: ${SC.slide.E * 100} cm/J.</p>`,
+      <p class="lede">摩擦力和阻力是<b>耗散力</b>。它们与运动方向相反，所以做的功总是负的。它们带走的机械能变成了内能。</p>
+      <div class="eq"><i>E</i><sub>mech,i</sub> = <i>E</i><sub>mech,f</sub> + |<i>W</i><sub>耗散</sub>|</div>
+      <p>${f(M.SLIDE.m, 1)} kg 的木块以 ${f(M.SLIDE.v0, 1)} m/s 滑上粗糙地面。μ<sub>k</sub> = ${f(M.SLIDE.mu)}，摩擦力 <i>f</i> = μ<sub>k</sub><i>mg</i> = ${f(M.SLIDE.f)} N。它滑行 ${f(M.SLIDE.d)} m 后停下：|<i>W</i><sub>f</sub>| = <i>f</i>·<i>d</i> = ${f(M.SLIDE.E, 1)} J，正好是它全部的 <i>K</i>。<i>E</i><sub>mech</sub> 降为零；把热也算进去，总能量始终不变。</p>
+      <div class="charts">${chart({ ...R.slide, xlabel: '滑行距离 (m)', ylabel: '能量 (J)', cursors: [['slideK', BLUE], ['slideT', GREY]], label: '动能和内能随滑行距离的变化',
+        series: [{ cls: 'trend', pts: [[0, M.SLIDE.E], [M.SLIDE.d, M.SLIDE.E]], tag: [0.85, M.SLIDE.E - 0.2, '总能量'] }, { color: BLUE, pts: [[0, M.SLIDE.E], [M.SLIDE.d, 0]], tag: [0.2, 11.5, 'K'] }, { color: GREY, pts: [[0, 0], [M.SLIDE.d, M.SLIDE.E]], tag: [1.45, 8.0, '内能'] }] })}</div>
+      <p class="hintline">点击木块。箭头：每牛顿长 ${SC.slide.F * 100} cm。能量条：每焦耳长 ${SC.slide.E * 100} cm。</p>`,
     cam: { target: [ST.slide + 0.3, 0.55, 0], az: -16, el: 12, dist: 14 }, lit: 'slide', scene: 'slide', look: {},
-    fig: 'Kinetic energy becomes heat',
+    fig: '动能变成热',
   },
   {
-    kicker: '4.11', title: 'Power', sub: 'how fast work is done',
+    kicker: '4.11', title: '功率', sub: '做功的快慢',
     body: `
-      <p class="lede"><b>Power</b> is the rate of doing work, or of turning energy from one form into another. It is measured in watts: 1 W = 1 J/s, and 1 horsepower = ${M.HP} W.</p>
+      <p class="lede"><b>功率</b>是做功的快慢，也就是能量从一种形式转化为另一种形式的快慢。单位是瓦特：1 W = 1 J/s，1 马力 = ${M.HP} W。</p>
       <div class="eq"><i>P</i> = <i>W</i>/<i>t</i> = <i>F</i>Δ<i>x</i>/<i>t</i> = <i>Fv</i></div>
-      <p>Both ${M.LIFT.m} kg crates rise ${f(M.LIFT.h, 1)} m at steady speed, so each rope pulls with <i>T</i> = <i>mg</i> = ${f(M.LIFT.W, 0)} N and does ${f(M.LIFT.work, 0)} J. The fast one takes ${f(M.LIFT.tFast, 1)} s: ${f(M.LIFT.Pfast, 0)} W. The slow one takes ${f(M.LIFT.tSlow, 1)} s: ${f(M.LIFT.Pslow, 0)} W. Same work, twice the power. Given speeds and times, <i>P</i> = Δ<i>E</i>/<i>t</i> is often quickest.</p>
-            <div class="charts">${chart({ ...R.lift, xlabel: 'time (s)', ylabel: 'work done (J)', cursors: [['liftF'], ['liftS']], label: 'Work against time, fast and slow',
-        series: [{ pts: [[0, 0], [M.LIFT.tFast, M.LIFT.work], [4.2, M.LIFT.work]], tag: [0.25, 160, 'fast: slope 98 W'] }, { cls: 'trend', pts: [[0, 0], [M.LIFT.tSlow, M.LIFT.work]], tag: [2.45, 95, 'slow: 49 W'] }] })}</div>
-      <p class="hintline">Brief start and stop ignored. Arrows: ${SC.lift.F * 100} cm per newton.</p>`,
+      <p>两个 ${M.LIFT.m} kg 的板条箱都匀速上升 ${f(M.LIFT.h, 1)} m，所以每根绳的拉力都是 <i>T</i> = <i>mg</i> = ${f(M.LIFT.W, 0)} N，做功 ${f(M.LIFT.work, 0)} J。快的用时 ${f(M.LIFT.tFast, 1)} s：${f(M.LIFT.Pfast, 0)} W。慢的用时 ${f(M.LIFT.tSlow, 1)} s：${f(M.LIFT.Pslow, 0)} W。做功相同，功率加倍。已知速率和时间时，用 <i>P</i> = Δ<i>E</i>/<i>t</i> 往往最快。</p>
+            <div class="charts">${chart({ ...R.lift, xlabel: '时间 (s)', ylabel: '已做的功 (J)', cursors: [['liftF'], ['liftS']], label: '功随时间的变化，快与慢',
+        series: [{ pts: [[0, 0], [M.LIFT.tFast, M.LIFT.work], [4.2, M.LIFT.work]], tag: [0.25, 160, '快：斜率 98 W'] }, { cls: 'trend', pts: [[0, 0], [M.LIFT.tSlow, M.LIFT.work]], tag: [2.45, 95, '慢：49 W'] }] })}</div>
+      <p class="hintline">忽略短暂的启动和停止。箭头：每牛顿长 ${SC.lift.F * 100} cm。</p>`,
     cam: { target: [ST.lift, 1.7, 0], az: -12, el: 6, dist: 14 }, lit: 'lift', scene: 'lift', look: {},
-    fig: 'Same work, half the time',
+    fig: '做功相同，用时减半',
   },
 ];
 
 // ---------- click a scene: what it breaks into ----------
 export const PLATES = {
-  pull: { text: `The pull splits into two parts (grey). <i>F</i> cos θ lies along the displacement and does all the work. <i>F</i> sin θ points straight up, at 90° to the motion, and does none: it only makes the floor push up less. The rope’s work equals the box’s kinetic energy, because nothing else does work.`,
-    facts: s => { const r = M.pull(s.pull.t); return [['F cos θ (along Δx)', `${f(M.PULL.Fx)} N`], ['F sin θ (across)', `${f(M.PULL.Fy)} N, no work`], ['Δx', `${f(r.x)} m`], ['W = F Δx cos θ', `${f(r.W)} J`], ['K = ½mv²', `${f(r.K)} J`]]; } },
-  toss: { text: `Watch the angle between the weight and the velocity. Going up they are opposite (180°): gravity’s work is negative and the K bar shrinks. Coming down they agree (0°): the work is positive and K grows back. At every instant K = K<sub>0</sub> + W<sub>g</sub>.`,
-    facts: s => { const r = M.toss(s.toss.t); return [['height', `${f(r.y)} m`], ['velocity', `${f(r.v)} m/s`], ['W by gravity so far', `${f(r.Wg)} J`], ['K = K₀ + W_g', `${f(M.toss(0).K)} + (${f(r.Wg)}) = ${f(r.K)} J`]]; } },
-  whirl: { text: `Earlier moments, a quarter lap apart: at each one the tension (toward the peg) and the velocity (along the circle) meet at 90°. Over any small step the displacement is along <b>v</b>, so T·Δx·cos 90° = 0. The weight and the table’s push are vertical and do no work either.`,
-    facts: () => [['tension T', `${f(M.WHIRL.T)} N`], ['angle between T and v', '90°'], ['work by T', '0 J'], ['speed', `${f(M.WHIRL.v)} m/s, constant`], ['K', `${f(M.WHIRL.K)} J, constant`]] },
-  car: { text: `Weight and the normal force are vertical, at 90° to the motion, so they do no work and are set aside. The only force along Δx is the road’s push, and it is also the net force (red). Its work, F·Δx, is the whole change in kinetic energy.`,
-    facts: s => { const r = M.car(s.car.t); return [['F (road, forward)', `${f(M.CAR.F / 1000)} kN`], ['Δx', `${f(r.x)} m`], ['W_net = F Δx', `${f(r.Wnet / 1000)} kJ`], ['v', `${f(r.v)} m/s`], ['K = ½mv²', `${f(r.K / 1000)} kJ`]]; } },
-  drop: { text: `Move the zero up to ${f(M.DROP.ref2, 1)} m and every value of U<sub>g</sub> drops by mg × ${f(M.DROP.ref2, 1)} = ${f(M.DROP.m * M.G * M.DROP.ref2)} J. Below the new zero, U<sub>g</sub> is negative. But the <i>change</i> in U<sub>g</sub> during the fall is the same, so the speed you predict is the same. Choose whichever zero makes the arithmetic easiest.`,
-    facts: s => { const r = M.drop(s.drop.t), m = M.DROP.m * M.G; return [['height', `${f(r.y)} m`], ['U_g, zero at ground', `${f(r.U)} J`], [`U_g, zero at ${f(M.DROP.ref2, 1)} m`, `${f(m * (r.y - M.DROP.ref2))} J`], ['ΔU_g since release', `${f(r.U - M.DROP.E)} J either way`], ['K', `${f(r.K)} J`]]; } },
-  spring: { text: `The grey arrow is the compression Δx, measured from the spring’s natural length. The spring force F<sub>s</sub> = −kΔx points the other way. As the block slows, its K bar empties into the U<sub>s</sub> bar; at full compression it is all U<sub>s</sub>. The total never changes.`,
-    facts: s => { const r = M.spring(s.spring.t); return [['compression Δx', `${f(r.x, 3)} m`], ['F_s = −kΔx', `${f(r.F)} N`], ['U_s = ½kΔx²', `${f(r.U)} J`], ['K = ½mv²', `${f(r.K)} J`], ['K + U_s', `${f(r.K + r.U)} J`]]; } },
-  push: { text: `The area under F(x) comes apart into ${6} strips. Each is F(x<sub>i</sub>)·Δx, the work over one short step where the push hardly changes. Their sum, ${f(M.pushStrips(6))} J, is already close to the integral, ${f(M.PUSH.W)} J; thinner strips close the gap. The floor is level and smooth, so weight and the normal force do no work and the area is all kinetic energy.`,
-    facts: s => { const r = M.push(s.push.t); return [['x', `${f(r.x)} m`], ['F(x)', `${f(r.F)} N`], ['W = ∫F dx so far', `${f(r.W)} J`], ['K = ½mv²', `${f(r.K)} J`], ['6-strip sum, whole push', `${f(M.pushStrips(6))} J`], ['∫₀ᴸ F dx', `${f(M.PUSH.W)} J`]]; } },
-  bead: { text: `The dashed line is the tangent to the wire. Gravity splits into a part along the wire, mg sin θ, and a part across it, which the wire’s push takes up. Since U = mgh and dh/dx = sin θ along the wire, the part along it is exactly −dU/dx. At the valley floor and the hump top the tangent is level: no force, equilibrium.`,
-    facts: s => { const r = M.bead(s.bead.t); return [['x along the wire', `${f(r.x)} m`], ['U = mgh', `${f(r.U)} J`], ['dU/dx (slope)', `${f(r.slope)} J/m`], ['F = −dU/dx', `${f(r.F)} N`], ['K + U', `${f(r.K + r.U, 3)} J`]]; } },
-  bond: { text: `The bond is a Lennard-Jones model, U = ε[(r<sub>0</sub>/r)¹² − 2(r<sub>0</sub>/r)⁶], r<sub>0</sub> = ${f(M.BOND.r0 * 1e9)} nm; the heavy atom barely moves. Ghosts mark the turning points, where U = E and the atom stops. The blue dashed parabola is ½k(r − r<sub>0</sub>)² with k = U″(r<sub>0</sub>) = ${f(M.BOND.k, 0)} N/m: it fits the bottom of the well, which is why small vibrations are simple harmonic with ω² = U″/m. Higher up the real well is lopsided, steep inside and soft outside, so this swing is slower and spends longer stretched.`,
-    facts: s => { const r = M.bond(s.bond.t); return [['r', `${f(r.r * 1e9, 4)} nm`], ['U', `${f(r.U / M.EV, 3)} eV`], ['K = E − U', `${f(r.K / M.EV, 3)} eV`], ['F = −dU/dr', `${f(r.F * 1e9)} nN`], ['k = U″(r₀)', `${f(M.BOND.k, 0)} N/m`], ['T small / this swing', `${f(2 * Math.PI / M.BOND.w * 1e15)} / ${f(M.BOND.period * 1e15)} fs`]]; } },
-  pendulum: { text: `The weight splits into mg sin θ, along the path, and mg cos θ, along the string. Only mg sin θ does work: it slows the bob on the way up and speeds it on the way down. The tension and mg cos θ are across the motion and do none, which is why K + U<sub>g</sub> stays fixed.`,
-    facts: s => { const r = M.pendulum(s.pendulum.t); return [['angle θ', `${f(r.th * 180 / Math.PI, 1)}°`], ['mg sin θ (along path)', `${f(r.Ftan)} N`], ['tension T', `${f(r.T)} N, no work`], ['K', `${f(r.K)} J`], ['U_g', `${f(r.U)} J`], ['K + U_g', `${f(r.K + r.U)} J`]]; } },
-  slide: { text: `Weight and the normal force do no work and are set aside. Friction is the only force along the motion, and it points backwards: θ = 180°, so its work is −f·Δx. That negative work is exactly the kinetic energy lost, and it reappears as heat in the block and the floor.`,
-    facts: s => { const r = M.slide(s.slide.t); return [['friction f = μk mg', `${f(M.SLIDE.f)} N`], ['Δx', `${f(r.x)} m`], ['W_f = −f Δx', `${f(r.Wf)} J`], ['K', `${f(r.K)} J`], ['thermal energy', `${f(r.Eth)} J`], ['K + thermal', `${f(r.K + r.Eth)} J`]]; } },
-  lift: { text: `The grey arrows are each crate’s rise Δy. At steady speed the rope’s pull equals the weight, so each rope does W = mgΔy. Equal heights mean equal work; the faster crate gets there in half the time, so its rope delivers twice the power.`,
-    facts: s => { const a = M.lift(s.lift.t, M.LIFT.vFast), b = M.lift(s.lift.t, M.LIFT.vSlow); return [['T = mg', `${f(M.LIFT.W, 1)} N`], ['fast: work so far', `${f(a.W, 0)} J, P ${f(a.P, 0)} W`], ['slow: work so far', `${f(b.W, 0)} J, P ${f(b.P, 0)} W`], ['P = Fv (fast)', `${f(M.LIFT.W, 0)} × ${f(M.LIFT.vFast, 1)} = ${f(M.LIFT.Pfast, 0)} W`]]; } },
+  pull: { text: `拉力分解为两个分量（灰色）。<i>F</i> cos θ 沿位移方向，做了全部的功。<i>F</i> sin θ 竖直向上，与运动方向成 90°，不做功：它只是让地板的支持力变小。绳做的功等于箱子的动能，因为没有其他力做功。`,
+    facts: s => { const r = M.pull(s.pull.t); return [['F cos θ（沿 Δx）', `${f(M.PULL.Fx)} N`], ['F sin θ（垂直）', `${f(M.PULL.Fy)} N，不做功`], ['Δx', `${f(r.x)} m`], ['W = F Δx cos θ', `${f(r.W)} J`], ['K = ½mv²', `${f(r.K)} J`]]; } },
+  toss: { text: `注意重力与速度之间的夹角。上升时两者相反（180°）：重力做负功，K 条缩短。下落时两者同向（0°）：重力做正功，K 条又长回来。每一时刻都有 K = K<sub>0</sub> + W<sub>g</sub>。`,
+    facts: s => { const r = M.toss(s.toss.t); return [['高度', `${f(r.y)} m`], ['速度', `${f(r.v)} m/s`], ['到目前为止重力做的功', `${f(r.Wg)} J`], ['K = K₀ + W_g', `${f(M.toss(0).K)} + (${f(r.Wg)}) = ${f(r.K)} J`]]; } },
+  whirl: { text: `更早的几个时刻，相隔四分之一圈：每个时刻拉力（指向钉子）与速度（沿圆周）都成 90°。在任何一小步中，位移都沿 <b>v</b>，所以 T·Δx·cos 90° = 0。重力和桌面的支持力是竖直的，也不做功。`,
+    facts: () => [['拉力 T', `${f(M.WHIRL.T)} N`], ['T 与 v 的夹角', '90°'], ['T 做的功', '0 J'], ['速率', `${f(M.WHIRL.v)} m/s，恒定`], ['K', `${f(M.WHIRL.K)} J，恒定`]] },
+  car: { text: `重力和支持力是竖直的，与运动方向成 90°，不做功，可以不管。沿 Δx 方向唯一的力是路面的推力，它也是合力（红）。它做的功 F·Δx 就是动能的全部变化量。`,
+    facts: s => { const r = M.car(s.car.t); return [['F（路面，向前）', `${f(M.CAR.F / 1000)} kN`], ['Δx', `${f(r.x)} m`], ['W_net = F Δx', `${f(r.Wnet / 1000)} kJ`], ['v', `${f(r.v)} m/s`], ['K = ½mv²', `${f(r.K / 1000)} kJ`]]; } },
+  drop: { text: `把零点上移到 ${f(M.DROP.ref2, 1)} m，每个 U<sub>g</sub> 值都减小 mg × ${f(M.DROP.ref2, 1)} = ${f(M.DROP.m * M.G * M.DROP.ref2)} J。在新零点以下，U<sub>g</sub> 为负。但下落过程中 U<sub>g</sub> 的<i>变化量</i>不变，所以算出的速率也不变。哪个零点让计算最简单，就选哪个。`,
+    facts: s => { const r = M.drop(s.drop.t), m = M.DROP.m * M.G; return [['高度', `${f(r.y)} m`], ['U_g，以地面为零点', `${f(r.U)} J`], [`U_g，以 ${f(M.DROP.ref2, 1)} m 为零点`, `${f(m * (r.y - M.DROP.ref2))} J`], ['释放以来的 ΔU_g', `${f(r.U - M.DROP.E)} J，两种零点相同`], ['K', `${f(r.K)} J`]]; } },
+  spring: { text: `灰色箭头是压缩量 Δx，从弹簧原长处量起。弹力 F<sub>s</sub> = −kΔx 指向相反方向。木块减速时，它的 K 条流入 U<sub>s</sub> 条；压缩到最大时能量全部是 U<sub>s</sub>。总能量始终不变。`,
+    facts: s => { const r = M.spring(s.spring.t); return [['压缩量 Δx', `${f(r.x, 3)} m`], ['F_s = −kΔx', `${f(r.F)} N`], ['U_s = ½kΔx²', `${f(r.U)} J`], ['K = ½mv²', `${f(r.K)} J`], ['K + U_s', `${f(r.K + r.U)} J`]]; } },
+  push: { text: `F(x) 图线下的面积被分成 ${6} 个细条。每一条是 F(x<sub>i</sub>)·Δx，即推力几乎不变的一小段上所做的功。它们的和 ${f(M.pushStrips(6))} J 已经接近积分值 ${f(M.PUSH.W)} J；细条越窄，差距越小。地板水平且光滑，所以重力和支持力不做功，面积全部变成动能。`,
+    facts: s => { const r = M.push(s.push.t); return [['x', `${f(r.x)} m`], ['F(x)', `${f(r.F)} N`], ['到目前为止 W = ∫F dx', `${f(r.W)} J`], ['K = ½mv²', `${f(r.K)} J`], ['整段推力的 6 条之和', `${f(M.pushStrips(6))} J`], ['∫₀ᴸ F dx', `${f(M.PUSH.W)} J`]]; } },
+  bead: { text: `虚线是金属丝的切线。重力分解为沿金属丝的分量 mg sin θ 和垂直于金属丝的分量，后者由金属丝的支持力承担。由于 U = mgh，且沿金属丝 dh/dx = sin θ，沿金属丝的分量恰好是 −dU/dx。在谷底和驼峰顶，切线水平：不受力，处于平衡。`,
+    facts: s => { const r = M.bead(s.bead.t); return [['沿金属丝的 x', `${f(r.x)} m`], ['U = mgh', `${f(r.U)} J`], ['dU/dx（斜率）', `${f(r.slope)} J/m`], ['F = −dU/dx', `${f(r.F)} N`], ['K + U', `${f(r.K + r.U, 3)} J`]]; } },
+  bond: { text: `这个化学键用伦纳德-琼斯模型描述，U = ε[(r<sub>0</sub>/r)¹² − 2(r<sub>0</sub>/r)⁶]，r<sub>0</sub> = ${f(M.BOND.r0 * 1e9)} nm；重原子几乎不动。虚影标出转折点，在那里 U = E，原子停住。蓝色虚线抛物线是 ½k(r − r<sub>0</sub>)²，k = U″(r<sub>0</sub>) = ${f(M.BOND.k, 0)} N/m：它与势阱底部吻合，所以小振动是简谐运动，ω² = U″/m。再往上，真实的势阱并不对称，内侧陡、外侧缓，所以这次振动更慢，在拉伸状态停留的时间更长。`,
+    facts: s => { const r = M.bond(s.bond.t); return [['r', `${f(r.r * 1e9, 4)} nm`], ['U', `${f(r.U / M.EV, 3)} eV`], ['K = E − U', `${f(r.K / M.EV, 3)} eV`], ['F = −dU/dr', `${f(r.F * 1e9)} nN`], ['k = U″(r₀)', `${f(M.BOND.k, 0)} N/m`], ['小振动 T / 本次振动', `${f(2 * Math.PI / M.BOND.w * 1e15)} / ${f(M.BOND.period * 1e15)} fs`]]; } },
+  pendulum: { text: `重力分解为沿轨迹的 mg sin θ 和沿绳的 mg cos θ。只有 mg sin θ 做功：上摆时使摆球减速，下摆时使它加速。拉力和 mg cos θ 垂直于运动方向，不做功，所以 K + U<sub>g</sub> 保持不变。`,
+    facts: s => { const r = M.pendulum(s.pendulum.t); return [['角度 θ', `${f(r.th * 180 / Math.PI, 1)}°`], ['mg sin θ（沿轨迹）', `${f(r.Ftan)} N`], ['拉力 T', `${f(r.T)} N，不做功`], ['K', `${f(r.K)} J`], ['U_g', `${f(r.U)} J`], ['K + U_g', `${f(r.K + r.U)} J`]]; } },
+  slide: { text: `重力和支持力不做功，可以不管。摩擦力是沿运动方向唯一的力，而且它向后：θ = 180°，所以它做的功是 −f·Δx。这个负功恰好等于损失的动能，这部分能量以热的形式出现在木块和地面中。`,
+    facts: s => { const r = M.slide(s.slide.t); return [['摩擦力 f = μk mg', `${f(M.SLIDE.f)} N`], ['Δx', `${f(r.x)} m`], ['W_f = −f Δx', `${f(r.Wf)} J`], ['K', `${f(r.K)} J`], ['内能', `${f(r.Eth)} J`], ['K + 内能', `${f(r.K + r.Eth)} J`]]; } },
+  lift: { text: `灰色箭头是每个箱子上升的 Δy。匀速时绳的拉力等于重力，所以每根绳做功 W = mgΔy。高度相同，做功就相同；快的箱子用一半的时间到达，所以它的绳输出的功率是两倍。`,
+    facts: s => { const a = M.lift(s.lift.t, M.LIFT.vFast), b = M.lift(s.lift.t, M.LIFT.vSlow); return [['T = mg', `${f(M.LIFT.W, 1)} N`], ['快：到目前为止做的功', `${f(a.W, 0)} J，P ${f(a.P, 0)} W`], ['慢：到目前为止做的功', `${f(b.W, 0)} J，P ${f(b.P, 0)} W`], ['P = Fv（快）', `${f(M.LIFT.W, 0)} × ${f(M.LIFT.vFast, 1)} = ${f(M.LIFT.Pfast, 0)} W`]]; } },
 };
