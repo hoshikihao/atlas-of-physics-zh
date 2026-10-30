@@ -41,7 +41,7 @@ export function buildWorld(E) {
   // ---------- 1 · forces: a block at rest ----------
   const X0 = STATIONS.rest;
   smooth(X0 - 1.2, X0 + 1.2);
-  const g0 = asm('rest', root, { title: 'A block at rest', sub: 'two forces, balanced' });
+  const g0 = asm('rest', root, { title: '静止的木块', sub: '两个力，互相平衡' });
   const b0 = block(g0, S1); b0.position.set(X0, 0.02 + S1 / 2, 0);
   const fg0 = force(g0), fn0 = force(g0);
   label('vec', 'F<sub>g</sub>', () => tip(fg0)); label('vec', 'F<sub>N</sub>', () => tip(fn0));
@@ -50,7 +50,7 @@ export function buildWorld(E) {
   // ---------- 2 · first law: gliding at constant velocity ----------
   const X1 = STATIONS.glide;
   smooth(X1 - 2.4, X1 + 2.4);
-  const g1 = asm('glide', root, { title: 'Gliding block', sub: 'no net force, so no change in motion' });
+  const g1 = asm('glide', root, { title: '滑行的木块', sub: '合力为零，运动状态不变' });
   const b1 = block(g1, S1);
   const fg1 = force(g1), fn1 = force(g1);
   label('vec', 'F<sub>g</sub>', () => tip(fg1)); label('vec', 'F<sub>N</sub>', () => tip(fn1));
@@ -61,7 +61,7 @@ export function buildWorld(E) {
   // ---------- 3 · second law: same push, double the mass ----------
   const X2 = STATIONS.second;
   smooth(X2 - 1.0, X2 + 3.2, -1.4, 1.4);
-  const g2 = asm('second', root, { title: 'Same push, different mass', sub: 'ΣF = ma' });
+  const g2 = asm('second', root, { title: '同样的推力，不同的质量', sub: 'ΣF = ma' });
   const b2a = block(g2, S1, '2.0 kg block'), b2b = block(g2, S2, '4.0 kg block');
   const push2a = force(g2), push2b = force(g2), net2a = force(g2, true), net2b = force(g2, true);
   label('vec', 'F', () => tip(push2a)); label('vec', 'F', () => tip(push2b));
@@ -72,7 +72,7 @@ export function buildWorld(E) {
   // ---------- 4 · friction: a growing push on a rough floor ----------
   const X3 = STATIONS.friction;
   rough(X3 - 1.4, X3 + 2.2);
-  const g3 = asm('friction', root, { title: 'Friction', sub: 'static until it can’t, then kinetic' });
+  const g3 = asm('friction', root, { title: '摩擦力', sub: '先是静摩擦，撑不住了就变成滑动摩擦' });
   const b3 = block(g3, S1);
   const fg3 = force(g3), fn3 = force(g3), fa3 = force(g3), ff3 = force(g3), net3 = force(g3, true);
   label('vec', 'F<sub>app</sub>', () => tip(fa3)); label('vec', 'f', () => tip(ff3));
@@ -81,10 +81,10 @@ export function buildWorld(E) {
   // ---------- 5 · third law: A pushes B ----------
   const X4 = STATIONS.third;
   smooth(X4 - 1.4, X4 + 2.4);
-  const g4 = asm('third', root, { title: 'Two blocks in contact', sub: 'A pushes B; B pushes A back' });
+  const g4 = asm('third', root, { title: '相互接触的两个木块', sub: 'A 推 B，B 反推 A' });
   const b4a = block(g4, S1, 'Block A · 2.0 kg'), b4b = block(g4, S2, 'Block B · 4.0 kg');
   const push4 = force(g4), onB = force(g4), onA = force(g4);
-  label('vec', 'F', () => tip(push4)); label('vec', 'F<sub>A on B</sub>', () => tip(onB)); label('vec', 'F<sub>B on A</sub>', () => tip(onA));
+  label('vec', 'F', () => tip(push4)); label('vec', 'F<sub>A 对 B</sub>', () => tip(onB)); label('vec', 'F<sub>B 对 A</sub>', () => tip(onA));
   label('tick', 'A', () => V(b4a.position.x, S1 + 0.14, S1 / 2)); label('tick', 'B', () => V(b4b.position.x, S2 + 0.14, S2 / 2));
 
   // ---------- 6 · inclined plane ----------
@@ -93,7 +93,7 @@ export function buildWorld(E) {
   const tri = new THREE.Shape(); tri.moveTo(topX, 0); tri.lineTo(topX + L * Math.cos(th), 0); tri.lineTo(topX, topY); tri.closePath();
   const rampGeo = new THREE.ExtrudeGeometry(tri, { depth: 1.4, bevelEnabled: false }); rampGeo.translate(0, 0, -0.7);
   part(root, rampGeo, { tone: 'mid', name: 'Ramp', mat: shadeMat('board', { opacity: 0.55 }) });
-  const g5 = asm('incline', root, { title: 'Block on a ramp', sub: `${M.THETA_DEG}°, frictionless` });
+  const g5 = asm('incline', root, { title: '斜面上的木块', sub: `${M.THETA_DEG}°，光滑` });
   const b5 = block(g5, S1); b5.rotation.z = -th;
   const fg5 = force(g5), fn5 = force(g5), par5 = arrow(g5, 'dark', { r: 0.018, head: 0.1, headR: 0.05, name: 'Components', tone: 'mid' }), perp5 = arrow(g5, 'dark', { r: 0.018, head: 0.1, headR: 0.05, name: 'Components', tone: 'mid' }), net5 = force(g5, true);
   label('vec', 'F<sub>g</sub>', () => tip(fg5)); label('vec', 'F<sub>N</sub>', () => tip(fn5)); label('vec red', 'ΣF', () => tip(net5));
@@ -103,7 +103,7 @@ export function buildWorld(E) {
   // ---------- tension: one string, and two strings at a changing angle ----------
   const XT = STATIONS.tension, CEIL = 2.6;
   part(root, box(4.4, 0.08, 0.5, 0.02), { tone: 'mid', pal: 'board', pos: [XT, CEIL + 0.04, 0], name: 'Ceiling' });
-  const gT = asm('tension', root, { title: 'Hanging block', sub: 'tension holds it up' });
+  const gT = asm('tension', root, { title: '悬挂的木块', sub: '拉力把它托住' });
   const bT1 = block(gT, S1, 'One string'), bT2 = block(gT, S1, 'Two strings');
   const thin = r => part(gT, new THREE.CylinderGeometry(0.008, 0.008, 1, 8), { tone: 'hi', pal: 'ink', name: 'Strings' });
   const s1 = thin(), s2a = thin(), s2b = thin(), s2c = thin();
@@ -116,7 +116,7 @@ export function buildWorld(E) {
 
   // ---------- a plane in level flight ----------
   const XP = STATIONS.plane, PY = 3.2;
-  const gP = asm('plane', root, { title: 'Plane in level flight', sub: 'four forces, all balanced' });
+  const gP = asm('plane', root, { title: '水平飞行的飞机', sub: '四个力，全部平衡' });
   const plane = new THREE.Group(); gP.add(plane);
   part(plane, xAxis(new THREE.CylinderGeometry(0.42, 0.3, 4.6, 32)), { tone: 'hi', name: 'Fuselage' });
   part(plane, xAxis(new THREE.ConeGeometry(0.42, 1.0, 32)).translate(2.8, 0, 0), { tone: 'hi', name: 'Fuselage' });
@@ -127,14 +127,14 @@ export function buildWorld(E) {
   part(plane, box(0.06, 1.7, 0.16, 0.03), { tone: 'mid', pal: 'dark', pos: [3.32, 0, 0], name: 'Propeller' });
   part(plane, box(0.4, 0.18, 0.5, 0.05), { tone: 'mid', pal: 'dark', pos: [1.2, 0.42, 0], name: 'Canopy' });
   const pLift = force(gP), pW = force(gP), pT = force(gP), pD = force(gP);
-  label('vec', 'lift', () => tip(pLift)); label('vec', 'F<sub>g</sub>', () => tip(pW)); label('vec', 'thrust', () => tip(pT)); label('vec', 'drag', () => tip(pD));
+  label('vec', '升力', () => tip(pLift)); label('vec', 'F<sub>g</sub>', () => tip(pW)); label('vec', '推力', () => tip(pT)); label('vec', '阻力', () => tip(pD));
 
   // ---------- a car speeding up ----------
   const XC = STATIONS.car - 6;
   part(root, box(24, 0.03, 3.4, 0.01), { tone: 'lo', pal: 'board', pos: [XC + 9, 0.015, 0], name: 'Road' });
   const dashes = []; for (let x = XC - 2.5; x < XC + 20.5; x += 2) dashes.push(x, 0.035, 0, x + 1, 0.035, 0);
   lines(root, dashes, '#9a9aa0');
-  const gC = asm('car', root, { title: 'Car speeding up', sub: 'the road pushes it forward' });
+  const gC = asm('car', root, { title: '加速的汽车', sub: '路面推它向前' });
   const carG = new THREE.Group(); gC.add(carG);
   part(carG, box(4.2, 0.7, 1.8, 0.18), { tone: 'hi', pos: [0, 0.75, 0], name: 'Body' });
   part(carG, box(2.2, 0.6, 1.6, 0.2), { tone: 'hi', pos: [-0.3, 1.38, 0], name: 'Cabin' });
@@ -143,7 +143,7 @@ export function buildWorld(E) {
     part(carG, zAxis(new THREE.CylinderGeometry(0.17, 0.17, 0.28, 20)), { tone: 'mid', pos: [x, 0.36, z], name: 'Wheels' });
   }
   const cW = force(gC), cN = force(gC), cF = force(gC), cD = force(gC), cNet = force(gC, true);
-  label('vec', 'F<sub>g</sub>', () => tip(cW)); label('vec', 'F<sub>N</sub>', () => tip(cN)); label('vec', 'friction', () => tip(cF)); label('vec', 'drag', () => tip(cD)); label('vec red', 'ΣF', () => tip(cNet));
+  label('vec', 'F<sub>g</sub>', () => tip(cW)); label('vec', 'F<sub>N</sub>', () => tip(cN)); label('vec', '摩擦力', () => tip(cF)); label('vec', '阻力', () => tip(cD)); label('vec red', 'ΣF', () => tip(cNet));
 
 
   // centre of mass: the quartered disc, drawn over solids so it can be seen inside them
@@ -162,7 +162,7 @@ export function buildWorld(E) {
   // ---------- systems: a tug of war on ice ----------
   const XG = STATIONS.tug, TG = M.TUG, HAND = 1.0, REACH = 0.26;
   smooth(XG - 3.6, XG + 2.8, -1.1, 1.1);
-  const gG = asm('tug', root, { title: 'Tug of war on ice', sub: 'internal forces cancel; the centre of mass stays put' });
+  const gG = asm('tug', root, { title: '冰上拔河', sub: '内力互相抵消，质心不动' });
   const skater = (r, h, dir, name) => {
     const g = new THREE.Group(); gG.add(g);
     part(g, cyl(r, h, 28), { tone: 'hi', pos: [0, h / 2 + 0.02, 0], name });
@@ -176,22 +176,22 @@ export function buildWorld(E) {
   const cmG = cmMark(gG, 0.09);
   const sysBox = part(gG, box(1, 1, 1, 0.04), { tone: 'lo', name: 'System', mat: shadeMat('board', { opacity: 0.35 }) });
   const above = a => a.visible ? a.localToWorld(V(0, a.userData.arrow.shaft.scale.y / 2, 0)).add(V(0, 0.2, 0)) : null;
-  label('vec', 'T<sub>on A</sub>', () => above(tOnA)); label('vec', 'T<sub>on B</sub>', () => above(tOnB));
+  label('vec', 'T<sub>A</sub>', () => above(tOnA)); label('vec', 'T<sub>B</sub>', () => above(tOnB));
   label('tick', 'A · 50 kg', () => V(skA.position.x - 0.12, 1.25 + 0.42, 0.2)); label('tick', 'B · 75 kg', () => V(skB.position.x + 0.62, 1.4 + 0.48, 0.2));
   label('vec blue', 'x<sub>cm</sub>', () => V(XG, 0.32, 0.5));
-  label('board', 'system', () => sysBox.visible && gG.userData.explode > 0.5 ? V(sysBox.position.x - sysBox.scale.x / 2 + 0.08, 2.32, 0.65) : null);
+  label('board', '系统', () => sysBox.visible && gG.userData.explode > 0.5 ? V(sysBox.position.x - sysBox.scale.x / 2 + 0.08, 2.32, 0.65) : null);
   { const t = []; for (let k = -1; k <= 1; k += 0.25) t.push(XG, 0.025, k * 1.0, XG, 0.025, k * 1.0 + 0.12); lines(root, t, '#5b86d6'); }   // dashed line through x_cm
 
   // ---------- ΣF_ext = M a_cm: a block on a board, the board pulled ----------
   const XB = STATIONS.board, BD = M.BOARD, XB0 = XB - 1.6, BH = 0.08;
   smooth(XB - 3.2, XB + 3.6, -1.0, 1.0);
-  const gB = asm('board', root, { title: 'Block on a board', sub: 'friction between them is internal' });
+  const gB = asm('board', root, { title: '木板上的木块', sub: '两者间的摩擦力是内力' });
   const plank = part(gB, box(BD.len, BH, 0.9, 0.02), { tone: 'mid', name: 'Board · 4.0 kg' });
   const bB = block(gB, S1, 'Block · 2.0 kg');
   const pullB = force(gB), fOnBlock = force(gB), fOnBoard = force(gB), netB = force(gB, true);
   const cmB = cmMark(gB, 0.07);
   label('vec', 'F', () => tip(pullB)); const below = a => a.visible ? a.localToWorld(V(0, a.userData.arrow.shaft.scale.y / 2, 0)).add(V(-0.1, -0.2, 0.15)) : null;
-  label('vec', 'f<sub>on block</sub>', () => fOnBlock.visible ? tip(fOnBlock).add(V(0.25, 0.08, 0)) : null); label('vec', 'f<sub>on board</sub>', () => below(fOnBoard));
+  label('vec', 'f<sub>木块</sub>', () => fOnBlock.visible ? tip(fOnBlock).add(V(0.25, 0.08, 0)) : null); label('vec', 'f<sub>木板</sub>', () => below(fOnBoard));
   label('vec red', 'ΣF<sub>ext</sub>', () => tip(netB));
   label('tick', '2.0 kg', () => V(bB.position.x - S1 / 2, bB.position.y + S1 / 2 + 0.14, S1 / 2));
   label('tick', '4.0 kg', () => V(plank.position.x - BD.len / 2 + 0.1, 0.42, 0.45));
@@ -203,7 +203,7 @@ export function buildWorld(E) {
     for (let y = 0; y <= DR.y0; y += 0.5) t.push(XD - 1.0, y, 0, XD - (y % 1 ? 0.92 : 0.84), y, 0);
     lines(root, t, '#8a8a8f'); }
   label('axis', '5 m', () => V(XD - 1.05, 5, 0)); label('axis', '0', () => V(XD - 1.05, 0.05, 0));
-  const gD = asm('drag', root, { title: 'Falling with drag ∝ v', sub: 'drag grows until it matches the weight' });
+  const gD = asm('drag', root, { title: '受阻力 ∝ v 作用的下落', sub: '阻力增大，直到与重力相等' });
   const ballD = part(gD, new THREE.SphereGeometry(RB, 32, 20), { tone: 'hi', name: 'Ball · 0.50 kg' });
   const wD = force(gD), dD = force(gD), netD = force(gD, true);
   const ghostsD = Array.from({ length: 8 }, () => ghostCircle(RB));
@@ -218,7 +218,7 @@ export function buildWorld(E) {
   part(root, new THREE.CylinderGeometry(JR, JR, JH - BASE, 40, 1, true), { tone: 'lo', pal: 'board', pos: [XH, BASE + (JH - BASE) / 2, 0], name: 'Jar', mat: shadeMat('board', { opacity: 0.25 }) });
   { const t = []; for (let k = 0; k <= 12; k++) { const y = BASE + k * 0.1, w = k % 5 ? 0.06 : 0.12; t.push(XH + JR + 0.02, y, 0, XH + JR + 0.02 + w, y, 0); } lines(root, t, '#8a8a8f'); }
   label('board', '0', () => V(XH + JR + 0.2, BASE, 0)); label('board', '5 cm', () => V(XH + JR + 0.2, BASE + 0.5, 0)); label('board', '10 cm', () => V(XH + JR + 0.2, BASE + 1.0, 0));
-  const gH = asm('honey', root, { title: 'Steel ball in honey', sub: 'at terminal speed within milliseconds' });
+  const gH = asm('honey', root, { title: '蜂蜜中的钢球', sub: '几毫秒内就达到终端速率' });
   gH.userData.minDist = 4; gH.userData.minRadius = 0.6;
   const RH = HN.r * Z10, YH0 = HTOP - 0.09;
   const ballH = part(gH, new THREE.SphereGeometry(RH, 24, 16), { tone: 'mid', pal: 'dark', name: 'Steel ball · 10 mm' });
