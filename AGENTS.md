@@ -8,7 +8,8 @@
 
 ## Translation Rules
 - 术语以 `glossary.zh.md` 为准；遇到表里没有的术语，先补进术语表再用。
-- `${...}` 插值、HTML 标签与属性、`class`、`data-*`、`<i>`/`<sub>`/`<sup>` 包裹的物理量符号、公式和单位保持原样。
+- `${...}` 插值、HTML 标签与属性、`class`、`data-*`、`<i>`/`<sup>` 包裹的物理量符号、公式和单位保持原样。
+- 下标中的英文整词（含 `V_under` 这类纯文本下标）按 `glossary.zh.md` 的 Subscripts 表译成中文；字母、数字和缩写下标（cm、net、max、min、ext、app、esc、mech、enc、ind、avg 等）保持原样。
 - `kicker`、`title` 保持单引号字符串、同一行、`kicker` 在 `title` 前，内容不得含 `'`。
 - 练习题 `choices` 中每个选项的第一个数字必须仍是该选项原来的数值，数字前不得加其他数字。
 - 用中文全角标点；中文与数字、拉丁字母之间加一个半角空格；保留原文的 `−`（U+2212）、`×`、`·` 等符号。

@@ -300,3 +300,24 @@
 | flux linkage | 磁链 |
 | back emf | 自感电动势 |
 | tesla / gauss / weber / henry | 特斯拉 / 高斯 / 韦伯 / 亨利 |
+
+## Subscripts
+| English | 中文 |
+|---|---|
+| before / after | 前 / 后 |
+| total | 总 |
+| new | 新 |
+| full / plug (hole cut out) | 整 / 孔 |
+| square / plate / disc（积分区域） | 正方形 / 板 / 圆盘 |
+| ball / cart / car / truck | 球 / 车 / 轿 / 卡 |
+| body / rod | 身 / 杆 |
+| block / plank / push | 木块 / 木板 / 推 |
+| fluid / water / sea | 液 / 水 / 海水 |
+| obj (object) / wood / ice / steel | 物 / 木 / 冰 / 钢 |
+| displaced / under (submerged) | 排 / 浸 |
+| top / bottom | 上 / 下 |
+| hole | 孔 |
+| free / bound | 自由 / 束缚 |
+| terminal | 端 |
+| near / far | 近 / 远 |
+| on A（受力对象） | A |
