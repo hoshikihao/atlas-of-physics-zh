@@ -143,6 +143,10 @@
 | perfectly inelastic collision | 完全非弹性碰撞 |
 | explosion | 爆炸 |
 | ballistic pendulum | 冲击摆 |
+| closed / isolated system | 孤立系统 |
+| crumple zone | 溃缩区 |
+| knife edge | 刀口 |
+| linear density | 线密度 |
 
 ## Oscillations and Rotation
 | English | 中文 |
@@ -157,6 +161,17 @@
 | physical pendulum | 复摆 |
 | torsion pendulum | 扭摆 |
 | mass on a spring | 弹簧振子 |
+| angular frequency | 角频率 |
+| phase constant | 初相 |
+| full cycle | 全振动 |
+| torsion constant | 扭转常量 |
+| centre of oscillation | 振动中心 |
+| line of action | 作用线 |
+| shape factor | 形状因子 |
+| Atwood’s machine | 阿特伍德机 |
+| drum (of a well) | 辘轳 |
+| merry-go-round | 旋转木马 |
+| rim speed | 轮缘速率 |
 | rotation | 转动 |
 | angular acceleration | 角加速度 |
 | torque | 力矩 |
@@ -180,6 +195,11 @@
 | continuity equation | 连续性方程 |
 | Bernoulli’s equation | 伯努利方程 |
 | Torricelli’s law | 托里拆利定律 |
+| ideal fluid | 理想流体 |
+| steady flow | 定常流动 |
+| volume flow rate | 体积流量 |
+| apparent weight | 视重 |
+| snowshoe | 雪鞋 |
 
 ## Electricity
 | English | 中文 |
