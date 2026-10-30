@@ -68,7 +68,7 @@ export const PRACTICE = {
   1: [
     { q: `本页 ${p(P1.q * 1e9, 1)} nC 的电荷位于一个立方体的中心。穿过立方体<b>一个</b>面的电通量为`,
       choices: P1.nums.map(x => `${p(x, 1)} N·m²/C`), answer: 0, nums: P1.nums,
-      why: `<p>由高斯定理，整个立方体的电通量是 <i>q</i>/ε<sub>0</sub> = ${p(P1.nums[1], 0)} N·m²/C。由对称性，六个面各分得相同的一份：</p><div class="eq">Φ<sub>一个面</sub> = <i>q</i>/6ε<sub>0</sub> = ${p(P1.nums[0], 1)} N·m²/C</div><p><i>kq</i> = ${p(P1.nums[2], 2)} 的单位也是 N·m²/C，但它是 <i>q</i>/4πε<sub>0</sub>，并不是穿过任何面的电通量。</p>` },
+      why: `<p>由高斯定理，整个立方体的电通量是 <i>q</i>/ε<sub>0</sub> = ${p(P1.nums[1], 0)} N·m²/C。由对称性，六个面各分得相同的一份：</p><div class="eq">Φ<sub>面</sub> = <i>q</i>/6ε<sub>0</sub> = ${p(P1.nums[0], 1)} N·m²/C</div><p><i>kq</i> = ${p(P1.nums[2], 2)} 的单位也是 N·m²/C，但它是 <i>q</i>/4πε<sub>0</sub>，并不是穿过任何面的电通量。</p>` },
     { q: `某区域内电场沿径向，<i>E</i> = <i>cr</i>，<i>c</i> = ${p(P1b.c / 1e4, 1)} × 10<sup>4</sup> N/C 每米。以原点为球心、半径 ${p(P1b.R * 100, 0)} cm 的球内有多少电荷？`,
       choices: P1b.nums.map(x => `${g(x)} nC`), answer: 3, nums: P1b.nums,
       why: `<p>球面上 <b>E</b> ∥ d<b>A</b>，且处处 <i>E</i> = <i>cR</i>，所以</p><div class="eq">∮<b>E</b> · d<b>A</b> = <i>cR</i> · 4π<i>R</i>² = <i>q</i><sub>enc</sub>/ε<sub>0</sub> &nbsp;→&nbsp; <i>q</i><sub>enc</sub> = 4πε<sub>0</sub><i>cR</i>³ = ${g(P1b.q * 1e9)} nC</div><p>球面面积是 4π<i>R</i>²，而不是 ⁴⁄₃π<i>R</i>³：电通量是对面积的积分。</p>` },

@@ -85,7 +85,7 @@ export const PRACTICE = {
   2: [
     { q: `本页中，一个 +${M.UNI.q / nC} nC 电荷在 ${M.UNI.E} N/C 的匀强电场中从 A 移到 C，<i>V</i><sub>C</sub> − <i>V</i><sub>A</sub> = −10 V。电场力对它做的功为`,
       choices: P2.nums.map(x => `${s(+p(x, 1))} nJ`), answer: 3, nums: P2.nums,
-      why: `<div class="eq"><i>W</i><sub>电场</sub> = −Δ<i>U</i> = −<i>q</i>Δ<i>V</i> = −(${M.UNI.q / nC} nC)(−10 V) = +${p(P2.W * 1e9, 1)} nJ</div><p>与路径无关：只有沿 <b>E</b> 的 ${p(M.UNI.C[0] * 100, 0)} cm 起作用，而不是 ${p(P2.L * 100, 1)} cm 的直线路径（${p(P2.nums[2], 1)} nJ）。正电荷顺着 <b>E</b> 运动时 <i>U</i> 减小，所以电场力做正功。</p>` },
+      why: `<div class="eq"><i>W</i><sub>电</sub> = −Δ<i>U</i> = −<i>q</i>Δ<i>V</i> = −(${M.UNI.q / nC} nC)(−10 V) = +${p(P2.W * 1e9, 1)} nJ</div><p>与路径无关：只有沿 <b>E</b> 的 ${p(M.UNI.C[0] * 100, 0)} cm 起作用，而不是 ${p(P2.L * 100, 1)} cm 的直线路径（${p(P2.nums[2], 1)} nJ）。正电荷顺着 <b>E</b> 运动时 <i>U</i> 减小，所以电场力做正功。</p>` },
     { q: `电场沿 +<i>x</i> 方向，<i>E</i> = ${P2b.c}<i>x</i>²（N/C，<i>x</i> 以 m 为单位）。<i>V</i>(${P2b.x} m) − <i>V</i>(0) 为`,
       choices: P2b.nums.map(x => `${s(x)} V`), answer: 2, nums: P2b.nums,
       why: `<div class="eq">Δ<i>V</i> = −∫<sub>0</sub><sup>${P2b.x}</sup> ${P2b.c}<i>x</i>² d<i>x</i> = −<i>x</i>³ |<sub>0</sub><sup>${P2b.x}</sup> = ${s(P2b.dV)} V</div><p>顺着 <b>E</b> 移动，<i>V</i> 降低，所以答案为负。<i>E</i>(${P2b.x}) × ${P2b.x} m = ${-P2b.nums[1]} V 把最大的电场当成了全程都一样大。</p>` },

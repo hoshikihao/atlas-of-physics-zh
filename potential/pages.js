@@ -103,7 +103,7 @@ export const PAGES = [
     kicker: '11.4', title: '电偶极子', sub: '电势按数值相加',
     body: `
       <p class="lede">电势是标量：有多个电荷时，把各自的 <i>kq</i>/<i>r</i> 连同正负号相加即可，不用分解分量。</p>
-      <div class="eq"><i>V</i><sub>轴线</sub> = −2<i>akq</i>/(<i>x</i>² − <i>a</i>²)</div>
+      <div class="eq"><i>V</i><sub>轴</sub> = −2<i>akq</i>/(<i>x</i>² − <i>a</i>²)</div>
       <p>这就是 ±1 nC、相距 ${2 * M.DIP.a * 100} cm 时的 <i>kq</i>/(<i>x</i> + <i>a</i>) − <i>kq</i>/(<i>x</i> − <i>a</i>)：一座山丘旁边一个深坑。在 ${M.DIP.axisX * 100} cm 外的 P 点，<i>V</i> = ${f(dipAxis, 1)} V。中垂线上每一点到两个电荷的距离都相等，所以那里 <i>V</i> = <b>0</b>，尽管 <b><i>E</i></b> 不为零。对于两个同种电荷，中垂线上的 <i>V</i> 不为 0：在中点达到峰值。</p>
       <div class="charts">${chart({ x0: -0.36, x1: 0.36, y0: -200, y1: 200, zero: true, xlabel: '沿轴线的位置（m）', ylabel: '轴线上的 V（伏特）', label: '沿偶极子轴线的电势',
         series: runs(samples(720, -0.36, 0.36, x => M.Vdip([x, 0, 0])), 200).map(pts => ({ pts })),
