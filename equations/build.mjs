@@ -17,7 +17,7 @@ for (const c of CHAPTERS) {
   const src = fs.readFileSync(path.join(ROOT, c, 'pages.js'), 'utf8');
   const list = [...src.matchAll(/kicker:\s*'([^']*)',\s*title:\s*'([^']*)'/g)];
   list.forEach(([, k, t], i) => {
-    const no = k.startsWith('Chapter') ? 'Ch. ' + k.split(' ')[1] : k.split(' ')[0];
+    const ch = /^(?:Chapter|第) (\d+)/.exec(k), no = ch ? `第 ${ch[1]} 章` : k.split(' ')[0];
     pages[`${c}/${i}`] = [no, t];
   });
 }
@@ -361,7 +361,7 @@ const sectionHTML = SHEETS.map(S => {
 }).join('');
 
 const html = `<!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

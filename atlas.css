@@ -3,11 +3,13 @@
   --page: #f2f2ef; --card: #fbfbfa; --text: #57575a; --strong: #18181a; --muted: #8c8c90;
   --hi: #26262a; --mid: #8a8a8f; --lo: #b4b4b8; --faint: #d4d4d6; --lit: #000;
   --red: #e5484d;
-  --serif: 'EB Garamond', Georgia, serif; --sans: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --serif: 'EB Garamond', Georgia, 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', serif; --sans: 'Inter', system-ui, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; --mono: 'JetBrains Mono', ui-monospace, 'PingFang SC', 'Microsoft YaHei', monospace;
   --lift: inset 0 1px 0 0 #fff, 0 0 0 1px #0000000f, 0 1px 1px -.5px #0000000a, 0 3px 3px -1.5px #0000000a, 0 6px 6px -3px #0000000a, 0 12px 12px -6px #0000000a, 0 24px 24px -12px #0000000a;
 }
 * { box-sizing: border-box; margin: 0; }
 html { background: var(--page); color: var(--text); font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+/* 中文字体没有斜体，不让浏览器把汉字压成假斜体 */
+html { font-synthesis-style: none; }
 body { background: var(--page); }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; }
