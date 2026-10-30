@@ -52,7 +52,7 @@ export function buildWorld(E) {
 
   // ---------- 0 · charge: three carbon atoms (a cartoon: not to scale) ----------
   const X0 = STATIONS.charge;
-  const gA = asm('atoms', root, { title: 'Three carbon atoms', sub: 'same nucleus, different electron counts' });
+  const gA = asm('atoms', root, { title: '三个碳原子', sub: '原子核相同，电子数不同' });
   const atoms = M.ATOMS.map((a, k) => {
     const c = V(X0 + (k - 1) * 3.4, 0.3, 0), g = new THREE.Group(); g.position.copy(c); gA.add(g);
     // nucleus: 6 protons (red) and 6 neutrons (paper) packed in a small cluster
@@ -66,19 +66,19 @@ export function buildWorld(E) {
     ghost.userData = { noEdge: true }; ghost.visible = false; g.add(ghost);
     label('tick', `${a.p} p⁺ · ${a.e} e⁻`, () => c.clone().add(V(0.62, -1.55, 0)));
     const net = a.p - a.e;
-    label(net === 0 ? 'board' : net > 0 ? 'vec red' : 'vec blue', net === 0 ? 'neutral' : net > 0 ? '+1<i>e</i>' : '−1<i>e</i>', () => c.clone().add(V(net === 0 ? -0.5 : 0, 1.6, 0)));
+    label(net === 0 ? 'board' : net > 0 ? 'vec red' : 'vec blue', net === 0 ? '中性' : net > 0 ? '+1<i>e</i>' : '−1<i>e</i>', () => c.clone().add(V(net === 0 ? -0.5 : 0, 1.6, 0)));
     return { a, g, el, ghost, c };
   });
 
   // ---------- 1 · charging by induction: a negative rod and a neutral metal sphere ----------
   const X1 = STATIONS.charging, SC = V(X1 - 1.2, 0.5, 0), R1 = M.SPHERE.R * S;
   sheet(X1 - 7, X1 + 7, -2, 3);
-  const gI = asm('induce', root, { title: 'Metal sphere, charged rod', sub: 'induction: no contact needed' });
+  const gI = asm('induce', root, { title: '金属球与带电棒', sub: '感应起电：无需接触' });
   ball(gI, R1 * 0.995, { name: 'Metal sphere', tone: 'hi', pos: [SC.x, SC.y, SC.z] });
   const rodL = M.ROD.L * S, rodG = new THREE.Group(); gI.add(rodG);
   part(rodG, xAxis(cyl(0.11, rodL, 28)), { tone: 'hi', pal: 'base', pos: [-rodL / 2, 0, 0], name: 'Charged rod' });
   for (let i = 0; i < M.ROD.n; i++) { const b = bead(rodG, 0.06, 'blue', 'Rod charge'); b.position.set(-(i + 0.5) * rodL / M.ROD.n, 0.02, 0.11); }
-  label('tick', `rod ${(M.ROD.Q / M.nC).toFixed(0)} nC`, () => rodG.visible ? rodG.localToWorld(V(-rodL * 0.25, 0.42, 0)) : null);
+  label('tick', `棒 ${(M.ROD.Q / M.nC).toFixed(0)} nC`, () => rodG.visible ? rodG.localToWorld(V(-rodL * 0.25, 0.42, 0)) : null);
   // surface charge: beads on a fixed set of surface points, sized by |σ| and coloured by its sign
   const NS = 220, surf = [];
   for (let i = 0; i < NS; i++) {
@@ -95,11 +95,11 @@ export function buildWorld(E) {
   const gs = []; for (let k = 0; k < 3; k++) gs.push(SC.x - 0.45 + k * 0.15, gy - k * 0.14, 0, SC.x + 0.45 - k * 0.15, gy - k * 0.14, 0);
   lines(gI, gs, '#2c2c30');
   const flow = Array.from({ length: 4 }, () => bead(gI, 0.06, 'blue', 'Electrons'));
-  label('tick', 'ground', () => V(SC.x + 0.95, gy - 0.1, 0));
+  label('tick', '接地', () => V(SC.x + 0.95, gy - 0.1, 0));
 
   // polarization: a charged balloon near a wall; the wall's molecules stretch into small dipoles
   const XB = X1 + 3.6, BR = M.BALLOON.r * S, wallX = XB + 1.6;
-  const gB = asm('balloon', root, { title: 'Balloon on a wall', sub: 'polarization: an insulator’s molecules stretch' });
+  const gB = asm('balloon', root, { title: '贴在墙上的气球', sub: '极化：绝缘体的分子被拉伸' });
   part(gB, new THREE.BoxGeometry(0.25, 4.2, 2.4), { tone: 'mid', pal: 'board', pos: [wallX + 0.125, 0.5, 0], name: 'Wall' });
   const balloonG = new THREE.Group(); gB.add(balloonG);
   const bl = ball(balloonG, 1, { name: 'Balloon', tone: 'hi' }); bl.scale.set(BR, BR * 1.18, BR);
@@ -112,16 +112,16 @@ export function buildWorld(E) {
     const link = part(gB, cyl(0.012, 1, 8), { tone: 'lo', pal: 'dark', name: 'Molecules' });
     mols.push({ p, pos, neg, link });
   }
-  label('tick', 'wall', () => V(wallX + 0.55, 2.35, 0));
-  label('tick', `balloon +${(M.BALLOON.q / M.nC).toFixed(0)} nC`, () => balloonG.localToWorld(V(-0.2, BR * 1.18 + 0.32, 0)));
+  label('tick', '墙', () => V(wallX + 0.55, 2.35, 0));
+  label('tick', `气球 +${(M.BALLOON.q / M.nC).toFixed(0)} nC`, () => balloonG.localToWorld(V(-0.2, BR * 1.18 + 0.32, 0)));
 
   // ---------- 2 · Coulomb's law: two point charges ----------
   const X2 = STATIONS.coulomb, Y2 = 0.6;
   sheet(X2 - 4, X2 + 4, -2, 2.5);
-  const gC = asm('coulomb', root, { title: 'Two point charges', sub: 'equal and opposite, inverse square' });
+  const gC = asm('coulomb', root, { title: '两个点电荷', sub: '等大反向，平方反比' });
   const c1 = charge(gC, 1, 0.26, `+${M.PAIR.q1 / M.uC} μC`), c2 = charge(gC, -1, 0.21, `−${-M.PAIR.q2 / M.uC} μC`);
   const fC1 = force(gC), fC2 = force(gC), rLine = dashed(gC);
-  label('vec', 'F<sub>on 1</sub>', () => tip(fC1, 0.05) && tip(fC1, 0.05).add(V(0, 0.28, 0))); label('vec', 'F<sub>on 2</sub>', () => tip(fC2, 0.05) && tip(fC2, 0.05).add(V(0, 0.28, 0)));
+  label('vec', 'F<sub>1</sub>', () => tip(fC1, 0.05) && tip(fC1, 0.05).add(V(0, 0.28, 0))); label('vec', 'F<sub>2</sub>', () => tip(fC2, 0.05) && tip(fC2, 0.05).add(V(0, 0.28, 0)));
   label('axis', '<i>r</i>', () => V(X2 + 0.08, Y2 - 0.32, 0));
   // breakdown: a like pair at the same distance, which repels
   const likeG = new THREE.Group(); gC.add(likeG);
@@ -135,7 +135,7 @@ export function buildWorld(E) {
   const axisPts = [LX(-0.05), Y3, 0, LX(M.LINE.D + 0.05), Y3, 0];
   for (let x = 0; x <= M.LINE.D + 1e-9; x += 0.05) axisPts.push(LX(x), Y3 - 0.06, 0, LX(x), Y3 + 0.06, 0);
   lines(root, axisPts, '#8a8a8f');
-  const gL = asm('line', root, { title: 'Three charges on a line', sub: 'where the forces balance' });
+  const gL = asm('line', root, { title: '一条直线上的三个电荷', sub: '力在哪里平衡' });
   const qA = charge(gL, 1, 0.24, `+${M.LINE.qA / M.uC} μC`), qB = charge(gL, 1, 0.15, `+${M.LINE.qB / M.uC} μC`);
   qA.position.set(LX(0), Y3, 0); qB.position.set(LX(M.LINE.D), Y3, 0);
   const q0 = charge(gL, 1, 0.1, null, 'Test charge');
@@ -149,7 +149,7 @@ export function buildWorld(E) {
   const X4 = STATIONS.field, CP = V(X4 - 3.7, 0.4, 0), CN = V(X4 + 3.7, 0.4, 0);
   sheet(X4 - 7.5, X4 + 7.5, -3, 3.8);
   lines(root, [X4, -3, 0, X4, 3.8, 0], '#b4b4b8');
-  const gF = asm('point', root, { title: 'Field of a point charge', sub: 'E = kQ/r², away from +, toward −' });
+  const gF = asm('point', root, { title: '点电荷的电场', sub: 'E = kQ/r²，背离 +，指向 −' });
   const fieldOf = (c, sign) => {
     const qm = charge(gF, sign, 0.2, `${sign > 0 ? '+' : '−'}${M.POINT.Q / M.nC} nC`); qm.position.copy(c);
     const ln = [];
@@ -174,7 +174,7 @@ export function buildWorld(E) {
   // ---------- 5 · the electric dipole ----------
   const X5 = STATIONS.dipole, D0 = V(X5 - 1.0, -0.6, 0), DW = p => D0.clone().add(V(p[0] * S, p[1] * S, 0));
   sheet(X5 - 6, X5 + 4, -2.6, 3.4);
-  const gD = asm('dipole', root, { title: 'An electric dipole', sub: 'two opposite charges, close together' });
+  const gD = asm('dipole', root, { title: '电偶极子', sub: '靠得很近的两个异种电荷' });
   const dch = M.dipoleCharges();
   const dPlus = charge(gD, 1, 0.18, `+${M.DIPOLE.q / M.nC} nC`), dMinus = charge(gD, -1, 0.18, `−${M.DIPOLE.q / M.nC} nC`);
   dPlus.position.copy(DW(dch[0].at)); dMinus.position.copy(DW(dch[1].at));
@@ -194,14 +194,14 @@ export function buildWorld(E) {
   // ---------- 6 · a uniformly charged rod ----------
   const X6 = STATIONS.rod, R0 = V(X6 - 1.2, -0.4, 0), RL = M.RODE.L * S;
   sheet(X6 - 5, X6 + 5, -2, 4);
-  const gR = asm('rod', root, { title: 'A uniformly charged rod', sub: 'cut it into slices dq = λ dx' });
+  const gR = asm('rod', root, { title: '均匀带电细棒', sub: '切成小段 dq = λ dx' });
   const ns = M.RODE.slices, sliceL = RL / ns;
   for (let i = 0; i < ns; i++) {
     const cx = R0.x - RL / 2 + (i + 0.5) * sliceL, off = (i + 0.5 - ns / 2) * 0.18;
     part(gR, xAxis(cyl(0.12, sliceL * 0.995, 28)), { tone: 'hi', pal: i % 2 ? 'paper' : 'base', pos: [cx, R0.y, 0], name: 'Slice dq', ex: [off, 0, 0] });
     for (let k = 0; k < 2; k++) { const b = part(gR, BEAD, { pal: 'red', tone: 'mid', name: 'Slice dq', pos: [cx + (k - 0.5) * sliceL * 0.5, R0.y + 0.03, 0.12], ex: [off, 0, 0] }); b.scale.setScalar(0.05); }
   }
-  label('tick', `+${M.RODE.Q / M.nC} nC over ${M.RODE.L * 100} cm`, () => V(R0.x + 0.9, R0.y - 0.45, 0));
+  label('tick', `+${M.RODE.Q / M.nC} nC，长 ${M.RODE.L * 100} cm`, () => V(R0.x + 0.9, R0.y - 0.45, 0));
   const pRa = ball(gR, 0.07, { pal: 'ink', name: 'P on the axis' }), pRb = ball(gR, 0.07, { pal: 'ink', name: 'P on the bisector' });
   label('tick', 'P', () => pRa.getWorldPosition(V()).add(V(0.02, -0.32, 0))); label('tick', 'P', () => pRb.getWorldPosition(V()).add(V(-0.2, 0.05, 0)));
   const eRa = eArrow(gR), eRb = eArrow(gR);
@@ -213,7 +213,7 @@ export function buildWorld(E) {
   // ---------- 7 · a ring of charge ----------
   const X7 = STATIONS.ring, C7 = V(X7 - 2.4, 0.4, 0), RR = M.RING.R * S;
   sheet(X7 - 5.5, X7 + 5.5, -2.4, 3.2);
-  const gG = asm('ring', root, { title: 'A ring of charge', sub: 'only the axial parts survive' });
+  const gG = asm('ring', root, { title: '带电圆环', sub: '只剩下轴向分量' });
   part(gG, new THREE.TorusGeometry(RR, 0.07, 16, 96).rotateY(Math.PI / 2), { tone: 'hi', name: 'Ring', pos: [C7.x, C7.y, C7.z] });
   const beads = M.ringBeads(M.RING.beads).map(b => { const m = bead(gG, 0.075, 'red', 'Charge dq'); m.position.copy(C7).add(V(b.at[0], b.at[1], b.at[2]).multiplyScalar(S)); return m; });
   lines(gG, [C7.x - 0.8, C7.y, 0, C7.x + 7.2, C7.y, 0], '#b4b4b8');
@@ -227,7 +227,7 @@ export function buildWorld(E) {
   // ---------- 8 · an electron between two charged plates ----------
   const X8 = STATIONS.plates, P8 = V(X8 - 2.4, 0.4, 0), PLL = M.PLATES.L * PL.S, GAP = M.PLATES.gap * PL.S;
   sheet(X8 - 5, X8 + 5, -1.8, 2.6);
-  const gP = asm('plates', root, { title: 'Electron between charged plates', sub: 'constant force: a parabola' });
+  const gP = asm('plates', root, { title: '带电极板间的电子', sub: '恒力：抛物线' });
   const plate = (y, sign) => {
     part(gP, new THREE.BoxGeometry(PLL, 0.08, 1.6), { tone: 'hi', pal: 'base', pos: [P8.x + PLL / 2, y, 0], name: sign > 0 ? '+ plate' : '− plate' });
     for (let i = 0; i < 12; i++) { const b = bead(gP, 0.045, sign > 0 ? 'red' : 'blue', sign > 0 ? '+ plate' : '− plate'); b.position.set(P8.x + (i + 0.5) * PLL / 12, y + (sign > 0 ? -0.06 : 0.06), 0.8); }
