@@ -5,6 +5,7 @@
 - 在 `main` 上原地把英文替换为中文，不引入 i18n 框架、语言切换或构建步骤。
 - 只改面向读者的文本：各章 `pages.js`、`practice.js`、`main.js` 与 `world.js` 中显示给读者的字符串、各章 `index.html`；`engine/` 界面文本、`engine/xrefs.js`、首页 `index.html`、`equations/build.mjs` 中的文本。
 - 不改 `model.js`、`checks.mjs`、`tools/`、计算逻辑、数值、相机参数和 3D 场景结构；不翻译代码注释；不顺手重构或格式化。
+- 页面不从外部 CDN 加载脚本、字体或样式；第三方运行时文件原样放在 `vendor/`，不修改。
 
 ## Translation Rules
 - 术语以 `glossary.zh.md` 为准；遇到表里没有的术语，先补进术语表再用。
