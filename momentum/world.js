@@ -73,7 +73,7 @@ export function buildWorld(E) {
 
   // ---------- 1 · momentum: a fast light ball and a slow heavy cart ----------
   const X0 = STATIONS.mom, START = -2.0, RB = 0.11;
-  const gM = asm('mom', root, { title: 'Same momentum', sub: 'light and fast, heavy and slow' });
+  const gM = asm('mom', root, { title: '动量相同', sub: '轻而快，重而慢' });
   strip(X0 - 2.6, X0 + 2.6, -1.0, 1.0, gM);
   const ball0 = part(gM, new THREE.SphereGeometry(RB, 32, 20), { tone: 'hi', name: 'Ball · 0.5 kg' });
   const cart0 = cart(gM, M.CART.m, 'Cart · 2.0 kg');
@@ -86,7 +86,7 @@ export function buildWorld(E) {
   // ---------- 2 · impulse: a ball bounces off a wall ----------
   const X1 = STATIONS.wall, W = M.WALL;
   part(root, box(0.16, 1.3, 1.5, 0.02), { tone: 'mid', pal: 'board', pos: [X1 + 0.08, 0.67, 0], name: 'Wall' });
-  const gW = asm('wall', root, { title: 'Ball hitting a wall', sub: 'impulse = change in momentum' });
+  const gW = asm('wall', root, { title: '撞墙的球', sub: '冲量 = 动量的变化量' });
   strip(X1 - 1.6, X1 + 0.3, -0.8, 0.8, gW);
   const ballW = part(gW, new THREE.SphereGeometry(W.r, 36, 24), { tone: 'hi', name: 'Ball · 0.5 kg' });
   const pW = pArrow(gW), fW = fArrow(gW);
@@ -98,7 +98,7 @@ export function buildWorld(E) {
   // drawn EGG_ZOOM× life size (positions, sizes and arrows all scaled together), so it can be seen
   const ER = 0.03, EK = 1.3, PH = 0.3, EGX = [-0.2, 0.2];
   const eggRoot = new THREE.Group(); eggRoot.position.x = STATIONS.eggs; eggRoot.scale.setScalar(EGG_ZOOM); root.add(eggRoot);
-  const gE = asm('eggs', eggRoot, { title: 'Two eggs dropped', sub: 'same Δp, different stopping time' });
+  const gE = asm('eggs', eggRoot, { title: '两只落下的鸡蛋', sub: 'Δp 相同，停止时间不同' });
   part(gE, box(1.0, 0.02, 0.7, 0.005), { tone: 'lo', pal: 'board', pos: [0, 0.01, 0], name: 'Surface' });
   const pillow = part(gE, box(0.26, PH, 0.24, 0.06), { tone: 'mid', pal: 'board', pos: [EGX[0], 0.02 + PH / 2, 0], name: 'Pillow' });
   const eggGeo = new THREE.SphereGeometry(ER, 28, 20);
@@ -106,7 +106,7 @@ export function buildWorld(E) {
   const fE = eggs.map(() => fArrow(gE, 0.15)), jE = eggs.map(() => gArrow(gE, 0.17, 'Impulse'));
   fE.forEach(a => label('vec red', '<i>F</i><sub>net</sub>', () => tip(a, 0.03)));
   jE.forEach(a => label('vec', '<i>J</i>', () => ex(gE) > 0.3 ? tip(a, 0.03) : null));
-  label('tick', 'pillow', () => eggRoot.localToWorld(V(EGX[0] + 0.06, 0.02, 0.24))); label('tick', 'floor', () => eggRoot.localToWorld(V(EGX[1] + 0.06, 0.02, 0.24)));
+  label('tick', '枕头', () => eggRoot.localToWorld(V(EGX[0] + 0.06, 0.02, 0.24))); label('tick', '地板', () => eggRoot.localToWorld(V(EGX[1] + 0.06, 0.02, 0.24)));
 
   // ---------- 4–6 · carts on a track ----------
   function collision(key, c, X, meta) {
@@ -120,7 +120,7 @@ export function buildWorld(E) {
     // the breakdown: momenta before and after, laid tip to tail
     const rows = ['before', 'after'].map((name, i) => ({ y: 2.15 - i * 0.6, a: pArrow(g), b: pArrow(g), t: totArrow(g) }));
     rows.forEach((r, i) => {
-      label('tick', i ? 'after' : 'before', () => ex(g) > 0.3 ? V(X - 2.9, r.y + 0.02, 0) : null);
+      label('tick', i ? '碰后' : '碰前', () => ex(g) > 0.3 ? V(X - 2.9, r.y + 0.02, 0) : null);
       label('vec', i ? '<i>p</i><sub>1</sub>′' : '<i>p</i><sub>1</sub>', () => ex(g) > 0.3 ? mid(r.a, V(0, -0.15, 0)) : null);
       label('vec', i ? '<i>p</i><sub>2</sub>′' : '<i>p</i><sub>2</sub>', () => ex(g) > 0.3 ? mid(r.b, V(0, 0.16, 0)) : null);
     });
@@ -128,15 +128,15 @@ export function buildWorld(E) {
     return { g, c, X, c1, c2, cm, p1, p2, tot, rows, plunger };
   }
   const cols = [
-    collision('stick', M.STICK, STATIONS.stick, { title: 'Carts that stick', sub: 'perfectly inelastic' }),
-    collision('bounce', M.BOUNCE, STATIONS.bounce, { title: 'Carts that bounce', sub: 'elastic' }),
-    collision('burst', M.BURST, STATIONS.burst, { title: 'Carts pushed apart', sub: 'an explosion' }),
+    collision('stick', M.STICK, STATIONS.stick, { title: '粘在一起的小车', sub: '完全非弹性碰撞' }),
+    collision('bounce', M.BOUNCE, STATIONS.bounce, { title: '相互弹开的小车', sub: '弹性碰撞' }),
+    collision('burst', M.BURST, STATIONS.burst, { title: '被推开的小车', sub: '爆炸' }),
   ];
 
   // ---------- 7 · ballistic pendulum ----------
   const X6 = STATIONS.pend, Pd = M.PEND, PIV = V(X6 + 0.4, 2.1, 0), BW = 0.3, BH = 0.22, CR = 0.035;
   part(root, box(1.4, 0.08, 0.5, 0.02), { tone: 'mid', pal: 'board', pos: [PIV.x, PIV.y + 0.04, 0], name: 'Ceiling' });
-  const gP = asm('pend', root, { title: 'Ballistic pendulum', sub: 'momentum, then energy' });
+  const gP = asm('pend', root, { title: '冲击摆', sub: '先用动量，再用能量' });
   const swingG = new THREE.Group(); swingG.position.copy(PIV); gP.add(swingG);
   part(swingG, new THREE.CylinderGeometry(0.008, 0.008, Pd.L - BH / 2, 8).translate(0, -(Pd.L - BH / 2) / 2, 0), { tone: 'hi', pal: 'ink', name: 'String' });
   part(swingG, box(BW, BH, 0.22, 0.02), { tone: 'hi', pos: [0, -Pd.L, 0], name: 'Block · 1.0 kg' });
@@ -166,7 +166,7 @@ export function buildWorld(E) {
   { const d = []; for (let x = -RL / 2; x < RL / 2; x += 2.4) if (Math.abs(x + 0.7) > RW / 2 + 0.4) d.push(X7 + x, 0.04, 0, X7 + x + 1.4, 0.04, 0);
     for (let z = -RL / 2; z < RL / 2; z += 2.4) if (Math.abs(z + 0.7) > RW / 2 + 0.4) d.push(X7, 0.04, z, X7, 0.04, z + 1.4);
     lines(root, d, '#9a9aa0'); }
-  const gX = asm('crash', root, { title: 'Crash at a crossroads', sub: 'momentum adds as a vector' });
+  const gX = asm('crash', root, { title: '十字路口的撞车', sub: '动量按矢量相加' });
   const car = new THREE.Group(), truck = new THREE.Group(); gX.add(car, truck);
   part(car, box(4.2, 0.7, 1.8, 0.18), { tone: 'hi', pos: [0, 0.75, 0], name: 'Car · 1000 kg' });
   part(car, box(2.2, 0.6, 1.6, 0.2), { tone: 'hi', pos: [-0.3, 1.38, 0], name: 'Car · 1000 kg' });
@@ -189,7 +189,7 @@ export function buildWorld(E) {
 
   // ---------- 9 · a shell that bursts at the top ----------
   const S = M.SHELL, SR = 0.16;
-  const gS = asm('shell', root, { title: 'A shell bursts in flight', sub: 'the centre of mass flies on' });
+  const gS = asm('shell', root, { title: '飞行中炸开的炮弹', sub: '质心照常飞行' });
   strip(SH0 - 0.8, SH0 + 1.5 * S.R + 1.0, -0.7, 0.7, gS);
   const halfGeo = front => new THREE.SphereGeometry(SR, 28, 18, front ? Math.PI / 2 : -Math.PI / 2, Math.PI);
   const halfMat = shadeMat('paper').clone(); halfMat.side = THREE.DoubleSide;
@@ -203,7 +203,7 @@ export function buildWorld(E) {
     dashed(path, '#8a8a8f'); dashed(a, '#c4c4c8'); dashed(b, '#c4c4c8');
     const tk = []; for (const x of [0, S.R / 2, S.R, 1.5 * S.R]) tk.push(SH0 + x, 0.03, -0.25, SH0 + x, 0.03, 0.25); lines(root, tk, '#6e6e74'); }
   label('tick', '<i>R</i>/2', () => V(SH0 + S.R / 2 + 0.15, 0.1, 0.6)); label('tick', '<i>R</i>', () => V(SH0 + S.R + 0.12, 0.1, 0.6)); label('tick', '3<i>R</i>/2', () => V(SH0 + 1.5 * S.R + 0.25, 0.1, 0.6));
-  label('tick', 'launch', () => V(SH0 + 0.35, 0.1, 0.6));
+  label('tick', '发射点', () => V(SH0 + 0.35, 0.1, 0.6));
 
 
   // ---------- 10–12 · continuous bodies (AP Physics C) ----------
@@ -214,7 +214,7 @@ export function buildWorld(E) {
 
   // 10 · two rods on knife edges
   const XR = STATIONS.rods, R = M.ROD, RS = 0.12, YR = 0.5, X0R = XR - R.L / 2, rodZ = { U: 0.55, N: -0.55 };
-  const gR = asm('rods', root, { title: 'Two rods, sliced', sub: 'x<sub>cm</sub> = (1/<i>M</i>)∫<i>x</i> d<i>m</i>' });
+  const gR = asm('rods', root, { title: '切成小段的两根杆', sub: 'x<sub>cm</sub> = (1/<i>M</i>)∫<i>x</i> d<i>m</i>' });
   strip(XR - 1.6, XR + 1.6, -1.1, 1.1, gR);
   gR.userData.focus = () => ({ target: [XR - 0.1, 0.55, 0], radius: 1.9 });
   const rods = ['U', 'N'].map(kind => {
@@ -226,14 +226,14 @@ export function buildWorld(E) {
     const wts = sl.map(() => gArrow(gR, 0.7, 'Weight dm·g'));
     return { kind, z, sl, xc, bands, slab, wts };
   });
-  label('tick', 'uniform', () => V(X0R - 0.12 - 0.35 * ex(gR), YR, rodZ.U)); label('tick', 'λ = λ₀x/L', () => V(X0R - 0.12 - 0.35 * ex(gR), YR, rodZ.N));
+  label('tick', '均匀', () => V(X0R - 0.12 - 0.35 * ex(gR), YR, rodZ.U)); label('tick', 'λ = λ₀x/L', () => V(X0R - 0.12 - 0.35 * ex(gR), YR, rodZ.N));
   label('tick', 'x_cm = L/2', () => V(X0R + R.xU - 0.2, 0.08, rodZ.U + 0.2)); label('tick', 'x_cm = 2L/3', () => V(X0R + R.xN - 0.16, 0.3, rodZ.N));
   label('tick', 'x = 0', () => V(X0R + 0.12, YR - 0.2, rodZ.U + 0.1));
   label('vec', 'd<i>m</i>', () => ex(gR) < 0.3 ? rods[1].slab.position.clone().add(V(0, 0.22, 0)) : null);
 
   // 11 · a triangle and a semicircle, cut into strips, each on a pin
   const XP = STATIONS.plates, YP = 0.45, PT = 0.04, plates = [];
-  const gPl = asm('plates', root, { title: 'Plates, strip by strip', sub: 'triangle and semicircle' });
+  const gPl = asm('plates', root, { title: '逐条分割的薄板', sub: '三角形与半圆' });
   strip(XP - 2.0, XP + 1.6, -1.1, 1.1, gPl);
   gPl.userData.focus = () => ({ target: [XP - 0.2, 0.5, 0], radius: 2.1 });
   for (const [S, w, x0, name] of [[M.TRI, M.triW, XP - 1.65, 'Triangle · 1.8 kg'], [M.SEMI, M.semiW, XP + 0.35, 'Semicircle · 2.0 kg']]) {
@@ -248,12 +248,12 @@ export function buildWorld(E) {
     plates.push({ S, w, x0, H, st, slab, wts: st.map(() => gArrow(gPl, 0.7, 'Weight dm·g')), pieces });
   }
   label('tick', 'h/3', () => V(plates[0].x0 + M.TRI.ucm - 0.08, 0.03, 0.3)); label('tick', '4R/3π', () => V(plates[1].x0 + M.SEMI.ucm - 0.08, 0.03, 0.3));
-  label('tick', 'base', () => V(plates[0].x0 - 0.06 - 0.3 * ex(gPl), YP, -0.62)); label('tick', 'diameter', () => V(plates[1].x0 - 0.06 - 0.3 * ex(gPl), YP, -0.82));
+  label('tick', '底边', () => V(plates[0].x0 - 0.06 - 0.3 * ex(gPl), YP, -0.62)); label('tick', '直径', () => V(plates[1].x0 - 0.06 - 0.3 * ex(gPl), YP, -0.82));
   label('vec', 'd<i>m</i>', () => ex(gPl) < 0.3 ? plates[1].slab.position.clone().add(V(0, 0.12, -0.15 - plates[1].slab.scale.z / 2)) : null);
 
   // 12 · by parts and by subtraction: a plate with a hole on a pin, an L hung by a string
   const XC = STATIONS.parts, Hh = M.HOLE, HX = XC - 0.95, L2 = M.ELL;
-  const gC = asm('parts', root, { title: 'By parts, by subtraction', sub: 'add the pieces; take the hole away' });
+  const gC = asm('parts', root, { title: '组合法与挖补法', sub: '各部分相加，减去孔' });
   strip(XC - 1.8, XC + 1.7, -0.85, 0.85, gC);
   gC.userData.focus = () => ({ target: [XC + 0.05, 1.25, 0], radius: 1.95 });
   const hs = Hh.s / 2, holePath = new THREE.Path(); holePath.absarc(Hh.c[0], Hh.c[1], Hh.r, 0, Math.PI * 2, true);
@@ -283,9 +283,9 @@ export function buildWorld(E) {
   const armLine = lines(gC, new Array(6 * 12).fill(0), '#6e6e74');
   label('vec', '<i>m</i><sub>A</sub>', () => ex(gC) > 0.3 ? arms[0].mk.getWorldPosition(V()).add(V(0.16, 0.06, 0)) : null);
   label('vec', '<i>m</i><sub>B</sub>', () => ex(gC) > 0.3 ? arms[1].mk.getWorldPosition(V()).add(V(0.02, 0.17, 0)) : null);
-  label('tick', 'string tied here', () => Q.clone().add(V(-0.2, 0.08, 0)));
-  label('tick', 'centre of mass: in the gap', () => hw(L2.cm).add(V(-0.12, -0.02, 0)));
-  label('tick', 'pin', () => w2(Hh.cm, 0.12).add(V(-0.08, 0, 0.1)));
+  label('tick', '绳系在这里', () => Q.clone().add(V(-0.2, 0.08, 0)));
+  label('tick', '质心：在空缺处', () => hw(L2.cm).add(V(-0.12, -0.02, 0)));
+  label('tick', '支针', () => w2(Hh.cm, 0.12).add(V(-0.08, 0, 0.1)));
 
   // ---------- per-frame ----------
   const P = n => n * P_SCALE;
