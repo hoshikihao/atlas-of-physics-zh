@@ -78,7 +78,7 @@ export const PRACTICE = {
       why: '<p><i>B</i> = μ<sub>0</sub><i>I</i>/2π<i>s</i> 随距离 <i>s</i> 变化，所以把线圈切成平行于导线的细条 <i>b ds</i>：</p><div class="eq">Φ = ∫<sub><i>r</i></sub><sup><i>r</i>+<i>a</i></sup> (μ<sub>0</sub><i>I</i>/2π<i>s</i>) <i>b ds</i> = (μ<sub>0</sub><i>Ib</i>/2π) ln((<i>r</i> + <i>a</i>)/<i>r</i>)</div><p>选项 A 把 <i>B</i> 当作处处等于近边处的值；选项 D 是导数的形式，不是积分的形式。</p>' },
     { q: `本页的线圈（沿导线方向 <i>b</i> = ${p(M.WIRE.b * 100, 0)} cm，垂直导线方向 <i>a</i> = ${p(M.WIRE.a * 100, 0)} cm）以 ${p(M.WIRE.v * 100, 0)} cm/s 径直远离一根 ${M.WIRE.I} A 的导线。当近边距导线 ${p(M.WIRE.r0 * 100, 0)} cm 时，|ε| 为`,
       choices: P3.nums.map(x => `${p(x, 3)} µV`), answer: 3, nums: P3.nums,
-      why: `<p>只有平行于导线的两条边切割磁感线。每条边的动生电动势为 <i>Bbv</i>，绕线圈一周两者方向相反：</p><div class="eq">ε = (<i>B</i><sub>near</sub> − <i>B</i><sub>far</sub>)<i>bv</i> = μ<sub>0</sub><i>Iabv</i> / 2π<i>r</i>(<i>r</i> + <i>a</i>) = ${p(P3.emf * 1e6, 3)} µV</div><p>与对数式的 −<i>d</i>Φ/<i>dt</i> 结果相同。只算近边得 ${p(P3.nums[0], 3)} µV；把两条边相加得 ${p(P3.nums[1], 3)} µV。</p>` },
+      why: `<p>只有平行于导线的两条边切割磁感线。每条边的动生电动势为 <i>Bbv</i>，绕线圈一周两者方向相反：</p><div class="eq">ε = (<i>B</i><sub>近</sub> − <i>B</i><sub>远</sub>)<i>bv</i> = μ<sub>0</sub><i>Iabv</i> / 2π<i>r</i>(<i>r</i> + <i>a</i>) = ${p(P3.emf * 1e6, 3)} µV</div><p>与对数式的 −<i>d</i>Φ/<i>dt</i> 结果相同。只算近边得 ${p(P3.nums[0], 3)} µV；把两条边相加得 ${p(P3.nums[1], 3)} µV。</p>` },
   ],
   4: [
     { q: '一根竖直的金属棒在垂直纸面向里的匀强磁场中向右运动，没有接入电路。片刻之后，',

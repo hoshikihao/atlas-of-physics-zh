@@ -105,7 +105,7 @@ export const PAGES = [
     body: `
       <p class="lede"><b>电动势</b> ℰ 是电池内的化学反应给每库仑电荷提供的能量。英文名 electromotive force 里虽有 force，它却不是力。</p>
       <p>真实电池有<b>内阻</b> <i>r</i>，电流在电池内部要损失 <i>Ir</i>：</p>
-      <div class="eq">Δ<i>V</i><sub>terminal</sub> = ℰ − <i>Ir</i>,  <i>I</i> = ℰ/(<i>R</i> + <i>r</i>)</div>
+      <div class="eq">Δ<i>V</i><sub>端</sub> = ℰ − <i>Ir</i>,  <i>I</i> = ℰ/(<i>R</i> + <i>r</i>)</div>
       <p>这里 ℰ = ${M.CELL.E} V，<i>r</i> = ${M.CELL.r} Ω，灯泡的 <i>R</i> 在 ${M.CELL.Rmin}–${M.CELL.Rmax} Ω 之间变化。电流越大，路端电压越低，<i>I</i>²<i>r</i> 也让电池发热。灯泡得到的功率为 ℰ²<i>R</i>/(<i>R</i> + <i>r</i>)²；在 <i>R</i> = <i>r</i> 处 d<i>P</i>/d<i>R</i> = 0，此时灯泡最亮：ℰ²/4<i>r</i> = ${f(M.CELL.E ** 2 / (4 * M.CELL.r), 0)} W。</p>
       <div class="charts">${chart({ ...R.pload, xlabel: '负载 R（Ω）', ylabel: '灯泡功率（W）', cursors: ['pload'], vlines: [[M.CELL.r, 'r']], label: '负载功率随负载电阻的变化，在 R = r 处达到峰值',
         series: [{ pts: curve(M.loadP, 0, 8) }] })}</div>
