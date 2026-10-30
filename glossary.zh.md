@@ -62,6 +62,8 @@
 | tip to tail | 首尾相接 |
 | component | 分量 |
 | strobe | 频闪 |
+| jerk (da/dt) | 加加速度 |
+| unit vector | 单位矢量 |
 
 ## Forces
 | English | 中文 |
@@ -84,6 +86,12 @@
 | inclined plane | 斜面 |
 | drag | 阻力 |
 | terminal velocity | 终端速度 |
+| dynamics | 动力学 |
+| action–reaction pair | 作用力与反作用力 |
+| lift / thrust | 升力 / 推力 |
+| drag coefficient | 阻力系数 |
+| Reynolds number | 雷诺数 |
+| newton / joule / watt / horsepower | 牛顿 / 焦耳 / 瓦特 / 马力 |
 
 ## Circular Motion and Gravitation
 | English | 中文 |
@@ -99,6 +107,13 @@
 | elliptical orbit | 椭圆轨道 |
 | escape speed | 逃逸速度 |
 | bound | 束缚 |
+| tangential speed | 线速度 |
+| arc length / radian / rpm | 弧长 / 弧度 / 转每分 |
+| proper speed (banked curve) | 设计速率 |
+| loop (roller coaster) | 回环 |
+| perigee / apogee | 近地点 / 远地点 |
+| Kepler’s first / second / third law | 开普勒第一 / 第二 / 第三定律 |
+| semi-major axis / focus | 半长轴 / 焦点 |
 
 ## Energy and Momentum
 | English | 中文 |
@@ -115,6 +130,13 @@
 | energy diagram | 势能曲线 |
 | turning point | 转折点 |
 | power | 功率 |
+| mechanical energy | 机械能 |
+| conservative force | 保守力 |
+| resistive force | 耗散力 |
+| thermal energy | 内能 |
+| potential well | 势阱 |
+| stable / unstable / neutral equilibrium | 稳定平衡 / 不稳定平衡 / 随遇平衡 |
+| Lennard-Jones model | 伦纳德-琼斯模型 |
 | momentum | 动量 |
 | impulse | 冲量 |
 | elastic / inelastic collision | 弹性碰撞 / 非弹性碰撞 |
@@ -195,6 +217,25 @@
 | Kirchhoff’s rules | 基尔霍夫定律 |
 | junction rule / loop rule | 节点定律 / 回路定律 |
 | time constant | 时间常数 |
+| test charge / point charge | 试探电荷 / 点电荷 |
+| field line (electric) | 电场线 |
+| perpendicular bisector / axis | 中垂线 / 轴线 |
+| far field | 远场 |
+| ground | 接地 |
+| ion | 离子 |
+| area vector | 面积矢量 |
+| cap / side (Gaussian cylinder) | 底面 / 侧面 |
+| coaxial cylinder / cable | 同轴圆柱面 / 同轴电缆 |
+| enclosed charge | 所围电荷 |
+| non-conducting sheet | 不导电的带电平面 |
+| equipotential line / conductor at one potential | 等势线 / 等势体 |
+| bound / free charge | 束缚电荷 / 自由电荷 |
+| energy density | 能量密度 |
+| farad | 法拉 |
+| battery connected / disconnected | 接着电源 / 断开电源 |
+| parallel-plate / spherical / cylindrical capacitor | 平行板 / 球形 / 圆柱形电容器 |
+| probe point | 探测点 |
+| potential hill / well | 电势山丘 / 电势深坑 |
 | superposition | 叠加原理 |
 | conductivity / conductance | 电导率 / 电导 |
 | drift speed / velocity | 漂移速度 |
