@@ -320,4 +320,6 @@
 | free / bound | 自由 / 束缚 |
 | terminal | 端 |
 | near / far | 近 / 远 |
+| face / axis / inner | 面 / 轴 / 内 |
+| field（电场力做的功） | 电 |
 | on A（受力对象） | A |
