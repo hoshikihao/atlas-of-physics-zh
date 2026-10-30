@@ -219,7 +219,7 @@ export const PLATES = {
   parallel: { text: `两个电容器都直接接在电池两端，所以各自承受全部的 ${M.CIRC.V} V。每个带电 Q = CΔV，电池提供两者之和。`,
     facts: () => [['C_eq', `${f(PA.C * 1e6, 0)} µF`], ['每个的 ΔV', `${M.CIRC.V} V`], ['Q₁ = C₁ΔV', `${u(PA.Q1)} µC`], ['Q₂ = C₂ΔV', `${u(PA.Q2)} µC`], ['能量 ½C_eqV²', `${f(PA.U * 1e6, 0)} µJ`]] },
   slab: { text: `在介质板中：只有极板上的自由电荷时，会产生 E₀（灰色，向右）。介质板表面的束缚电荷产生 E_ind（灰色，向左）。剩下的是 E（蓝色），在介质板中和旁边的空气中都相同，因为两者跨越的是同一个 ΔV。`,
-    facts: s => { const x = M.fillOf(s.slide.t), r = M.slab(x, false); return [['插入比例', `${f(x * 100, 0)} %`], ['E₀ = σ_free/ε₀（介质板部分）', `${f(r.Efree, 0)} V/m`], ['E_ind = σ_bound/ε₀', `${f(r.Eind, 0)} V/m`], ['E = E₀ − E_ind', `${f(r.E, 0)} V/m`], ['ΔV', `${f(r.V, 1)} V`], ['C', `${pF(r.C)} pF`]]; } },
+    facts: s => { const x = M.fillOf(s.slide.t), r = M.slab(x, false); return [['插入比例', `${f(x * 100, 0)} %`], ['E₀ = σ_自由/ε₀（介质板部分）', `${f(r.Efree, 0)} V/m`], ['E_ind = σ_束缚/ε₀', `${f(r.Eind, 0)} V/m`], ['E = E₀ − E_ind', `${f(r.E, 0)} V/m`], ['ΔV', `${f(r.V, 1)} V`], ['C', `${pF(r.C)} pF`]]; } },
   battery: { text: `电池使 ΔV 保持在 ${M.V0} V，所以 E = ΔV/d 不能改变。随着介质板插入，电荷流到正对介质板的那部分极板上，直到那里的电荷变为原来的 κ 倍。`,
     facts: s => { const r = M.slab(M.fillOf(s.slide.t), true); return [['C', `${pF(r.C)} pF`], ['Q', `${f(r.Q * 1e12, 0)} pC`], ['ΔV', `${f(r.V, 1)} V`], ['E', `${f(r.E, 0)} V/m`], ['U', `${f(r.U * 1e9, 1)} nJ`]]; } },
   isolated: { text: `电荷既流不进也流不出，所以 Q 保持不变。电荷向介质板一侧移动，两极间各处的电场都减小，ΔV 也随之减小。`,
