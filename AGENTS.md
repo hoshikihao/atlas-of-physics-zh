@@ -17,5 +17,6 @@
 
 ## Workflow
 - 一章一个提交，提交信息格式：`zh: <章节目录名>`。
-- 改完运行 `npm run check`，并用 `python3 -m http.server <端口>` 本地打开改过的每一页，确认文本显示正常、控制台无报错；`/_vercel/insights/script.js` 的 404 不算报错。
+- 改完运行 `npm run check`，并用 `python3 -m http.server <端口>` 本地打开改过的每一页，确认文本显示正常、控制台无报错。
 - `equations/index.html` 只在所有章节合并后由公式表任务运行 `node equations/build.mjs` 统一生成，章节任务不运行、不提交该文件。
+- 部署：在仓库根目录运行 `wrangler deploy`，上传范围由 `.assetsignore` 控制；不用 `cf deploy`。
