@@ -1,5 +1,6 @@
 {
   "name": "atlas-of-physics-zh",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "." }
+  "assets": { "directory": "." },
+  "routes": [{ "pattern": "physics.hoshikihao.com", "custom_domain": true }]
 }
