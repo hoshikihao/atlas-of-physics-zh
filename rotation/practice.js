@@ -158,7 +158,7 @@ export const PRACTICE = {
       why: `<p>ΔL 是 τ–t 图线下的面积，这里是一个三角形：</p>${eq(`ΔL = ½ × ${f(Q12.T, 1)} s × ${Q12.peak} N·m = ${p3(Q12.J)} kg·m²/s`)}<p>${p3(Q12.peak * Q12.T)} 把它当成了矩形；${p3(Q12.peak / Q12.T)} 是斜率，不是面积。</p>` },
   ],
   13: [
-    { q: `滑冰者（I<sub>body</sub> = ${f(SK.Ib, 1)} kg·m²）以 ${f(SK.w0, 1)} rad/s 旋转，${f(SK.m, 1)} kg 的哑铃在 ${f(SK.rOut, 2)} m 处，她把哑铃收到 ${f(SK.rIn, 2)} m 处。她新的 ω 是`,
+    { q: `滑冰者（I<sub>身</sub> = ${f(SK.Ib, 1)} kg·m²）以 ${f(SK.w0, 1)} rad/s 旋转，${f(SK.m, 1)} kg 的哑铃在 ${f(SK.rOut, 2)} m 处，她把哑铃收到 ${f(SK.rIn, 2)} m 处。她新的 ω 是`,
       choices: [`${p3(SK.w0 * SK.rOut / SK.rIn)} rad/s`, `${p3(Q13.wNoBody)} rad/s`, `${p3(Q13.w)} rad/s`, `${p3(SK.w0)} rad/s`], answer: 2,
       why: `${eq(`I<sub>0</sub> = ${f(SK.Ib, 1)} + 2 × ${f(SK.m, 1)} × ${f(SK.rOut, 2)}² = ${f(Q13.I0)} kg·m², I<sub>f</sub> = ${f(SK.Ib, 1)} + 2 × ${f(SK.m, 1)} × ${f(SK.rIn, 2)}² = ${f(Q13.I1, 3)} kg·m²`)}${eq(`ω<sub>f</sub> = I<sub>0</sub>ω<sub>0</sub> / I<sub>f</sub> = ${p3(Q13.w)} rad/s`)}<p>${p3(Q13.wNoBody)} rad/s 漏掉了她身体的 ${f(SK.Ib, 1)} kg·m²，这部分不变。</p>` },
     { q: '她把哑铃收回的过程中，她的转动动能',

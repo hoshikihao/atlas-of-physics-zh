@@ -92,7 +92,7 @@ export function buildWorld(E) {
   const pW = pArrow(gW), fW = fArrow(gW);
   const dpI = pArrow(gW), dpF = pArrow(gW), dpD = gArrow(gW, 1.1, 'Δp');
   label('vec', '<i>p</i>', () => tip(pW)); label('vec red', '<i>F</i>', () => tip(fW));
-  label('vec', '<i>p</i><sub>before</sub>', () => tip(dpI)); label('vec', '<i>p</i><sub>after</sub>', () => tip(dpF)); label('vec', 'Δ<i>p</i> = <i>J</i>', () => tip(dpD));
+  label('vec', '<i>p</i><sub>前</sub>', () => tip(dpI)); label('vec', '<i>p</i><sub>后</sub>', () => tip(dpF)); label('vec', 'Δ<i>p</i> = <i>J</i>', () => tip(dpD));
 
   // ---------- 3 · an egg on a pillow, an egg on the floor ----------
   // drawn EGG_ZOOM× life size (positions, sizes and arrows all scaled together), so it can be seen
@@ -179,12 +179,12 @@ export function buildWorld(E) {
   const TRUCK_C = V(0, 0, 0.35), LANE = 1.7;                     // the truck's centre of mass, in its frame
   const TRUCK0 = V(X7 + LANE, 0, LANE).sub(TRUCK_C), CAR0 = V(X7 + LANE - 1.25 - 2.12, 0, LANE);
   const cmX = cmMark(gX, 0.5), pCar = pArrow(gX, 3), pTruck = pArrow(gX, 3), totX = totArrow(gX, 3);
-  label('vec', '<i>p</i><sub>car</sub>', () => tip(pCar, 0.6)); label('vec', '<i>p</i><sub>truck</sub>', () => tip(pTruck, 0.6)); label('vec blue', '<i>P</i>', () => tip(totX, 0.6));
+  label('vec', '<i>p</i><sub>轿</sub>', () => tip(pCar, 0.6)); label('vec', '<i>p</i><sub>卡</sub>', () => tip(pTruck, 0.6)); label('vec blue', '<i>P</i>', () => tip(totX, 0.6));
   const kc = n => n / 1000 * CRASH_SCALE;
   const addA = pArrow(gX, 3), addB = pArrow(gX, 3), addT = totArrow(gX, 3);
-  label('vec', '<i>p</i><sub>car</sub>', () => ex(gX) > 0.3 ? mid(addA, V(0, 0, 1.2)) : null);
-  label('vec', '<i>p</i><sub>truck</sub>', () => ex(gX) > 0.3 ? mid(addB, V(1.6, 0, 0)) : null);
-  label('vec blue', '<i>P</i><sub>total</sub>', () => ex(gX) > 0.3 ? mid(addT, V(-1.8, 0, 0)) : null);
+  label('vec', '<i>p</i><sub>轿</sub>', () => ex(gX) > 0.3 ? mid(addA, V(0, 0, 1.2)) : null);
+  label('vec', '<i>p</i><sub>卡</sub>', () => ex(gX) > 0.3 ? mid(addB, V(1.6, 0, 0)) : null);
+  label('vec blue', '<i>P</i><sub>总</sub>', () => ex(gX) > 0.3 ? mid(addT, V(-1.8, 0, 0)) : null);
   label('tick', '1000 kg', () => car.position.clone().add(V(-1, 2.6, 0))); label('tick', '8000 kg', () => truck.position.clone().add(V(-1.4, 4.1, 0)));
 
   // ---------- 9 · a shell that bursts at the top ----------
@@ -267,7 +267,7 @@ export function buildWorld(E) {
   { const d = [], A = [Hh.cm[0] - 0.12, Hh.cm[1] - 0.12], B = [Hh.c[0] + 0.12, Hh.c[1] + 0.12], n = 14;
     for (let i = 0; i < n; i++) { const t0 = i / n, t1 = (i + 0.55) / n; d.push(...w2([A[0] + (B[0] - A[0]) * t0, A[1] + (B[1] - A[1]) * t0], YP + PT + 0.005).toArray(), ...w2([A[0] + (B[0] - A[0]) * t1, A[1] + (B[1] - A[1]) * t1], YP + PT + 0.005).toArray()); }
     lines(holeLine, d, '#6e6e74'); }
-  label('vec', '−<i>m</i><sub>plug</sub>', () => ex(gC) > 0.3 ? plug.position.clone().add(V(0.42, 0.08, 0)) : null);
+  label('vec', '−<i>m</i><sub>孔</sub>', () => ex(gC) > 0.3 ? plug.position.clone().add(V(0.42, 0.08, 0)) : null);
   // the L: in the xy plane, hanging from a string tied at P
   const Q = V(XC + 0.75, 2.05, 0), CEIL = 2.4;
   part(root, box(0.9, 0.08, 0.5, 0.02), { tone: 'mid', pal: 'board', pos: [Q.x, CEIL + 0.04, 0], name: 'Ceiling' });

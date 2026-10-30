@@ -35,7 +35,7 @@ export const PRACTICE = {
     { q: `把一个边长 10 cm 的铝立方体（ρ = ${AL.rho} kg/m³）切成八个相同的小立方体。每个小立方体的密度是`,
       choices: [`${AL.rho / 8} kg/m³`, `${AL.rho / 2} kg/m³`, `${AL.rho} kg/m³`, `${AL.rho * 8} kg/m³`], answer: 2,
       why: `<p>每一块的质量和体积都是原来的 ⅛，所以 ρ = m/V 不变。密度属于材料，而不属于物体。</p>` },
-    { q: `边长 ${f(S0 * 100, 1)} cm 的冰块质量是多少？（ρ<sub>ice</sub> = ${ICEM.rho} kg/m³）`,
+    { q: `边长 ${f(S0 * 100, 1)} cm 的冰块质量是多少？（ρ<sub>冰</sub> = ${ICEM.rho} kg/m³）`,
       choices: [`${p3(ICEM.mass / 2)} kg`, `${p3(M0)} kg`, `${p3(ICEM.mass / 4)} kg`, `${p3(ICEM.rho * (S0 * 10) ** 3)} kg`], answer: 1,
       why: `<p>先换算成米：V = (${f(S0, 2)} m)³ = ${f(S0 ** 3 * 1e4, 2)} × 10<sup>−4</sup> m³。</p>${eq(`m = ρV = ${ICEM.rho} × ${f(S0 ** 3 * 1e4, 2)} × 10<sup>−4</sup> = ${p3(M0)} kg`)}<p>边长减半，体积变为 ⅛ 而不是 ½：10 cm 立方体的 ${f(ICEM.mass, 3)} kg 变为 ${p3(M0)} kg。</p>` },
   ],
@@ -66,7 +66,7 @@ export const PRACTICE = {
   4: [
     { q: `${f(BU.s * 100, 0)} cm 的铝立方体（W = ${f(BU.W, 0)} N）用细绳吊着，完全浸没在水中。绳的拉力是`,
       choices: [`${p3(BU.W)} N`, `${p3(BU.Fb)} N`, `${p3(BU.W + BU.Fb)} N`, `${p3(T4)} N`], answer: 3,
-      why: `${eq(`<i>F</i><sub>b</sub> = ρ<sub>water</sub><i>Vg</i> = ${RHO} × ${f(BU.V, 3)} × ${f(G)} = ${f(BU.Fb, 0)} N`)}${eq(`<i>T</i> = <i>W</i> − <i>F</i><sub>b</sub> = ${f(BU.W, 0)} − ${f(BU.Fb, 0)} = ${p3(T4)} N`)}<p>浮力用的是<b>水</b>的密度，不是铝的密度；${p3(BU.Fb)} N 是浮力，不是拉力。</p>` },
+      why: `${eq(`<i>F</i><sub>b</sub> = ρ<sub>水</sub><i>Vg</i> = ${RHO} × ${f(BU.V, 3)} × ${f(G)} = ${f(BU.Fb, 0)} N`)}${eq(`<i>T</i> = <i>W</i> − <i>F</i><sub>b</sub> = ${f(BU.W, 0)} − ${f(BU.Fb, 0)} = ${p3(T4)} N`)}<p>浮力用的是<b>水</b>的密度，不是铝的密度；${p3(BU.Fb)} N 是浮力，不是拉力。</p>` },
     { q: '立方体完全浸没后，再继续往深处放。它受到的浮力',
       choices: ['增大，因为越深压强越大', '减小，因为它上方的水更多', '不变', '增大，直到等于重力'], answer: 2,
       why: '<p>更深处，顶面和底面的压强都增加同样的 ρgΔh。两者之差 ρgs，因而 <i>F</i><sub>b</sub> = ρ<i>Vg</i>，都不变。（水视为不可压缩。）</p>' },
@@ -74,10 +74,10 @@ export const PRACTICE = {
   5: [
     { q: `${M.WOOD.rho} kg/m³ 的木块漂浮在海水（${M.RHO_SEA} kg/m³）中，而不是淡水中。它有多大比例在水下？`,
       choices: [`${f(100 * M.WOOD.rho / RHO, 1)}%`, `${f(100 * (1 - FR5), 1)}%`, `${f(100 * FR5, 1)}%`, `${f(100 * (1 - M.WOOD.rho / RHO), 1)}%`], answer: 2,
-      why: `<p>漂浮时 <i>F</i><sub>b</sub> = <i>W</i>：ρ<sub>sea</sub><i>V</i><sub>under</sub><i>g</i> = ρ<sub>wood</sub><i>Vg</i>。</p>${eq(`<i>V</i><sub>under</sub>/<i>V</i> = ${M.WOOD.rho} / ${M.RHO_SEA} = ${f(100 * FR5, 1)}%`)}<p>密度更大的水用更小的体积就能托住它，所以比在淡水中的 ${f(100 * M.WOOD.rho / RHO, 1)}% 略少。${f(100 * (1 - FR5), 1)}% 是露出水面的部分。</p>` },
+      why: `<p>漂浮时 <i>F</i><sub>b</sub> = <i>W</i>：ρ<sub>海水</sub><i>V</i><sub>浸</sub><i>g</i> = ρ<sub>木</sub><i>Vg</i>。</p>${eq(`<i>V</i><sub>浸</sub>/<i>V</i> = ${M.WOOD.rho} / ${M.RHO_SEA} = ${f(100 * FR5, 1)}%`)}<p>密度更大的水用更小的体积就能托住它，所以比在淡水中的 ${f(100 * M.WOOD.rho / RHO, 1)}% 略少。${f(100 * (1 - FR5), 1)}% 是露出水面的部分。</p>` },
     { q: `钢球（半径 ${f(M.BALL.r, 2)} m，ρ = ${M.BALL.rho} kg/m³）静止在水池底部。池底对它向上的支持力是`,
       choices: [`${p3(M.BALL.W)} N`, `${p3(N5)} N`, `${p3(M.BALL.Fb)} N`, `${p3(M.BALL.W + M.BALL.Fb)} N`], answer: 1,
-      why: `${eq(`V = ⁴⁄₃πr³ = ${f(M.BALL.V, 4)} m³, W = ρ<sub>steel</sub>Vg = ${f(M.BALL.W, 0)} N, <i>F</i><sub>b</sub> = ρ<sub>water</sub>Vg = ${f(M.BALL.Fb, 0)} N`)}${eq(`<i>F</i><sub>N</sub> = W − <i>F</i><sub>b</sub> = ${p3(N5)} N`)}<p>水对沉底的球仍有向上的浮力；池底只承担剩下的部分。</p>` },
+      why: `${eq(`V = ⁴⁄₃πr³ = ${f(M.BALL.V, 4)} m³, W = ρ<sub>钢</sub>Vg = ${f(M.BALL.W, 0)} N, <i>F</i><sub>b</sub> = ρ<sub>水</sub>Vg = ${f(M.BALL.Fb, 0)} N`)}${eq(`<i>F</i><sub>N</sub> = W − <i>F</i><sub>b</sub> = ${p3(N5)} N`)}<p>水对沉底的球仍有向上的浮力；池底只承担剩下的部分。</p>` },
   ],
   6: [
     { q: `半径 ${f(FL.r1 * 100, 0)} cm 的管中流速为 ${f(FL.v1, 1)} m/s 的水流入半径 ${f(R6 * 100, 0)} cm 的一段。水在那里的流速是`,
@@ -101,6 +101,6 @@ export const PRACTICE = {
       why: '<p><i>v</i> = √(2<i>gh</i>)：<i>h</i> 变为四倍，速度变为 √4 = 2 倍，与石块从四倍高度落下一样。</p>' },
     { q: `小孔在地面上方 ${f(TK.yh, 2)} m 处。当小孔上方的水深为 ${f(H8, 2)} m 时，射流落在离水箱多远处？`,
       choices: [`${p3(Math.sqrt(H8 * TK.yh))} m`, `${p3(X8)} m`, `${p3(M.jetRange(TK.h0))} m`, `${p3(Math.sqrt(2 * H8 * TK.yh))} m`], answer: 1,
-      why: `${eq(`<i>v</i> = √(2 × ${f(G)} × ${f(H8, 2)}) = ${f(M.torricelli(H8))} m/s, t = √(2 × ${f(TK.yh, 2)} / ${f(G)}) = ${f(M.jetFlight, 3)} s`)}${eq(`x = vt = 2√(h y<sub>hole</sub>) = ${p3(X8)} m`)}<p>${p3(M.jetRange(TK.h0))} m 是水箱满（${f(TK.h0, 1)} m）时的射程，不是现在的。</p>` },
+      why: `${eq(`<i>v</i> = √(2 × ${f(G)} × ${f(H8, 2)}) = ${f(M.torricelli(H8))} m/s, t = √(2 × ${f(TK.yh, 2)} / ${f(G)}) = ${f(M.jetFlight, 3)} s`)}${eq(`x = vt = 2√(h y<sub>孔</sub>) = ${p3(X8)} m`)}<p>${p3(M.jetRange(TK.h0))} m 是水箱满（${f(TK.h0, 1)} m）时的射程，不是现在的。</p>` },
   ],
 };

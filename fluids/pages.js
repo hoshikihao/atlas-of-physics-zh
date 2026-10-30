@@ -113,8 +113,8 @@ export const PAGES = [
     kicker: '8.4', title: '浮力', sub: '阿基米德原理',
     body: `
       <p class="lede">水对浸没物体的每个面都有压力，而且越往下压得越厉害。侧面的压力相互抵消；底面向上的压力大于顶面向下的压力，两者之差就是<b>浮力</b>。</p>
-      <p>对边长为 <i>s</i> 的立方体：(<i>P</i><sub>bottom</sub> − <i>P</i><sub>top</sub>)<i>s</i>² = ρ<i>gs</i>·<i>s</i>² = ρ<i>Vg</i>，正好等于它排开的水的重力：</p>
-      <div class="eq"><i>F</i><sub>b</sub> = ρ<sub>fluid</sub> <i>V</i><sub>displaced</sub> <i>g</i></div>
+      <p>对边长为 <i>s</i> 的立方体：(<i>P</i><sub>下</sub> − <i>P</i><sub>上</sub>)<i>s</i>² = ρ<i>gs</i>·<i>s</i>² = ρ<i>Vg</i>，正好等于它排开的水的重力：</p>
+      <div class="eq"><i>F</i><sub>b</sub> = ρ<sub>液</sub> <i>V</i><sub>排</sub> <i>g</i></div>
       <p>立方体浸入水中时浮力逐渐增大，完全浸没后保持 ${f(M.BUOY.Fb, 0)} N 不变，无论多深。细绳承担剩下的部分，即<b>视重</b> <i>T</i> = <i>W</i> − <i>F</i><sub>b</sub> = ${f(M.BUOY.W - M.BUOY.Fb, 0)} N，而不是 ${f(M.BUOY.W, 0)} N。</p>
       <div class="charts">${chart({ x0: -0.35, x1: 0.75, y0: 0, y1: 900, xlabel: '底面的深度 (m)', ylabel: '力 (N)', cursors: ['fb', 'T'], label: '浮力和绳的拉力随立方体浸入深度的变化', h: 140, xlabels: ['−0.35', '0.75'],
         series: [{ pts: sample(d => M.buoy(M.BUOY.L0 - d).Fb, -0.35, 0.75), tag: [0.45, M.BUOY.Fb + 10, 'F_b'] }, { pts: sample(d => M.buoy(M.BUOY.L0 - d).T, -0.35, 0.75), tag: [0.45, M.BUOY.W - M.BUOY.Fb + 10, 'T = W − F_b'] }, { cls: 'trend', pts: [[-0.35, M.BUOY.W], [0.75, M.BUOY.W]], tag: [0.6, M.BUOY.W + 10, 'W'] }] })}</div>
@@ -125,8 +125,8 @@ export const PAGES = [
   {
     kicker: '8.5', title: '浮与沉', sub: '比较密度',
     body: `
-      <p class="lede">如果物体的密度比水小，它只会下沉到排开的水的重力等于它自身的重力为止：ρ<sub>fluid</sub><i>V</i><sub>under</sub><i>g</i> = ρ<sub>obj</sub><i>Vg</i>，所以</p>
-      <div class="eq"><i>V</i><sub>under</sub> / <i>V</i> = ρ<sub>obj</sub> / ρ<sub>fluid</sub></div>
+      <p class="lede">如果物体的密度比水小，它只会下沉到排开的水的重力等于它自身的重力为止：ρ<sub>液</sub><i>V</i><sub>浸</sub><i>g</i> = ρ<sub>物</sub><i>Vg</i>，所以</p>
+      <div class="eq"><i>V</i><sub>浸</sub> / <i>V</i> = ρ<sub>物</sub> / ρ<sub>液</sub></div>
       <table class="data">
         <tr><th></th><th>ρ (kg/m³)</th><th>结果</th></tr>
         <tr><td>木块</td><td>${M.WOOD.rho}</td><td>漂浮，${f(100 * M.WOOD.draft / M.WOOD.s, 0)}% 在水下</td></tr>
@@ -135,7 +135,7 @@ export const PAGES = [
         <tr><td>钢船，平均</td><td>${f(M.SHIP.avg, 0)}</td><td>漂浮，吃水 ${f(M.SHIP.draft * 100, 1)} cm</td></tr>
       </table>
       <p>海水中的冰山有 ${f(100 * M.fractionUnder(917, M.RHO_SEA), 0)}% 在水下。钢球的 <i>F</i><sub>b</sub> = ${f(M.BALL.Fb, 0)} N 抵不过它 ${f(M.BALL.W, 0)} N 的重力，剩下的由池底向上的支持力承担。船是把钢做成能装下空气的形状。</p>
-      <div class="charts">${chart({ x0: 0, x1: 1.5, y0: 0, y1: 1.15, xlabel: 'ρ_物体 / ρ_水', ylabel: '浸在水下的比例', label: '浸没比例随密度比的变化：两者相等，直到 1 为止，此后物体下沉', h: 104, ylabels: ['', '0'],
+      <div class="charts">${chart({ x0: 0, x1: 1.5, y0: 0, y1: 1.15, xlabel: 'ρ_物 / ρ_水', ylabel: '浸在水下的比例', label: '浸没比例随密度比的变化：两者相等，直到 1 为止，此后物体下沉', h: 104, ylabels: ['', '0'],
         series: [{ pts: [[0, 0], [1, 1], [1.5, 1]], tag: [1.02, 1.0, '下沉 →'] }], marks: [[M.SHIP.avg / 1000, M.SHIP.avg / 1000, '船'], [0.6, 0.6, '木块'], [0.917, 0.917, '冰', -26, -8]] })}</div>
       <p class="hintline">力：每牛顿对应 ${f(SC.floatF * 1000, 1)} mm。点击把排开的水取出来。</p>`,
     cam: { target: at('float', 0.15, 0.55), az: -10, el: 9, dist: 12.5 }, lit: 'float', scene: 'float', look: {},
@@ -175,7 +175,7 @@ export const PAGES = [
       <p class="lede">水从水面下 <i>h</i> 处的小孔流出。从敞开的水面（大气压，几乎静止）到射流（同样是大气压）应用伯努利方程：压强项相互抵消，剩下 ρ<i>gh</i> = ½ρ<i>v</i>²，所以</p>
       <div class="eq"><i>v</i> = √(2<i>gh</i>)</div>
       <p>与水滴自由下落高度 <i>h</i> 得到的速率相同。这里 <i>h</i> 起初为 ${f(M.TANK.h0, 1)} m，所以 <i>v</i> = ${f(M.torricelli(M.TANK.h0))} m/s。随着水箱排空，<i>h</i> 和 <i>v</i> 一起减小。</p>
-      <p>水滴一离开小孔就做平抛运动：水平速度为 <i>v</i>，用 ${f(M.jetFlight, 3)} s 下落 ${f(M.TANK.yh, 2)} m。射程为 <i>v t</i> = 2√(<i>h y</i><sub>hole</sub>)，水箱满时为 ${f(M.jetRange(M.TANK.h0))} m。</p>
+      <p>水滴一离开小孔就做平抛运动：水平速度为 <i>v</i>，用 ${f(M.jetFlight, 3)} s 下落 ${f(M.TANK.yh, 2)} m。射程为 <i>v t</i> = 2√(<i>h y</i><sub>孔</sub>)，水箱满时为 ${f(M.jetRange(M.TANK.h0))} m。</p>
       <div class="charts">${chart({ x0: 0, x1: 1.2, y0: 0, y1: 5, xlabel: '小孔上方的水深 h (m)', ylabel: '射流速率 v (m/s)', cursors: ['tank'], label: '射流速率随水深的变化：2gh 的平方根', h: 150,
         series: [{ pts: sample(h => M.torricelli(h), 0, 1.2) }] })}</div>
       <p class="hintline">速度：每 m/s 对应 ${f(SC.jetV * 100, 0)} cm。点击水箱，分解水滴的速度。</p>`,
@@ -197,7 +197,7 @@ export const PLATES = {
     facts: s => { const p = M.pascal(s.clock); return [['各处的 ΔP', kPa(M.PASCAL.dP, 2)], ['F₁ = ΔP·A₁', `${M.PASCAL.F1} N`], ['F₂ = ΔP·A₂', `${f(M.PASCAL.F2, 0)} N`], ['小活塞下降 d₁', `${f(p.d1 * 100, 1)} cm`], ['大活塞上升 d₂', `${f(p.d2 * 100, 2)} cm`], ['功 F₁d₁ = F₂d₂', `${f(M.PASCAL.F1 * p.d1, 2)} J`]]; } },
   cube: { text: `每个面上的箭头被替换成该面受到的总压力，即作用在面中心的 <i>P</i>·<i>A</i>。四个侧面的压力两两抵消。底面减去顶面就是浮力，等于立方体排开的水的重力。`,
     facts: s => { const b = b4(s), A = M.BUOY.s ** 2, top = M.gaugeAtY(b.yb + M.BUOY.s, b.L) * A, bot = M.gaugeAtY(b.yb, b.L) * A;
-      return [['底面向上', `${f(bot, 1)} N`], ['顶面向下', `${f(top, 1)} N`], ['F_b = 底面 − 顶面', `${f(bot - top, 1)} N`], ['ρ V_under g', `${f(b.Fb, 1)} N`], ['拉力 T = W − F_b', `${f(b.T, 1)} N`], ['水面上升', `${f((b.L - M.BUOY.L0) * 1000, 1)} mm`]]; } },
+      return [['底面向上', `${f(bot, 1)} N`], ['顶面向下', `${f(top, 1)} N`], ['F_b = 底面 − 顶面', `${f(bot - top, 1)} N`], ['ρ V_浸 g', `${f(b.Fb, 1)} N`], ['拉力 T = W − F_b', `${f(b.T, 1)} N`], ['水面上升', `${f((b.L - M.BUOY.L0) * 1000, 1)} mm`]]; } },
   float: { text: `每个蓝色块都是该物体排开的水，被取了出来。对漂浮的物体，它的重力恰好等于物体的重力。钢球排开了与自身等体积的水，仍然不够。`,
     facts: () => [['木块：W = F_b', `${f(M.WOOD.W, 0)} N`], ['冰：W = F_b', `${f(M.ICE.W, 0)} N`], ['钢球：W、F_b', `${f(M.BALL.W, 0)} N，${f(M.BALL.Fb, 0)} N`], ['船：W = F_b', `${f(M.SHIP.W, 0)} N（${f(M.SHIP.m, 1)} kg 钢）`]] },
   pipe: { text: `两个横截面滑了出来。每秒都有 ${f(M.FLOW.Q * 1000, 0)} L 的水通过它们：以 ${f(M.FLOW.v1, 1)} m/s 通过 ${f(M.FLOW.A1, 3)} m²，以 ${f(M.FLOW.v2, 1)} m/s 通过 ${f(M.FLOW.A2, 3)} m²。`,

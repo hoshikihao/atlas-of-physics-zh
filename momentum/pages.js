@@ -54,8 +54,8 @@ const vecSketch = (() => {
   const head = (x1, y1, x2, y2, cls) => { const a = Math.atan2(y2 - y1, x2 - x1), L = 9; return `<line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2 - 6 * Math.cos(a)}" y2="${y2 - 6 * Math.sin(a)}"/><path class="${cls}h" d="M${x2},${y2}L${x2 - L * Math.cos(a - 0.4)},${y2 - L * Math.sin(a - 0.4)}L${x2 - L * Math.cos(a + 0.4)},${y2 - L * Math.sin(a + 0.4)}Z"/>`; };
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="动量矢量首尾相接相加">
     ${head(ox, oy, ax, oy, 'vk')}${head(ax, oy, ax, ay, 'vk')}${head(ox, oy, ax, ay, 'vb')}
-    <text class="lab" x="${ox - 4}" y="${oy + 6}" text-anchor="end">p_轿车 ${k(C.px)}</text>
-    <text class="lab" x="${ax + 8}" y="${(oy + ay) / 2}">p_卡车 ${k(C.py)}</text>
+    <text class="lab" x="${ox - 4}" y="${oy + 6}" text-anchor="end">p_轿 ${k(C.px)}</text>
+    <text class="lab" x="${ax + 8}" y="${(oy + ay) / 2}">p_卡 ${k(C.py)}</text>
     <text class="lab blue" x="${(ox + ax) / 2 - 8}" y="${(oy + ay) / 2 - 6}" text-anchor="end">P ${k(C.P)}</text>
     <text class="ax" x="${W - 14}" y="20" text-anchor="end">kg·m/s · 东 → 北 ↑</text>
   </svg>`;
@@ -223,7 +223,7 @@ export const PAGES = [
       <div class="charts">${vecSketch}</div>
       <p class="hintline">此处箭头：每 1000 kg·m/s 对应 ${cm(CRASH_SCALE)}。点击把它们首尾相接。</p>`,
     cam: { target: [STATIONS.crash + 0.5, 0, -1.5], az: -10, el: 50, dist: 58 }, lit: 'crash', scene: 'crash', look: {},
-    fig: 'p_轿车 + p_卡车 = P',
+    fig: 'p_轿 + p_卡 = P',
   },
   {
     kicker: '5.8', title: '质心', sub: '炸开后照样飞行',
@@ -282,7 +282,7 @@ export const PAGES = [
         <tr><td>整个 L 形板</td><td>${f(Ll.M)} kg</td><td>${xy(Ll.cm)}</td></tr>
       </table>
       <p>这个点落在空缺处，不在 L 形板上。和圆环、回旋镖一样，它无法用一根支针顶住平衡；但用细绳吊起时，它会转动，直到质心位于绳结正下方。</p>
-      <div class="eq"><i>x</i><sub>cm</sub> = (<i>m</i><sub>full</sub><i>x</i><sub>full</sub> − <i>m</i><sub>plug</sub><i>x</i><sub>plug</sub>)/<i>M</i></div>
+      <div class="eq"><i>x</i><sub>cm</sub> = (<i>m</i><sub>整</sub><i>x</i><sub>整</sub> − <i>m</i><sub>孔</sub><i>x</i><sub>孔</sub>)/<i>M</i></div>
       <p>边长 ${f(Ho.s, 1)} m 的正方形板（${f(Ho.mFull)} kg）在 ${xy(Ho.c)} 处挖去半径 ${f(Ho.r, 1)} m 的圆片（${f(Ho.mPlug)} kg）：<i>x</i><sub>cm</sub> = <i>y</i><sub>cm</sub> = −${f(Ho.mPlug)}×${f(Ho.c[0])}/${f(Ho.M)} = ${f(Ho.cm[0], 3)} m，离中心 ${f(Math.hypot(...Ho.cm) * 100, 1)} cm，偏向远离孔的一侧。</p>
       <p class="hintline">点击拆开 L 形板，并取出圆片。</p>`,
     cam: { target: [STATIONS.parts + 0.05, 1.22, 0], az: -12, el: 14, dist: 10.2 }, lit: 'parts', scene: 'parts', look: {},
@@ -296,7 +296,7 @@ const collFacts = c => s => { const r = M.track(c, s[c === S ? 'stick' : c === B
 export const PLATES = {
   mom: { text: `灰色箭头是速度：球的速度箭头是小车的四倍长。黑色的动量箭头一样长，因为小车的质量是球的四倍。动量由质量和速度共同决定。`,
     facts: () => [['球：0.5 kg × 4.0 m/s', `${f(M.p(M.BALL.m, M.BALL.v))} kg·m/s`], ['小车：2.0 kg × 1.0 m/s', `${f(M.p(M.CART.m, M.CART.v))} kg·m/s`], ['球 KE = p²/2m', `${f(M.ke(M.BALL.m, M.BALL.v))} J`], ['小车 KE = p²/2m', `${f(M.ke(M.CART.m, M.CART.v))} J`]] },
-  wall: { text: `碰前（向右）与碰后（向左）的动量。变化量 Δp = p<sub>after</sub> − p<sub>before</sub> 的长度是两者的两倍，方向背离墙面，与墙的推力同向。这个变化量就是冲量。`,
+  wall: { text: `碰前（向右）与碰后（向左）的动量。变化量 Δp = p<sub>后</sub> − p<sub>前</sub> 的长度是两者的两倍，方向背离墙面，与墙的推力同向。这个变化量就是冲量。`,
     facts: s => { const w = M.wall(s.wall.t); return [['碰前 p', `+${f(Wl.m * Wl.v)} kg·m/s`], ['碰后 p', `−${f(Wl.m * Wl.v)} kg·m/s`], ['Δp = J', `−${f(Wl.J)} N·s`], ['接触时间', `${f(Wl.tau)} s`], ['此刻的力', `${f(Math.abs(w.F), 1)} N`]]; } },
   eggs: { text: `灰色箭头是两个冲量：完全相同，因为两只鸡蛋失去的动量相同。不同的是这一过程用了多长时间，因而推力要多大。`,
     facts: () => [['每只的冲量', `${f(Eg.J, 3)} N·s`], ['枕头：J / Δt', `${f(Eg.J / Eg.tauSoft)} N，持续 ${f(Eg.tauSoft)} s`], ['地板：J / Δt', `${f(Eg.J / Eg.tauHard)} N，持续 ${f(Eg.tauHard)} s`], ['力之比', `${f(Eg.tauSoft / Eg.tauHard, 1)}×`]] },

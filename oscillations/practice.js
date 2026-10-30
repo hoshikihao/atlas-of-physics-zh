@@ -79,7 +79,7 @@ export const PRACTICE = {
   6: [
     { q: `${f(M.DOUBLE.m, 1)} kg 木块挂在 ${M.K} N/m 的弹簧上，周期为 ${f(M.periodSpring(M.DOUBLE.m, M.K))} s。劲度系数为多少时周期加倍？`,
       choices: [`${f(M.K / 2, 1)} N/m`, `${f(2 * M.K, 1)} N/m`, `${f(k6, 1)} N/m`, `${f(4 * M.K, 1)} N/m`], answer: 2,
-      why: `<p><i>T</i> ∝ 1/√<i>k</i>。要得到 2<i>T</i>，√(<i>k</i><sub>new</sub>) 必须是 √<i>k</i> 的一半，所以 <i>k</i><sub>new</sub> = <i>k</i>/4 = ${f(k6, 1)} N/m。把 <i>k</i> 减半只能让周期变为 √2 倍；更硬的弹簧会让周期变短。</p>` },
+      why: `<p><i>T</i> ∝ 1/√<i>k</i>。要得到 2<i>T</i>，√(<i>k</i><sub>新</sub>) 必须是 √<i>k</i> 的一半，所以 <i>k</i><sub>新</sub> = <i>k</i>/4 = ${f(k6, 1)} N/m。把 <i>k</i> 减半只能让周期变为 √2 倍；更硬的弹簧会让周期变短。</p>` },
     { q: `${f(M.DOUBLE.L)} m 长的单摆周期为 ${f(TL)} s。要使周期为 ${f(T6, 1)} s，摆长应为多少？`,
       choices: [`${f(M.DOUBLE.L * T6 / TL)} m`, `${f(G * T6 / TAU)} m`, `${f(G * T6 ** 2 / 4, 1)} m`, `${f(L6)} m`], answer: 3,
       why: `<div class="eq"><i>L</i> = <i>g</i>(<i>T</i>/2π)² = ${f(G)} × (${f(T6, 1)}/2π)² = ${f(L6)} m</div><p>也可以用比例：<i>L</i> ∝ <i>T</i>²，所以 ${f(M.DOUBLE.L)} × (${f(T6, 1)}/${f(TL)})² = ${f(L6)} m。直接按时间之比缩放 <i>L</i> 会得到 ${f(M.DOUBLE.L * T6 / TL)} m。</p>` },

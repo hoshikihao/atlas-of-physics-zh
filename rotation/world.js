@@ -395,7 +395,7 @@ export function buildWorld(E) {
   label('vec', 'r<sub>⊥</sub> = d', () => O.clone().add(V(H.d * 0.45, 0.14, -0.12)));
   label('tick', 'O', () => O.clone().add(V(-0.12, 0.05, 0.12))); label('vec', 'ω', () => curveEnd(qW));
   label('tick', '', () => qBall.position.clone().add(V(0.7, 0.2, 0)), () => `L = ${M.hit(qNow).Lb.toFixed(2)} kg·m²/s`);
-  label('vec', 'L<sub>ball</sub>', () => tip(qLb)); label('vec', 'L<sub>rod</sub>', () => tip(qLr)); label('vec blue', 'L', () => tip(qL));
+  label('vec', 'L<sub>球</sub>', () => tip(qLb)); label('vec', 'L<sub>杆</sub>', () => tip(qLr)); label('vec blue', 'L', () => tip(qL));
   let qNow = 0;
 
   // ================= per frame =================
