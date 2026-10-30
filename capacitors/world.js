@@ -114,7 +114,7 @@ export function buildWorld(E) {
 
   // ---------- 0 · a capacitor on a battery turned slowly up and down ----------
   const X0 = STATIONS.plates;
-  const g0 = asm('plates', root, { title: 'Two charged plates', sub: 'each plate’s field, then their sum' });
+  const g0 = asm('plates', root, { title: '两块带电极板', sub: '先看每块极板的电场，再相加' });
   const c0 = capacitor(g0, X0);
   hookUp(g0, X0, D0);
   plateLabels(X0);
@@ -128,7 +128,7 @@ export function buildWorld(E) {
 
   // ---------- 1 · Gauss's law: the gap opens and closes, Q fixed ----------
   const X1 = STATIONS.pillbox;
-  const g1 = asm('pillbox', root, { title: 'The Gaussian pillbox', sub: 'flux out = charge inside / ε₀' });
+  const g1 = asm('pillbox', root, { title: '扁圆柱高斯面', sub: '穿出的电通量 = 内部电荷 / ε₀' });
   const c1 = capacitor(g1, X1);
   plateLabels(X1, D0, () => true);
   label('vec blue', '<i>E</i>', () => V(X1, CY + SIDE / 2 + 0.2, 0.9));
@@ -142,13 +142,13 @@ export function buildWorld(E) {
   const pbE = field(pb, 0.02); setArrow(pbE, V(PBL / 2, 0, 0), V(M.E0 * ES, 0, 0));
   label('vec blue', '<i>E</i>·<i>A</i>', when(g1, () => tipOf(pbE)));
   label('tick', '<i>q</i><sub>enc</sub> = σ<i>A</i>', when(g1, () => pb.localToWorld(V(0, PBR + 0.18, 0))));
-  label('tick', 'flux 0', when(g1, () => pb.localToWorld(V(-PBL / 2 - 0.08, 0, 0))));
+  label('tick', '电通量 0', when(g1, () => pb.localToWorld(V(-PBL / 2 - 0.08, 0, 0))));
   const dimD = lines(g1, new Array(18).fill(0), '#6e6e74');
   label('tick', '<i>d</i>', () => V(X1 + 0.06, CY - SIDE / 2 - 0.2, SIDE / 2));
 
   // ---------- 2 · spherical capacitor ----------
   const X2 = STATIONS.sphere, C2y = 2.2, A2 = M.SPH.a * DRAW, B2 = M.SPH.b * DRAW, c2 = V(X2, C2y, 0);
-  const g2 = asm('sphere', root, { title: 'Spherical capacitor', sub: 'a ball inside a shell' });
+  const g2 = asm('sphere', root, { title: '球形电容器', sub: '球壳里的一个球' });
   part(g2, new THREE.SphereGeometry(A2, 48, 32), { tone: 'hi', pos: c2.toArray(), name: 'Inner sphere (+Q)' });
   // the outer shell cut in half through the centre, the front half removed: a cross-section.
   // The back half is in two quarters that part when opened.
@@ -181,7 +181,7 @@ export function buildWorld(E) {
 
   // ---------- 3 · cylindrical (coaxial) capacitor, axis along x ----------
   const X3 = STATIONS.coax, C3y = 1.6, A3 = M.CYL.a * DRAW, B3 = M.CYL.b * DRAW, L3 = M.CYL.L * DRAW, c3 = V(X3, C3y, 0);
-  const g3 = asm('coax', root, { title: 'Cylindrical capacitor', sub: 'a rod inside a tube' });
+  const g3 = asm('coax', root, { title: '圆柱形电容器', sub: '管子里的一根棒' });
   part(g3, xAxis(new THREE.CylinderGeometry(A3, A3, L3 + 0.6, 40)), { tone: 'hi', pos: c3.toArray(), name: 'Inner rod (+Q)' });
   const tube3 = mover(g3, [L3 + 0.8, 0, 0]); tube3.position.copy(c3); tube3.userData.home.copy(c3);
   // cylinder angle θ: x = r sin θ, z = r cos θ; turned to the x axis, θ ∈ [90°, 270°] is the back half (z ≤ 0)
@@ -205,7 +205,7 @@ export function buildWorld(E) {
 
   // ---------- 4 · energy: charging the plates a bit at a time ----------
   const X4 = STATIONS.energy;
-  const g4 = asm('energy', root, { title: 'The energy in the gap', sub: 'u = ½ε₀E², filling the volume Ad' });
+  const g4 = asm('energy', root, { title: '两极间的能量', sub: 'u = ½ε₀E²，充满体积 Ad' });
   const c4 = capacitor(g4, X4);
   plateLabels(X4);
   const fillMat = shadeMat('blue', { opacity: 0.3 });
@@ -213,7 +213,7 @@ export function buildWorld(E) {
   fill4.userData.noEdge = true;
   const vol4 = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(D0, SIDE, SIDE)), new THREE.LineBasicMaterial({ color: '#3d63a8' }));
   vol4.position.set(X4, CY, 0); vol4.userData = { noEdge: true }; g4.add(vol4);
-  label('tick', 'volume <i>Ad</i>', when(g4, () => V(X4 + 0.5, CY - SIDE / 2 - 0.15, SIDE / 2)));
+  label('tick', '体积 <i>Ad</i>', when(g4, () => V(X4 + 0.5, CY - SIDE / 2 - 0.15, SIDE / 2)));
   label('vec blue', '<i>u</i> = ½ε<sub>0</sub><i>E</i><sup>2</sup>', when(g4, () => V(X4 + 0.15, CY + SIDE / 2 + 0.25, SIDE / 2)));
   const dq = part(g4, new THREE.SphereGeometry(0.07, 24, 16), { tone: 'hi', pal: 'red', name: 'A bit of charge dq' });
   const push4 = arrow(g4, 'ink', { r: 0.014, head: 0.08, headR: 0.04, name: 'A bit of charge dq' });
@@ -239,14 +239,14 @@ export function buildWorld(E) {
     return gap;
   }
   // series, on the left
-  const xs = X5 - 2.2, gS = asm('series', root, { title: 'In series', sub: 'one charge Q, the voltage shared' });
+  const xs = X5 - 2.2, gS = asm('series', root, { title: '串联', sub: '电荷量 Q 相同，电压分担' });
   battery(gS, V(xs, by5, 0), 0.7, 0.12);
   smallCap(gS, xs - 0.6, ty5, M.CIRC.C1, M.SER.Q1, 'C₁ = 2 µF'); smallCap(gS, xs + 0.6, ty5, M.CIRC.C2, M.SER.Q2, 'C₂ = 4 µF');
   wire(gS, [V(xs - 0.38, by5, 0), V(xs - 1.4, by5, 0), V(xs - 1.4, ty5, 0), V(xs - 0.71, ty5, 0)]);
   wire(gS, [V(xs - 0.49, ty5, 0), V(xs + 0.49, ty5, 0)], 'The island between them');
   wire(gS, [V(xs + 0.71, ty5, 0), V(xs + 1.4, ty5, 0), V(xs + 1.4, by5, 0), V(xs + 0.35, by5, 0)]);
   // parallel, on the right
-  const xp = X5 + 2.2, gP = asm('parallel', root, { title: 'In parallel', sub: 'one voltage, the charge shared' });
+  const xp = X5 + 2.2, gP = asm('parallel', root, { title: '并联', sub: '电压相同，电荷分担' });
   const my5 = 1.6;
   battery(gP, V(xp, by5, 0), 0.7, 0.12);
   smallCap(gP, xp, ty5, M.CIRC.C1, M.PAR.Q1, 'C₁ = 2 µF'); smallCap(gP, xp, my5, M.CIRC.C2, M.PAR.Q2, 'C₂ = 4 µF');
@@ -264,8 +264,8 @@ export function buildWorld(E) {
   };
   capLab(gS, xs - 0.6, ty5, 2, M.SER.Q1, M.SER.V1); capLab(gS, xs + 0.6, ty5, 4, M.SER.Q2, M.SER.V2);
   capLab(gP, xp, ty5, 2, M.PAR.Q1, M.PAR.V1); capLab(gP, xp, my5, 4, M.PAR.Q2, M.PAR.V2, true);
-  label('board', 'series', () => V(xs - 1.4, ty5 + 0.75, 0)); label('board', 'parallel', () => V(xp - 1.4, ty5 + 0.75, 0));
-  label('tick', 'island: −<i>Q</i> + <i>Q</i> = 0', when(gS, () => V(xs + 0.55, ty5 - 0.75, 0)));
+  label('board', '串联', () => V(xs - 1.4, ty5 + 0.75, 0)); label('board', '并联', () => V(xp - 1.4, ty5 + 0.75, 0));
+  label('tick', '孤立部分：−<i>Q</i> + <i>Q</i> = 0', when(gS, () => V(xs + 0.55, ty5 - 0.75, 0)));
 
   // ---------- 6 · a dielectric slab slides in (plates isolated, Q fixed) ----------
   function slabCap(g, cx, molecules) {
@@ -324,7 +324,7 @@ export function buildWorld(E) {
     }
   }
   const X6 = STATIONS.slab;
-  const g6 = asm('slab', root, { title: 'A dielectric slab', sub: 'the molecules turn and cancel part of the field' });
+  const g6 = asm('slab', root, { title: '电介质板', sub: '分子转向，抵消一部分电场' });
   const S6 = slabCap(g6, X6, true);
   plateLabels(X6);
   label('vec blue', '<i>E</i>', () => V(X6 + 0.05, CY - SIDE / 2 - 0.25, 0.6));
@@ -335,17 +335,17 @@ export function buildWorld(E) {
 
   // ---------- 7 · the same slab, battery connected vs disconnected ----------
   const X7 = STATIONS.compare, xa = X7 - 1.8, xb = X7 + 1.8;
-  const gA = asm('battery', root, { title: 'Battery connected', sub: 'ΔV held at 100 V: more charge flows on' });
-  const gB = asm('isolated', root, { title: 'Battery disconnected', sub: 'Q held: the voltage falls' });
+  const gA = asm('battery', root, { title: '接着电池', sub: 'ΔV 保持 100 V：更多电荷流上极板' });
+  const gB = asm('isolated', root, { title: '断开电池', sub: 'Q 保持不变：电压降低' });
   const S7a = slabCap(gA, xa, false), S7b = slabCap(gB, xb, false);
   hookUp(gA, xa, D0);
-  label('board', 'connected', () => V(xa - 1.0, CY + SIDE / 2 + 0.85, -1));
-  label('board', 'disconnected', () => V(xb - 1.0, CY + SIDE / 2 + 0.85, -1));
+  label('board', '接着电源', () => V(xa - 1.0, CY + SIDE / 2 + 0.85, -1));
+  label('board', '断开电源', () => V(xb - 1.0, CY + SIDE / 2 + 0.85, -1));
   label('tick', '100 V', () => V(xa + 0.1, 0.0, 0.3));
 
   // ---------- 8 · a conducting sphere in a uniform field ----------
   const X8 = STATIONS.conductor, C8y = 1.8, R8 = M.COND.R * DRAW, c8 = V(X8, C8y, 0);
-  const g8 = asm('conductor', root, { title: 'A conductor in a field', sub: 'charges move until E = 0 inside' });
+  const g8 = asm('conductor', root, { title: '电场中的导体', sub: '电荷移动，直到内部 E = 0' });
   [0, 1].map(k => {
     const h = mover(g8, [0, k ? -1.2 : 1.2, 0]); h.position.copy(c8); h.userData.home.copy(c8);
     part(h, new THREE.SphereGeometry(R8, 64, 32, 0, 2 * Math.PI, k ? Math.PI / 2 : 0, Math.PI / 2), { tone: 'hi', name: 'Conducting sphere' });
@@ -380,7 +380,7 @@ export function buildWorld(E) {
   label('vec blue', '<i>E</i><sub>0</sub>', () => c8.clone().add(V(-2.9, 2.9, 0)));
   const inner8 = new THREE.Group(); inner8.position.copy(c8); g8.add(inner8);
   gauss(inner8, new THREE.SphereGeometry(R8 * 0.65, 40, 24), 'Gaussian surface inside');
-  label('tick', '<i>E</i> = 0 inside', when(g8, () => c8.clone().add(V(0.5, 0, R8))));
+  label('tick', '内部 <i>E</i> = 0', when(g8, () => c8.clone().add(V(0.5, 0, R8))));
 
   // ---------- per-frame ----------
   function update(s) {
