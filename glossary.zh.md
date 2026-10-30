@@ -343,3 +343,5 @@
 | face / axis / inner | 面 / 轴 / 内 |
 | field（电场力做的功） | 电 |
 | on A（受力对象） | A |
+| gauge（表压） | 表 |
+| core（线圈铁芯） | 芯 |
